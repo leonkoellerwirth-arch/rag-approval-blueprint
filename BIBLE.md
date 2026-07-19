@@ -54,6 +54,16 @@ internal audit, board submission. Not another RAG security pattern library.
 
 Newest first. Each: date · decision · why · (superseded by …).
 
+- **2026-07-20 — Zwei Auslieferungsformen, eine Codebasis.** `npm run build` erzeugt die
+  gehostete PWA, `npm run build:datei` eine self-contained HTML-Datei. *Why:* Die Einzeldatei
+  war die eine echte Stärke der verworfenen Handfassung — ein ISB bekommt eine Datei und
+  öffnet sie, ohne Ticket an den Betrieb. Der Vorschlag lautete zunächst „React für Power
+  User, HTML für normale User"; das wäre die falsche Trennlinie gewesen, denn es geht nicht um
+  Nutzerkompetenz, sondern um Verteilung — und zwei Zielgruppen hätten zwei Produkte erzeugt,
+  die auseinanderlaufen. Stattdessen ist die Einzeldatei ein **Bauziel**, kein zweiter Zweig:
+  erzeugt wie `controls.md` aus `controls.yaml`, mit denselben Regeln und denselben Tests.
+  Beide Ziele laufen in `verify:ci`, damit keines unbemerkt bricht.
+
 - **2026-07-20 — Der Assistent ist eine Anwendung unter `app/`, nicht mehr eine Einzeldatei.**
   Die erste Fassung war handgeschriebenes HTML. *Why:* Das Haus hat mit `dev/base`,
   Template `vite-react-pwa`, eine paved road für Weboberflächen, und `scripts/gate.sh` sieht ein

@@ -8,31 +8,47 @@ Oberfläche auf dem Designsystem des Hauses (`dev/base/standards/extra/theme.css
 
 > **Kein Rechtsrat.** Siehe [`../DISCLAIMER.md`](../DISCLAIMER.md).
 
-## Starten
+## Zwei Auslieferungsformen, eine Codebasis
+
+Nicht zwei Anwendungen für verschiedene Nutzergruppen — **ein Quelltext, zwei Bauziele.** Die
+Einzeldatei ist erzeugt, nicht handgepflegt; genau wie `controls.md` aus `controls.yaml`
+erzeugt wird. Damit kann nichts auseinanderlaufen: dieselben Regeln, dieselben 33 Tests,
+derselbe Export.
 
 ```bash
-cd app
-npm ci
-npm run dev          # Entwicklung, http://localhost:5273
+cd app && npm ci
+
+npm run dev           # Entwicklung, http://localhost:5273
+
+npm run build         # → dist/                     gehostet, PWA, installierbar
+npm run build:datei   # → dist-einzeldatei/index.html   EINE Datei, Doppelklick
 ```
 
-Für die Nutzung im Haus:
+### Wann welche Form
+
+| | `dist/` | Einzeldatei |
+|---|---|---|
+| Verteilung | interner Webserver oder Netzlaufwerk mit Webfreigabe | Datei weiterreichen, Ablage, USB |
+| Öffnen | über eine Adresse | Doppelklick, kein Server, keine Installation |
+| Offline | ja, per Service Worker installierbar | ja, von Natur aus |
+| Aktualisierung | automatisch beim nächsten Aufruf | neue Datei verteilen |
+| Größe | 260 kB in mehreren Dateien | 258 kB in einer |
+
+**Die Einzeldatei ist die Form für den Regelfall im Haus:** Ein ISB, der die Akte ausfüllen
+soll, bekommt eine Datei und öffnet sie. Kein Ticket an den Betrieb, keine Freigabe für eine
+neue Adresse, keine Installation.
+
+Dass sie wirklich eigenständig ist, lässt sich nachrechnen — kein externes Skript, kein
+dynamischer Import, keine Netzaufrufe, das Icon als data-URI eingebettet:
 
 ```bash
-npm run build        # erzeugt dist/
-npm run preview      # dist/ lokal ausliefern
+npm run build:datei
+ls dist-einzeldatei/                                        # genau eine Datei
+grep -oE '<(script|link)[^>]*(src|href)="[^"]+"' dist-einzeldatei/index.html | grep -v data:
+grep -E "\bfetch\(|XMLHttpRequest|WebSocket|sendBeacon" dist-einzeldatei/index.html
 ```
 
-`dist/` ist ein statisches Verzeichnis ohne Serverlogik — es lässt sich auf jedem beliebigen
-Webserver oder in einem internen Netzlaufwerk mit Webfreigabe ablegen. **Ein Öffnen per
-Doppelklick aus dem Dateisystem funktioniert nicht**, weil ES-Module über `file://` von den
-Browsern blockiert werden; ein simpler statischer Server genügt aber:
-
-```bash
-cd dist && python3 -m http.server 8080
-```
-
-Als PWA ist die Anwendung installierbar und läuft danach vollständig offline.
+Beide Ziele werden von `npm run verify:ci` gebaut — bricht eines, ist das Gate rot.
 
 ## Warum das Werkzeug so gebaut ist
 
@@ -100,8 +116,9 @@ Läuft auch als Teil des Repo-Gates: `../scripts/gate.sh` erkennt `app/package.j
 
 ## Offene Punkte
 
-- **Kein Öffnen per `file://`** — ES-Module verlangen einen Server. Für den Einsatz im Haus
-  heißt das: einmal bauen und statisch ausliefern.
+- **Die Einzeldatei hat keinen Service Worker** und damit keine Installation und keine
+  automatische Aktualisierung — beides setzt eine Herkunft voraus, die `file://` nicht hat.
+  Eine neue Fassung wird verteilt, nicht nachgeladen.
 - **Nur ein SVG-Icon.** Für Installationsdialoge erwarten manche Browser PNGs in 192 und 512
   Pixeln; die fehlen.
 - **Die Schriften des Hauses** (Plus Jakarta Sans, Bricolage Grotesque, Fraunces) liegen im

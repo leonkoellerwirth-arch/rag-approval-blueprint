@@ -134,9 +134,22 @@ the Freigabeakte and exports Markdown. It has **no server, no database, no login
 call at all** — verifiably so, because it handles exactly the confidential content this
 repository warns about:
 
+It ships in **two delivery formats from one codebase** — not two applications:
+
 ```bash
-cd app && npm ci && npm run build
-grep -rE "\bfetch\(|XMLHttpRequest|WebSocket|sendBeacon" dist/assets/   # → empty
+cd app && npm ci
+npm run build         # → dist/                        hosted, installable PWA
+npm run build:datei   # → dist-einzeldatei/index.html  ONE file, opens by double-click
+```
+
+The single file is *generated*, never hand-maintained — the same principle as
+`controls.md` from `controls.yaml`, so the two can't drift. Both are built by
+`verify:ci`, so breaking either turns the gate red. And the offline promise is
+checkable rather than asserted:
+
+```bash
+ls dist-einzeldatei/                                                      # exactly one file
+grep -E "\bfetch\(|XMLHttpRequest|WebSocket|sendBeacon" dist-einzeldatei/index.html   # → empty
 ```
 
 The assistant deliberately shows no progress bar. A tool reporting "72 % complete" optimises
