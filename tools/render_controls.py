@@ -203,15 +203,17 @@ def render_readiness(doc: dict[str, Any], assessment: dict[str, Any]) -> str:
 
 def write(path: Path, content: str, check: bool) -> bool:
     """Write `content` to `path`, or in check mode report whether it is already current."""
-    current = path.read_text(encoding="utf-8") if path.exists() else None
+    full = path.resolve()
+    name = full.relative_to(ROOT) if full.is_relative_to(ROOT) else full
+    current = full.read_text(encoding="utf-8") if full.exists() else None
     if check:
         if current != content:
-            print(f"✗ {path.relative_to(ROOT)} is out of date — run render_controls.py")
+            print(f"✗ {name} is out of date — run render_controls.py")
             return False
-        print(f"✓ {path.relative_to(ROOT)} is current")
+        print(f"✓ {name} is current")
         return True
-    path.write_text(content, encoding="utf-8")
-    print(f"✓ wrote {path.relative_to(ROOT)}")
+    full.write_text(content, encoding="utf-8")
+    print(f"✓ wrote {name}")
     return True
 
 
@@ -226,9 +228,8 @@ def main(argv: list[str] | None = None) -> int:
     doc = load(args.controls)
     errors = validate(doc)
     if errors:
-        print("✗ controls.yaml is invalid:", file=sys.stderr)
-        for error in errors:
-            print(f"  - {error}", file=sys.stderr)
+        listed = "\n".join(f"  - {error}" for error in errors)
+        print(f"✗ controls.yaml is invalid:\n{listed}", file=sys.stderr)
         return 1
 
     check = args.command == "check"

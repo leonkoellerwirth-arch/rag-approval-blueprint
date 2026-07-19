@@ -7,6 +7,8 @@ edits the Markdown directly, or changes the YAML without re-rendering, this fail
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import yaml
 
 import render_controls as rc
@@ -126,6 +128,31 @@ def test_committed_catalogue_is_current():
 
 def test_check_command_passes_on_a_clean_tree():
     assert rc.main(["check"]) == 0
+
+
+def test_relative_output_path_does_not_crash(tmp_path, monkeypatch, capsys):
+    """A path outside ROOT, or a relative one, must still render — it used to raise ValueError."""
+    monkeypatch.chdir(tmp_path)
+    out = tmp_path / "readiness-report.md"
+    assert rc.write(Path("readiness-report.md"), "content\n", check=False) is True
+    assert out.read_text(encoding="utf-8") == "content\n"
+    assert "wrote" in capsys.readouterr().out
+
+
+def test_pilot_readiness_report_is_current():
+    assessment = rc.load(rc.ROOT / "pilot" / "controls-assessment.yaml")
+    rendered = rc.render_readiness(rc.load(rc.CONTROLS), assessment)
+    report = (rc.ROOT / "pilot" / "readiness-report.md").read_text(encoding="utf-8")
+    assert report == rendered, (
+        "pilot/readiness-report.md is stale — re-run render_controls.py readiness"
+    )
+
+
+def test_every_assessed_control_exists_in_the_catalogue():
+    known = {c["id"] for c in rc.load(rc.CONTROLS)["controls"]}
+    assessment = rc.load(rc.ROOT / "pilot" / "controls-assessment.yaml")
+    unknown = [r["control"] for r in assessment["results"] if r["control"] not in known]
+    assert not unknown, f"assessment references controls that do not exist: {unknown}"
 
 
 def test_invalid_catalogue_exits_nonzero(tmp_path, capsys):
