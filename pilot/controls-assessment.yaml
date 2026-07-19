@@ -1,0 +1,250 @@
+# Kontrollbewertung der 2nd Line zum Freigabelauf NORA — Nordwind Bank AG.
+#
+# FIKTIVES INSTITUT, REALER PROZESS. Nordwind Bank AG ist frei erfunden; Personen, Anbieter,
+# Zahlen und Befunde sind konstruiert. Siehe pilot/00-fallbeschreibung.md.
+#
+# Bewertet gegen controls/controls.yaml. Der Readiness-Report wird hieraus erzeugt:
+#   python tools/render_controls.py readiness --assessment pilot/controls-assessment.yaml
+# Niemals pilot/readiness-report.md von Hand ändern.
+#
+# Stand der Bewertung ist der 19.05.2026. Zwei Kontrollen sind rot, vier gelb — das ist der
+# realistische Befund eines ersten Freigabelaufs und bleibt bewusst so stehen.
+
+meta:
+  institution: Nordwind Bank AG (fiktiv)
+  system: NORA — Nordwind Richtlinien-Assistent
+  date: "2026-05-19"
+  assessor: S. Vogt, 2nd Line / IT-Risikocontrolling
+  recommendation: >-
+    Freigabe unter Auflagen. Die beiden roten Kontrollen betreffen keinen laufenden Schaden,
+    sondern fehlende Nachweise (LOE-02) bzw. eine fehlende vertragliche Absicherung (BET-02).
+    Beide sind mit Frist und benannter Verantwortung in Auflagen überführt. Aus Sicht der 2nd
+    Line steht der Produktivbetrieb nicht entgegen, sofern die Auflagen A1 bis A4 mit den
+    genannten Fristen beschlossen werden.
+  note: |
+    Bewertet wurden alle 22 Kontrollen des Katalogs gegen die vorgelegten Nachweise sowie durch
+    eigene Stichproben am 12.05. und 15.05.2026. Grundlage waren die Testnachweise T1 bis T12
+    (siehe [`akte/06-testnachweise.md`](akte/06-testnachweise.md)), die Freigabeakte und zwei
+    Systemvorführungen.
+
+    **Zur Lesart:** Ein grüner Status bedeutet, dass die Kontrolle eingerichtet **und** belegt
+    ist — nicht, dass kein Risiko besteht. Gelb bedeutet, dass die Kontrolle wirkt, der Nachweis
+    aber unvollständig ist oder eine Maßnahme noch nicht abgeschlossen wurde. Rot bedeutet, dass
+    die Kontrolle in ihrer Kernaussage nicht belegt werden konnte.
+
+results:
+  # --- Zugriff und Berechtigungen -----------------------------------------------------------
+  - control: ZUG-01
+    status: green
+    finding: >-
+      Berechtigungsprüfung erfolgt zur Query-Zeit gegen das Gruppenmodell des Verzeichnisdienstes.
+      Der erste Negativ-Retrieval-Test am 11.02.2026 war nicht bestanden (Trefferliste zeigte
+      Titel nicht berechtigter Dokumente); nach Korrektur — die Trefferliste unterliegt jetzt
+      demselben Filter wie der Antworttext — im Nachtest am 06.03.2026 bestanden. Eigene
+      Stichprobe mit vier Nutzenden am 12.05.2026 ohne Befund.
+    owner: T. Brand
+  - control: ZUG-02
+    status: green
+    finding: >-
+      Gemessene Wirkzeit des Berechtigungsentzugs 4 Minuten gegenüber einer im Betriebskonzept
+      zugesagten Wirkzeit von 15 Minuten. Testprotokoll T2 vom 06.03.2026 liegt vor.
+    owner: T. Brand
+  - control: ZUG-03
+    status: green
+    finding: >-
+      Rezertifizierung ist halbjährlich eingerichtet und in den bestehenden Prozess des Hauses
+      eingebunden; erster Lauf am 30.04.2026 durch die Fachverantwortung, nicht durch die
+      Administration. Vollzug der drei entzogenen Berechtigungen belegt.
+    owner: M. Sørensen
+  - control: ZUG-04
+    status: green
+    finding: >-
+      Aggregationsbewertung am 04.02.2026 gemeinsam mit der Organisationsabteilung und Compliance
+      durchgeführt, Protokoll liegt vor. Hypothese A3 wurde bestätigt: Interne Eskalations- und
+      Meldeschwellen ließen sich aus mehreren Fragmenten rekonstruieren. Maßnahme umgesetzt —
+      die betroffenen Dokumente sind aus dem Index entfernt und werden nur noch als Verweis
+      ausgegeben; im Nachtest T4 nicht mehr rekonstruierbar.
+    owner: Dr. P. Ohlsen
+
+  # --- Datenklassifizierung -----------------------------------------------------------------
+  - control: KLA-01
+    status: green
+    finding: >-
+      Alle drei Quellsysteme sind einzeln freigegeben; das Quellenverzeichnis weist 812 Dokumente
+      mit Freigabestatus und freigebender Person aus. Gegenprobe in Richtung Index am 15.05.2026:
+      keine indexierte Quelle ohne Freigabe.
+    owner: M. Sørensen
+  - control: KLA-02
+    status: green
+    finding: >-
+      Die Schutzbedarfsfeststellung bewertet je Verarbeitungsstufe S1 bis S8, einschließlich
+      Vektorindex und Prompt-Protokoll als eigene Datenklasse. Ergebnis Vertraulichkeit hoch,
+      Integrität hoch, Verfügbarkeit normal.
+    owner: Dr. P. Ohlsen
+  - control: KLA-03
+    status: yellow
+    finding: >-
+      Test T10 ergab, dass zwei abgelöste Richtlinien weiterhin als geltend zitiert wurden. Die
+      Metadaten Gültig-ab und Gültig-bis sind seither eingeführt und werden in der Antwort
+      ausgewiesen. Der Wirksamkeitsnachweis über einen vollständigen Aktualisierungszyklus steht
+      noch aus.
+    auflage: >-
+      Wiederholung von T10 nach dem nächsten Richtlinien-Aktualisierungslauf; Ergebnis der 2nd
+      Line vorlegen.
+    due: "2026-09-30"
+    owner: M. Sørensen
+
+  # --- Löschung ------------------------------------------------------------------------------
+  - control: LOE-01
+    status: green
+    finding: >-
+      Löschkonzept bildet alle acht Stationen der Ableitungskette ab; der am 28.04.2026 real
+      vollzogene Löschfall ist je Station protokolliert. Die Adressierbarkeit ist gegeben, jedes
+      Fragment trägt die Dokument-ID der Quelle.
+    owner: R. Mattis
+  - control: LOE-02
+    status: red
+    finding: >-
+      Der funktionale Teil ist erfüllt: Nach der Löschung liefern die zuvor treffenden Anfragen
+      keine Inhalte, Titel oder Fundstellen mehr. Der Nachweis auf Ebene der Indexdatei fehlt
+      jedoch. Die Inspektion am 28.04.2026 zeigte, dass gelöschte Vektoren als markierte Einträge
+      physisch im HNSW-Index verbleiben; eine Kompaktierung war nicht eingerichtet und ein
+      Neuaufbau erfolgt nur bei Modellwechsel. Damit ist die Löschung derzeit weder als
+      unumkehrbar belegt noch widerlegt.
+    auflage: >-
+      Einrichtung eines wöchentlichen Kompaktierungslaufs mit Protokoll sowie Nachweis der
+      Unumkehrbarkeit durch Index-Inspektion vor und nach dem Lauf (Elementanzahl, markierte
+      Einträge, Dateigröße). Erneute Durchführung von T3 einschließlich Verifikationsschritt V2
+      und V3.
+    due: "2026-09-30"
+    owner: T. Brand
+  - control: LOE-03
+    status: green
+    finding: >-
+      Löschliste mit Zeitstempeln wird geführt und nach jeder Wiederherstellung erneut angewendet;
+      der Prüfschritt ist im Wiederanlaufplan verankert. Test T9 am 02.06.2026 bestanden.
+    owner: T. Brand
+  - control: LOE-04
+    status: green
+    finding: >-
+      Aufbewahrungsfrist für Prompt- und Antwortprotokolle beträgt 90 Tage, begründet und in der
+      Betriebsvereinbarung verankert; die Löschung ist automatisiert. Ältester vorhandener
+      Eintrag am Stichtag 88 Tage alt.
+    owner: R. Mattis
+
+  # --- Evaluierung ---------------------------------------------------------------------------
+  - control: EVA-01
+    status: green
+    finding: >-
+      Referenzfragenkatalog mit 180 Fragen, erstellt durch die Organisationsabteilung, versioniert
+      und eingefroren. Messung vom 05.05.2026: 91,1 % korrekt, 4,4 % teilweise korrekt, 4,5 %
+      unbegründete Verweigerung. Schwellenwert der Freigabe (≥ 85 % korrekt) eingehalten.
+    owner: M. Sørensen
+  - control: EVA-02
+    status: green
+    finding: >-
+      Die Kategorie "aus der Wissensbasis nicht beantwortbar" umfasst 24 Fragen und wird getrennt
+      gemessen. Ergebnis 0 % selbstbewusst falsche Antworten bei einem Schwellenwert von 0 %.
+      Eigene Stichprobe mit fünf zusätzlichen Fragen am 15.05.2026 ohne Befund.
+    owner: M. Sørensen
+  - control: EVA-03
+    status: green
+    finding: >-
+      Jede inhaltliche Aussage wird mit Fundstelle ausgegeben. Stichprobe von zehn produktiven
+      Antworten am 15.05.2026: in allen Fällen trug die angegebene Quelle die Aussage.
+    owner: T. Brand
+  - control: EVA-04
+    status: yellow
+    finding: >-
+      Direkte Prompt-Manipulation wurde am 21.04.2026 getestet und abgewehrt. Die indirekte
+      Einschleusung über indexierte Dokumente wurde nur in eingeschränktem Umfang geprüft (drei
+      präparierte Testdokumente); eine belastbare Aussage für den gesamten Korpus liegt nicht vor.
+      Da alle indexierten Inhalte aus freigegebenen internen Quellen stammen, wird das Risiko als
+      begrenzt, aber nicht als nachgewiesen behandelt.
+    auflage: >-
+      Erweiterter Test der indirekten Prompt-Einschleusung über eine repräsentative Stichprobe des
+      Korpus, mit Beteiligung der Informationssicherheit.
+    due: "2026-10-31"
+    owner: Dr. P. Ohlsen
+
+  # --- Protokollierung -----------------------------------------------------------------------
+  - control: AUD-01
+    status: green
+    finding: >-
+      Anfrage, abgerufene Fragmente, Antwort, Identität und Zeitpunkt werden protokolliert. Die
+      vollständige Rekonstruktion einer Anfrage vom 06.04.2026 wurde am 15.05.2026 vorgeführt;
+      insbesondere sind die abgerufenen Fragmente enthalten. Test T7 am 19.05.2026 bestanden.
+    owner: T. Brand
+  - control: AUD-02
+    status: green
+    finding: >-
+      Zugriff auf die Protokolle nur im Vier-Augen-Verfahren mit dokumentiertem Anlass; das
+      Verfahren ist in der Betriebsvereinbarung vom 27.03.2026 geregelt und der Zugriff selbst
+      wird protokolliert. Zwei erfolgte Zugriffe geprüft, beide mit Anlass und Genehmigung.
+      Administrativer Direktzugriff ist technisch unterbunden.
+    owner: R. Mattis
+  - control: AUD-03
+    status: yellow
+    finding: >-
+      Ein Meldeweg für fehlerhafte Auskünfte ist eingerichtet und in der Anwendung sichtbar. Aus
+      dem Pilotbetrieb liegen 14 Meldungen vor, davon 11 bearbeitet und 3 offen; die
+      durchschnittliche Bearbeitungsdauer betrug 9 Arbeitstage ohne definierte Zielfrist. Eine
+      Auswertung über einen vollen Regelbetriebszeitraum fehlt naturgemäß noch.
+    auflage: >-
+      Festlegung einer Bearbeitungsfrist für gemeldete Falschauskünfte und erste Auswertung des
+      Regelbetriebs zur Wiedervorlage.
+    due: "2026-11-30"
+    owner: M. Sørensen
+
+  # --- Betrieb und Änderungswesen ------------------------------------------------------------
+  - control: BET-01
+    status: green
+    finding: >-
+      Modell-, Embedding- und Prompt-Änderungen sind als wesentliche Änderungen im
+      Änderungsverfahren erfasst und lösen definierte Wiederholungstests aus. Die Systemprompts
+      liegen versioniert in der Konfigurationsverwaltung. Drei Änderungen der letzten zwölf
+      Monate geprüft, jeweils mit Genehmigung und Testnachweis.
+    owner: A. Kellner
+  - control: BET-02
+    status: red
+    finding: >-
+      Der Vertrag mit Meridian AI B.V. enthält weder eine Ankündigungsfrist für
+      Modellaktualisierungen noch die Möglichkeit einer Versionsfestlegung. Eine Änderung des
+      Antwortverhaltens könnte damit ohne Vorlauf und zunächst unbemerkt eintreten. Als
+      Übergangsmaßnahme läuft seit dem 11.05.2026 wöchentlich ein automatisierter Regressionslauf
+      gegen den Referenzfragenkatalog; das ist eine Erkennung, keine Steuerung.
+    auflage: >-
+      Nachverhandlung einer Ankündigungsfrist von mindestens 30 Tagen oder einer
+      Versionsfestlegung. Kommt die Regelung nicht zustande, ist das Risiko dem Vorstand erneut
+      zur Entscheidung vorzulegen. Der wöchentliche Regressionslauf bleibt bis dahin verbindlich.
+    due: "2026-11-30"
+    owner: C. Ahrens
+  - control: BET-03
+    status: yellow
+    finding: >-
+      Kill-Switch als Funktionsschalter umgesetzt, Degradationsmodi D0 bis D3 definiert;
+      Antwortgenerierung ohne Retrieval ist technisch ausgeschlossen. Zum Bewertungsstichtag war
+      die Auslösung ausschließlich in der Testumgebung erprobt. Die Erprobung in Produktion ist
+      terminiert, aber noch nicht erfolgt.
+    auflage: >-
+      Erprobung des Kill-Switch in der Produktionsumgebung mit gemessener Wirkzeit vor
+      Produktivstart; Protokoll der 2nd Line vorlegen.
+    due: "2026-06-30"
+    owner: T. Brand
+  - control: BET-04
+    status: yellow
+    finding: >-
+      Meridian AI B.V. ist als einziger externer IKT-Dienstleister der Lösung im
+      Informationsregister erfasst; Embedding, Index und Hosting werden selbst betrieben. Die
+      Einstufung als nicht kritische oder wichtige Funktion ist begründet dokumentiert. Offen
+      bleibt die vertragliche Beschränkung des Support-Zugriffs auf Personal innerhalb der EU:
+      Die anbieterseitige Protokollierung wurde am 02.04.2026 auf Metadaten reduziert, womit der
+      strittige Inhalt entfällt, die vertragliche Zusicherung steht jedoch aus. Der Exit ist
+      beschrieben und am 12.05.2026 teilweise belegt (Testlauf des Referenzfragenkatalogs gegen
+      ein selbstbetriebenes Modell, 68,3 % korrekt) — das ist kein vollständiger Exit-Test.
+    auflage: >-
+      Schriftliche Bestätigung von Meridian AI B.V. über die Beschränkung des Support-Zugriffs auf
+      Personal innerhalb der EU; bis dahin wird die verbleibende Unsicherheit als Restrisiko
+      geführt.
+    due: "2026-09-30"
+    owner: C. Ahrens
