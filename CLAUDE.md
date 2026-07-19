@@ -62,15 +62,17 @@ framework. Never overclaim it.
 8. **Respect prior work.** Existing repos and vendor blueprints are linked and described
    accurately, never disparaged, never copied.
 9. **Code discipline — two tools, no more.** `tools/render_controls.py` (under 250 lines,
-   tested, ruff-clean) and `tools/akte-assistent.html` (one file, no build, no dependency, no
-   network access, local storage only). No third tool, no framework, no server.
+   tested, ruff-clean) and `app/` (Vite + React + TS, scaffolded from the `dev/base`
+   `vite-react-pwa` template). No third tool, no server, no database, no login, and no network
+   call in the app — the grep in `app/README.md` is the proof, keep it true.
    `controls/controls.yaml` is the single source of truth; the rendered Markdown is generated,
    never hand-edited, and a test fails if the two drift. Every pilot must assess *every*
    control — a test enforces it, so a new control means updating both assessments.
-10. **Never reinvent the interface.** Any UI consumes the house design tokens from
+10. **Never reinvent the foundation.** A UI is scaffolded from the `dev/base` template
+   (`vite-react-pwa`) and consumes the house design tokens from
    `dev/base/standards/extra/theme.css`; the rules live in `DESIGNSYSTEM.md` beside it.
    Components never use raw hex, themes are named `paper` and `ink`. Look there *before*
-   choosing a colour.
+   writing a line of CSS or hand-rolling a file.
 
 ## Session protocol
 

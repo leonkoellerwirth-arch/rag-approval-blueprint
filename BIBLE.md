@@ -35,10 +35,12 @@ internal audit, board submission. Not another RAG security pattern library.
   fictional institution. The documented conflict and the red controls stay in; neither pilot is
   ever polished clean, and the second one must keep ending in a refusal.
 - **INV-8 — Zwei Werkzeuge, mehr nicht.** `tools/render_controls.py` (unter 250 Zeilen,
-  ruff-clean, getestet) und `tools/akte-assistent.html` (eine Datei, kein Build, keine
-  Abhängigkeit, kein Netzzugriff). Kein drittes Werkzeug, kein Framework, keine
-  Plugin-Fläche, kein Server. Geändert am 2026-07-19, siehe Entscheidungsregister.
-- **INV-11 — Kein Neuerfinden der Oberfläche.** Jede UI konsumiert die Tokens aus
+  ruff-clean, getestet) und `app/` (Vite + React + TS von der paved road). Kein drittes
+  Werkzeug, kein Server, keine Datenbank, kein Login. **Die Anwendung enthält keinen
+  Netzaufruf** — nachprüfbar per grep über `app/dist/assets/`; dieser Beleg ist Teil der
+  Zusage und darf nicht stillschweigend brechen.
+- **INV-11 — Kein Neuerfinden des Fundaments.** Eine Weboberfläche wird aus dem
+  `dev/base`-Template `vite-react-pwa` erzeugt und konsumiert die Tokens aus
   `dev/base/standards/extra/theme.css`; die Regeln stehen in `DESIGNSYSTEM.md` daneben.
   Komponenten verwenden niemals rohes Hex. Themes heißen `paper` und `ink`.
 - **INV-10 — No demanded artifact without a specimen.** Every evidence format the repo defines
@@ -51,6 +53,18 @@ internal audit, board submission. Not another RAG security pattern library.
 ## Decision register
 
 Newest first. Each: date · decision · why · (superseded by …).
+
+- **2026-07-20 — Der Assistent ist eine Anwendung unter `app/`, nicht mehr eine Einzeldatei.**
+  Die erste Fassung war handgeschriebenes HTML. *Why:* Das Haus hat mit `dev/base`,
+  Template `vite-react-pwa`, eine paved road für Weboberflächen, und `scripts/gate.sh` sieht ein
+  `app/`-Verzeichnis ausdrücklich vor — eine zweite, handgepflegte Implementierung wäre genau
+  die Doppelung, die verrottet. Gewonnen: Typprüfung, Lint, 33 Tests und ein Build im selben
+  Gate. *Der Preis, ehrlich benannt:* kein Öffnen per Doppelklick mehr, weil ES-Module einen
+  Server verlangen. Die Einzeldatei ist entfernt, nicht parallel gepflegt.
+- **2026-07-20 — Vites `modulePreload`-Polyfill ist abgeschaltet.** Es erzeugte einen `fetch()`
+  der eigenen Chunks — gleiche Herkunft, fachlich harmlos. *Why:* Das Werkzeug wirbt mit
+  nachprüfbarer Offline-Eigenschaft, und „nachprüfbar" heißt hier: ein grep über `dist/` findet
+  keinen einzigen Netzaufruf. Ein erklärungsbedürftiger Treffer hätte den Beleg entwertet.
 
 - **2026-07-19 — INV-8 geändert: ein zweites Werkzeug, `tools/akte-assistent.html`.**
   Das Briefing erlaubte genau ein Werkzeug unter 250 Zeilen. Diese Amendment ist bewusst und

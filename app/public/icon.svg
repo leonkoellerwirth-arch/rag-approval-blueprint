@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Freigabeakte">
+  <rect width="512" height="512" rx="96" fill="#eef3f8"/>
+  <!-- Acht Register der Akte; das oberste hervorgehoben, die Messingkante als Signaturdetail -->
+  <g fill="none" stroke="#235d8f" stroke-width="22" stroke-linecap="round">
+    <path d="M136 168h240M136 240h240M136 312h168"/>
+  </g>
+  <path d="M136 116h240" stroke="#a87c3a" stroke-width="22" stroke-linecap="round"/>
+  <circle cx="360" cy="356" r="42" fill="#d23a2a"/>
+</svg>

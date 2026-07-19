@@ -128,11 +128,16 @@ cp pilot/controls-assessment.yaml my-assessment.yaml   # edit statuses, findings
 python tools/render_controls.py readiness --assessment my-assessment.yaml
 ```
 
-There are exactly two tools ([`tools/`](tools/)): the renderer above — 249 lines, tested,
-ruff-clean — and [`akte-assistent.html`](tools/akte-assistent.html), which walks through all
-eight parts of the Freigabeakte and exports Markdown. Open it by double-clicking the file: no
-build, no install, no server, and **no network access whatsoever**, because it handles exactly
-the confidential content this repository warns about.
+There are exactly two tools: the renderer above — 249 lines, tested, ruff-clean — and
+[`app/`](app/), a Vite + React + TypeScript application that walks through all eight parts of
+the Freigabeakte and exports Markdown. It has **no server, no database, no login and no network
+call at all** — verifiably so, because it handles exactly the confidential content this
+repository warns about:
+
+```bash
+cd app && npm ci && npm run build
+grep -rE "\bfetch\(|XMLHttpRequest|WebSocket|sendBeacon" dist/assets/   # → empty
+```
 
 The assistant deliberately shows no progress bar. A tool reporting "72 % complete" optimises
 for filled fields, and an approval file that looks generated is worse in an audit than none. It

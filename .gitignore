@@ -11,3 +11,8 @@ uv.lock
 
 # Internal briefing — the source instruction, not part of the public artifact.
 CLAUDE-CODE-BRIEFING-*.md
+
+# Web-Fläche
+app/node_modules/
+app/dist/
+app/dev-dist/
