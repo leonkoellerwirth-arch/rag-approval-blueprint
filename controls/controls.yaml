@@ -1,0 +1,557 @@
+# Kontrollkatalog für RAG-Systeme im regulierten Umfeld.
+#
+# EINZIGE QUELLE DER WAHRHEIT. controls/controls.md wird hieraus erzeugt:
+#   python tools/render_controls.py catalogue
+# Niemals die Markdown-Datei von Hand ändern — ein Test schlägt fehl, wenn beide auseinanderlaufen.
+#
+# Pflichtfelder je Kontrolle (INV-4):
+#   objective        Kontrollziel — was die Kontrolle sicherstellen soll
+#   audit_procedure  Prüfhandlung — wie eine interne Revision sie formulieren würde
+#   evidence         Evidenz-Artefakt — welches Dokument/Log/Protokoll die Kontrolle belegt
+#   mapping          Zuordnung zu aufsichtlichen Anforderungen (nur verifizierte Fundstellen)
+#
+# Zu den Mapping-Feldern: dora/marisk/dsgvo enthalten im Juli 2026 gegen die jeweilige Quelle
+# geprüfte Fundstellen. bait enthält Kapitel der BAIT — historisch, siehe meta.intro. generic
+# enthält bewusst nicht-zitierende Formulierungen dort, wo keine Fundstelle verifiziert wurde.
+
+meta:
+  version: "0.1.0"
+  updated: "2026-07-19"
+  intro: |
+    Dieser Katalog ist für die Funktionen geschrieben, die ein RAG-System prüfen, nicht für die,
+    die es bauen. Jede Kontrolle trägt daher vier Felder: das Kontrollziel, eine ausformulierte
+    **Prüfhandlung** in der Sprache einer Prüfung („Lasse dir X zeigen, wähle Stichprobe Y, prüfe
+    Z"), das **Evidenz-Artefakt**, das sie belegt, und die Zuordnung zu aufsichtlichen
+    Anforderungen. Eine Kontrolle ohne Prüfhandlung ist eine Absichtserklärung; eine ohne
+    benannte Evidenz ist in der Prüfung nicht belegbar.
+
+    **Zum Mapping.** Angaben zu DORA (Verordnung (EU) 2022/2554), MaRisk (Rundschreiben 06/2024)
+    und DSGVO wurden im Juli 2026 gegen die jeweilige Quelle geprüft; die Belege stehen in
+    [`docs/quellen.md`](../docs/quellen.md). Angaben zu **BAIT sind historisch**: VAIT, KAIT und
+    ZAIT wurden mit Ablauf des 16.01.2025 aufgehoben, die BAIT werden mit Ablauf des 31.12.2026
+    vollständig aufgehoben. Sie stehen hier, weil viele Prüfungsfunktionen weiterhin in
+    BAIT-Kapiteln denken und formulieren — nicht als geltende Anforderung. Die BAIT-Kapitelnamen
+    stammen aus übereinstimmenden Sekundärquellen und konnten nicht gegen das Originaldokument
+    geprüft werden; behandeln Sie sie als Orientierung, nicht als Zitat.
+
+    **Kein Rechtsrat.** Ob eine Anforderung auf Ihr Haus zutrifft, entscheidet Ihre zuständige
+    Funktion. Siehe [`DISCLAIMER.md`](../DISCLAIMER.md).
+  open_questions:
+    - >-
+      Die BAIT-Kapitelbezeichnungen stammen aus Sekundärquellen (übereinstimmend, aber nicht
+      gegen das BaFin-Originaldokument geprüft). Vor Verwendung in einer echten Vorlage gegen
+      Rundschreiben 10/2017 (BA) in der Fassung vom 16.08.2021 abgleichen.
+    - >-
+      Die 9. MaRisk-Novelle wurde im Juni 2026 veröffentlicht; Rundschreiben-Nummer und
+      Inkrafttreten konnten nicht verifiziert werden. Die Mappings verweisen daher auf
+      Rundschreiben 06/2024 (8. Novelle) und sind bei Anwendung der 9. Novelle zu prüfen.
+    - >-
+      Der EU AI Act (Verordnung (EU) 2024/1689) gilt allgemein ab dem 02.08.2026. Ob ein interner
+      Richtlinien-Assistent als Hochrisiko-System einzustufen ist, ist eine Einzelfallprüfung
+      gegen Anhang III; dieser Katalog enthält daher keine AI-Act-Mappings.
+    - >-
+      Der Katalog deckt keine institutsspezifischen Anforderungen ab (Konzernvorgaben,
+      Mitbestimmung, branchenspezifische Aufsicht für Versicherer oder KVGen).
+
+domains:
+  - id: ZUG
+    name: Zugriff und Berechtigungen zur Query-Zeit
+    description: |
+      Die Domäne, an der RAG-Freigaben am häufigsten scheitern. Entscheidend ist nicht, ob die
+      Quellsysteme sauber berechtigt sind, sondern ob die Berechtigung **im Moment der Anfrage**
+      gegen die aktuelle Berechtigung des Nutzenden geprüft wird — und ob auch Metadaten,
+      Trefferlisten und Quellenangaben dieser Prüfung unterliegen.
+  - id: KLA
+    name: Datenklassifizierung und Aufnahme in die Wissensbasis
+    description: |
+      Was in den Index gelangt, entscheidet über alles Weitere. Diese Domäne prüft, ob die
+      Aufnahme eines Dokuments eine bewusste, verantwortete Entscheidung ist — und ob der
+      Schutzbedarf der abgeleiteten Artefakte (Fragmente, Vektoren, Metadaten) bewertet wurde.
+  - id: LOE
+    name: Löschung, Aufbewahrung und Nachweisführung
+    description: |
+      Löschen heißt bei RAG nicht, einen Datensatz zu entfernen, sondern eine Ableitungskette
+      aufzulösen: Quelle, Fragmente, Vektoren, Caches, Sicherungen, Protokolle. Details und
+      Verifikationsschritte in [`docs/loeschnachweis.md`](../docs/loeschnachweis.md).
+  - id: EVA
+    name: Evaluierung, Antwortqualität und Halluzination
+    description: |
+      Ein System, das falsch antwortet, ist im regulierten Umfeld schädlicher als eines, das
+      nicht antwortet. Diese Domäne prüft, ob Antwortqualität gemessen wird — wiederholbar, mit
+      festem Fragenkatalog und einem definierten Schwellenwert für die Freigabe.
+  - id: AUD
+    name: Protokollierung und Nachvollziehbarkeit
+    description: |
+      Ohne Protokoll ist im Nachhinein weder ein Vorfall aufklärbar noch eine Falschauskunft
+      korrigierbar. Zugleich ist das Protokoll selbst eine schutzbedürftige Verarbeitung: Es
+      dokumentiert, wonach einzelne Beschäftigte gefragt haben.
+  - id: BET
+    name: Betrieb, Änderungswesen und Notfall
+    description: |
+      Die Domäne, die über die Zeit trägt. Ein System, dessen Modell, Prompt oder Wissensbasis
+      ohne Änderungsverfahren verändert werden kann, ist nach drei Monaten ein anderes System als
+      das freigegebene.
+
+controls:
+  # --- ZUG ---------------------------------------------------------------------------------
+  - id: ZUG-01
+    domain: ZUG
+    title: Berechtigungsprüfung zur Query-Zeit
+    objective: >-
+      Nutzende erhalten ausschließlich Inhalte, für die sie zum Zeitpunkt der Anfrage berechtigt
+      sind. Die Prüfung erfolgt gegen die aktuelle Berechtigung, nicht gegen einen zur
+      Indexierungszeit eingefrorenen Stand.
+    audit_procedure: >-
+      Lasse dir die Stelle im System zeigen, an der die Berechtigung ausgewertet wird, und den
+      Zeitpunkt der Auswertung im Ablauf. Wähle eine Stichprobe von fünf Nutzenden mit
+      unterschiedlichen Rollen und fünf Dokumenten mit eingeschränktem Zugriff. Lass die Anfragen
+      unter den Identitäten der Nutzenden ausführen und prüfe Antwort, Trefferliste und
+      Quellenangaben. Prüfe zusätzlich anhand des Protokolls, ob für nicht berechtigte Nutzende
+      überhaupt Treffer erzeugt und erst danach gefiltert wurden.
+    evidence:
+      - Testprotokoll Negativ-Retrieval (T1 aus akte/06-testnachweise.md)
+      - Architektur-/Ablaufbeschreibung der Berechtigungsauswertung
+      - Protokollauszug der Teststichprobe
+    mapping:
+      dora: ["Art. 9 (Protection and prevention)"]
+      marisk: ["AT 4.3 (Internes Kontrollsystem)", "AT 7.2 (Technisch-organisatorische Ausstattung)"]
+      bait: ["Kapitel 6 (Identitäts- und Rechtemanagement)"]
+      dsgvo: ["Art. 5 Abs. 1 lit. f", "Art. 32 (Sicherheit der Verarbeitung)"]
+    note: >-
+      Häufigster Befund: Die Antwort ist leer, aber die Quellenliste nennt Titel oder Dateinamen.
+      Auch ein Existenzhinweis ist eine Information — die Kontrolle ist dann nicht erfüllt.
+
+  - id: ZUG-02
+    domain: ZUG
+    title: Wirksamkeit des Berechtigungsentzugs
+    objective: >-
+      Der Entzug einer Berechtigung wirkt sich innerhalb der zugesagten Frist auf die Ergebnisse
+      des Systems aus.
+    audit_procedure: >-
+      Lasse dir die im Betriebskonzept zugesagte Wirkzeit zeigen. Wähle einen Testnutzer, lass
+      ihm eine Berechtigung entziehen und die identische Anfrage in definierten Abständen
+      wiederholen. Halte den ersten Zeitpunkt fest, ab dem der Zugriff zuverlässig ausbleibt, und
+      vergleiche ihn mit der Zusage. Prüfe, ob eine Wirkzeit überhaupt zugesagt wurde —
+      „unmittelbar" ist keine prüfbare Aussage.
+    evidence:
+      - Testprotokoll Berechtigungsentzug (T2)
+      - Betriebskonzept mit zugesagter Wirkzeit
+    mapping:
+      dora: ["Art. 9 (Protection and prevention)"]
+      marisk: ["AT 7.2 (Technisch-organisatorische Ausstattung)"]
+      bait: ["Kapitel 6 (Identitäts- und Rechtemanagement)"]
+      dsgvo: ["Art. 32 (Sicherheit der Verarbeitung)"]
+
+  - id: ZUG-03
+    domain: ZUG
+    title: Rezertifizierung der Berechtigungen
+    objective: >-
+      Zugriffsrechte auf System und Wissensbasis werden regelmäßig durch die fachlich
+      verantwortliche Stelle überprüft und bestätigt.
+    audit_procedure: >-
+      Lasse dir das Rezertifizierungsprotokoll des letzten Turnus zeigen. Wähle eine Stichprobe
+      von zehn Berechtigungen und prüfe, ob die Bestätigung durch die fachlich zuständige und
+      nicht durch die technisch administrierende Stelle erfolgte. Prüfe, was mit den im letzten
+      Lauf beanstandeten Berechtigungen geschehen ist und ob der Entzug nachweislich vollzogen
+      wurde.
+    evidence:
+      - Rezertifizierungsprotokoll mit Datum und bestätigender Rolle
+      - Nachweis über den Vollzug entzogener Berechtigungen
+    mapping:
+      dora: ["Art. 9 (Protection and prevention)"]
+      marisk: ["AT 4.3 (Internes Kontrollsystem)"]
+      bait: ["Kapitel 6 (Identitäts- und Rechtemanagement)"]
+      generic: ["Regelmäßige Überprüfung von Zugriffsrechten durch die fachliche Verantwortung"]
+
+  - id: ZUG-04
+    domain: ZUG
+    title: Bewertung des Aggregationsrisikos
+    objective: >-
+      Es ist bewertet und dokumentiert, ob durch die Zusammenführung mehrerer für sich
+      unkritischer Inhalte eine schutzbedürftige Aussage entstehen kann.
+    audit_procedure: >-
+      Lasse dir die Aggregationsbewertung aus der Schutzbedarfsfeststellung zeigen, einschließlich
+      der geprüften Hypothesen und der Teilnehmenden der Bewertung. Wähle zwei Hypothesen aus und
+      lass sie im laufenden System nachstellen. Prüfe, ob ein bestätigter Fall zu einer Maßnahme
+      geführt hat und ob diese wirksam ist.
+    evidence:
+      - Schutzbedarfsfeststellung, Abschnitt Aggregationsbewertung
+      - Protokoll der Bewertungssitzung mit dem Fachbereich
+      - Testprotokoll Aggregation/Leakage (T4)
+    mapping:
+      marisk: ["AT 4.3 (Internes Kontrollsystem)"]
+      bait: ["Kapitel 3 (Informationsrisikomanagement)"]
+      dsgvo: ["Art. 5 Abs. 1 lit. c (Datenminimierung)", "Art. 35 (Datenschutz-Folgenabschätzung)"]
+      generic: ["Schutzbedarfsfeststellung nach BSI-Standard 200-2, Kapitel 8.2.1"]
+    note: >-
+      Diese Kontrolle lässt sich nicht automatisiert prüfen. Die überzeugendste Evidenz ist das
+      Protokoll einer Sitzung mit dem Fachbereich, in der die Hypothesen gebildet wurden.
+
+  # --- KLA ---------------------------------------------------------------------------------
+  - id: KLA-01
+    domain: KLA
+    title: Verantwortete Aufnahme in die Wissensbasis
+    objective: >-
+      Jede Datenquelle wird vor Aufnahme in den Index durch eine benannte fachliche Stelle
+      freigegeben; die Freigabe ist dokumentiert.
+    audit_procedure: >-
+      Lasse dir die Liste aller indexierten Quellen zeigen und vergleiche sie mit den
+      dokumentierten Freigaben. Wähle drei Quellen und lass dir die Freigabeentscheidung mit
+      Datum und freigebender Person zeigen. Prüfe gezielt, ob eine Quelle im Index liegt, für die
+      keine Freigabe vorliegt — der Abgleich in dieser Richtung ist der eigentliche Test.
+    evidence:
+      - Verzeichnis der indexierten Quellen mit Freigabestatus
+      - Freigabeentscheidungen je Quelle
+    mapping:
+      dora: ["Art. 8 (Identification)"]
+      marisk: ["AT 4.3 (Internes Kontrollsystem)"]
+      bait: ["Kapitel 3 (Informationsrisikomanagement)"]
+      dsgvo: ["Art. 5 Abs. 1 lit. b (Zweckbindung)", "Art. 30 (Verzeichnis von Verarbeitungstätigkeiten)"]
+
+  - id: KLA-02
+    domain: KLA
+    title: Schutzbedarf der abgeleiteten Artefakte
+    objective: >-
+      Der Schutzbedarf ist nicht nur für die Quelldokumente, sondern für Fragmente, Embeddings,
+      Index-Metadaten, Prompts, Antworten und Protokolle bewertet.
+    audit_procedure: >-
+      Lasse dir die Schutzbedarfsfeststellung zeigen und prüfe, ob sie je Verarbeitungsstufe
+      bewertet — nicht nur je Quellsystem. Frage gezielt nach der Einstufung des Vektorindex und
+      des Prompt-Protokolls. Fehlen diese, ist die Feststellung unvollständig, unabhängig von
+      ihrer Länge.
+    evidence:
+      - Schutzbedarfsfeststellung mit Bewertung je Verarbeitungsstufe
+    mapping:
+      dora: ["Art. 8 (Identification)"]
+      marisk: ["AT 4.3 (Internes Kontrollsystem)"]
+      bait: ["Kapitel 3 (Informationsrisikomanagement)"]
+      generic: ["Schutzbedarfsfeststellung nach BSI-Standard 200-2, Kapitel 8.2.1 (Grundwerte Vertraulichkeit, Integrität, Verfügbarkeit)"]
+
+  - id: KLA-03
+    domain: KLA
+    title: Gültigkeitsstand der Inhalte
+    objective: >-
+      Veraltete oder zurückgezogene Fassungen werden nicht als geltende Auskunft ausgegeben;
+      Gültigkeitszeiträume sind als Metadatum geführt.
+    audit_procedure: >-
+      Wähle drei Dokumente, die zwischenzeitlich durch eine neue Fassung ersetzt wurden. Stelle
+      dem System Fragen, die auf den Inhalt zielen, und prüfe, welche Fassung zitiert wird.
+      Lasse dir zusätzlich zeigen, wie eine zurückgezogene Richtlinie aus dem Index entfernt wird
+      und wie lange das dauert.
+    evidence:
+      - Testprotokoll Aktualität (T10)
+      - Verfahrensbeschreibung Pflege der Wissensbasis
+    mapping:
+      marisk: ["AT 4.3 (Internes Kontrollsystem)"]
+      bait: ["Kapitel 8 (IT-Betrieb)"]
+      dsgvo: ["Art. 5 Abs. 1 lit. d (Richtigkeit)"]
+    note: >-
+      Eine veraltete, aber selbstbewusst zitierte Richtlinie ist schadensträchtiger als eine
+      ausbleibende Antwort.
+
+  # --- LOE ---------------------------------------------------------------------------------
+  - id: LOE-01
+    domain: LOE
+    title: Löschung entlang der vollständigen Ableitungskette
+    objective: >-
+      Ein Löschverlangen erfasst Quelle, Fragmente, Embeddings, Index-Metadaten, Caches,
+      Sicherungen und Protokolle — nicht nur den Ausgangsdatensatz.
+    audit_procedure: >-
+      Lasse dir das Löschkonzept mit der vollständigen Ableitungskette zeigen. Wähle einen real
+      vollzogenen Löschfall und lass dir für jede Station der Kette den Nachweis vorlegen. Prüfe
+      insbesondere, ob für den Vektorindex ein eigener Nachweis existiert oder ob lediglich ein
+      API-Aufruf dokumentiert ist, der eine Löschmarkierung setzt.
+    evidence:
+      - Löschprotokoll je Station (siehe docs/loeschnachweis.md)
+      - Löschkonzept mit Ableitungskette
+    mapping:
+      dsgvo: ["Art. 17 (Recht auf Löschung)", "Art. 5 Abs. 1 lit. e (Speicherbegrenzung)"]
+      marisk: ["AT 4.3 (Internes Kontrollsystem)"]
+      bait: ["Kapitel 3 (Informationsrisikomanagement)"]
+      generic: ["Nachweisbare und unumkehrbare Löschung abgeleiteter Repräsentationen"]
+
+  - id: LOE-02
+    domain: LOE
+    title: Verifikation der Löschung im Vektorindex
+    objective: >-
+      Es ist nachgewiesen, dass gelöschte Inhalte im Vektorindex weder auffindbar noch aus den
+      Rohdaten des Index rekonstruierbar sind.
+    audit_procedure: >-
+      Lasse dir den Negativ-Retrieval-Test nach der Löschung zeigen: identische Anfragen vor und
+      nach dem Löschvorgang, mit vollständigem Ergebnis. Lasse dir zusätzlich zeigen, wie mit
+      soft-gelöschten Einträgen umgegangen wird — verlange eine Aussage zur Ebene der Indexdatei,
+      nicht zur API. Prüfe, ob eine Kompaktierung oder ein Neuaufbau des Index stattfindet und in
+      welchem Turnus.
+    evidence:
+      - Testprotokoll Löschverifikation (T3) mit Anfragen vor/nach Löschung
+      - Nachweis über Kompaktierung/Neuaufbau oder Krypto-Shredding
+    mapping:
+      dsgvo: ["Art. 17 (Recht auf Löschung)"]
+      generic: ["Verifizierbare und unumkehrbare Löschung; siehe docs/loeschnachweis.md mit Quellenangabe zur Rekonstruierbarkeit soft-gelöschter Embeddings"]
+    note: >-
+      Die Kernkontrolle dieses Repositories. Ein Löschversprechen ohne Verifikationsschritt auf
+      Indexebene ist die häufigste unerkannte Lücke in RAG-Freigaben.
+
+  - id: LOE-03
+    domain: LOE
+    title: Löschung in Sicherungen und Wiederherstellungen
+    objective: >-
+      Nach einer Wiederherstellung aus Sicherung sind zwischenzeitlich gelöschte Inhalte nicht
+      wieder verfügbar.
+    audit_procedure: >-
+      Lasse dir das Verfahren zeigen, mit dem nach einem Restore die zwischenzeitlichen
+      Löschverlangen erneut angewendet werden. Wähle den letzten durchgeführten Restore und lass
+      dir den zugehörigen Abgleich vorlegen. Fand kein Restore statt, lass dir den Prüfschritt im
+      Wiederanlaufplan zeigen und frage, ob er je erprobt wurde.
+    evidence:
+      - Wiederanlaufplan mit Prüfschritt Löschabgleich
+      - Protokoll des letzten Restore einschließlich Abgleich
+    mapping:
+      dora: ["Art. 12 (Backup policies and procedures, restoration and recovery procedures and methods)"]
+      dsgvo: ["Art. 17 (Recht auf Löschung)"]
+      marisk: ["AT 7.3 (Notfallmanagement)"]
+      bait: ["Kapitel 10 (IT-Notfallmanagement)"]
+
+  - id: LOE-04
+    domain: LOE
+    title: Aufbewahrung und Löschung der Protokolldaten
+    objective: >-
+      Prompt- und Antwortprotokolle werden nach einer festgelegten, begründeten Frist gelöscht.
+    audit_procedure: >-
+      Lasse dir die festgelegte Aufbewahrungsfrist und ihre Begründung zeigen. Prüfe im System
+      stichprobenartig, ob Protokolleinträge existieren, die älter als die Frist sind. Prüfe, ob
+      die Löschung automatisiert erfolgt oder von einer manuellen Handlung abhängt.
+    evidence:
+      - Löschkonzept Protokolldaten mit Fristbegründung
+      - Nachweis des ältesten vorhandenen Protokolleintrags
+    mapping:
+      dsgvo: ["Art. 5 Abs. 1 lit. e (Speicherbegrenzung)", "Art. 17 (Recht auf Löschung)"]
+      marisk: ["AT 4.3 (Internes Kontrollsystem)"]
+      generic: ["Begründete und technisch durchgesetzte Aufbewahrungsfristen"]
+
+  # --- EVA ---------------------------------------------------------------------------------
+  - id: EVA-01
+    domain: EVA
+    title: Referenzfragenkatalog und Qualitätsmessung
+    objective: >-
+      Die Antwortqualität wird gegen einen festen, versionierten Fragenkatalog mit hinterlegten
+      Sollantworten gemessen; ein Schwellenwert für die Freigabe ist definiert.
+    audit_procedure: >-
+      Lasse dir den Fragenkatalog und die letzte Messung zeigen. Prüfe, wer den Katalog erstellt
+      hat — er muss aus dem Fachbereich stammen, nicht aus der Entwicklung. Prüfe, ob der Katalog
+      versioniert und eingefroren ist, und ob er eine Kategorie für Fragen enthält, die aus der
+      Wissensbasis nicht beantwortbar sind. Wähle fünf Fragen und lass sie live ausführen.
+    evidence:
+      - Referenzfragenkatalog mit Sollantworten und Versionsstand
+      - Messprotokoll der letzten Durchführung
+    mapping:
+      marisk: ["AT 4.3.5 (Modelle; Anforderung ausreichender Nachvollziehbarkeit, insbesondere bei technologischer Innovation und künstlicher Intelligenz)"]
+      dora: ["Art. 25 (Testing of ICT tools and systems)"]
+      bait: ["Kapitel 7 (IT-Projekte und Anwendungsentwicklung)"]
+
+  - id: EVA-02
+    domain: EVA
+    title: Verhalten bei nicht beantwortbaren Fragen
+    objective: >-
+      Das System erfindet keine Antwort, wenn die Wissensbasis die Frage nicht abdeckt, sondern
+      weist die Lücke aus.
+    audit_procedure: >-
+      Stelle dem System fünf Fragen zu Sachverhalten, die nachweislich nicht in der Wissensbasis
+      enthalten sind — darunter zwei, die inhaltlich nah an vorhandenen Dokumenten liegen. Prüfe,
+      ob das System die Lücke ausweist oder eine plausible Antwort erzeugt. Lasse dir die
+      gemessene Quote aus der Qualitätsmessung getrennt für diese Kategorie zeigen.
+    evidence:
+      - Messprotokoll, Kategorie "nicht beantwortbar"
+      - Testprotokoll der Stichprobe
+    mapping:
+      marisk: ["AT 4.3.5 (Modelle; Nachvollziehbarkeit)"]
+      dsgvo: ["Art. 5 Abs. 1 lit. d (Richtigkeit)"]
+      generic: ["Kontrollierter Umgang mit Wissenslücken statt generierter Plausibilität"]
+    note: >-
+      Ein System, das zu oft „weiß ich nicht" sagt, ist unbequem. Ein System, das eine
+      unbeantwortbare Frage überzeugend falsch beantwortet, ist im regulierten Umfeld gefährlich.
+      Diese Kategorie gehört getrennt gemessen und strenger geschwellt.
+
+  - id: EVA-03
+    domain: EVA
+    title: Quellenbindung der Antworten
+    objective: >-
+      Jede inhaltliche Aussage ist auf eine Fundstelle in der Wissensbasis zurückführbar und wird
+      mit Quellenangabe ausgegeben.
+    audit_procedure: >-
+      Wähle zehn Antworten aus dem produktiven Protokoll und prüfe, ob die angegebene Quelle die
+      Aussage tatsächlich trägt. Achte auf Antworten, deren Quellenangabe formal vorhanden, aber
+      inhaltlich unpassend ist — das ist der Regelfall bei Halluzinationen mit Quellenangabe.
+    evidence:
+      - Stichprobenprotokoll Quellenprüfung
+      - Systembeschreibung der Quellenausweisung
+    mapping:
+      marisk: ["AT 4.3.5 (Modelle; Nachvollziehbarkeit)"]
+      dsgvo: ["Art. 5 Abs. 1 lit. d (Richtigkeit)"]
+      generic: ["Nachvollziehbarkeit maschinell erzeugter Aussagen"]
+
+  - id: EVA-04
+    domain: EVA
+    title: Widerstandsfähigkeit gegen Prompt-Manipulation
+    objective: >-
+      Weder direkte noch über indexierte Inhalte eingeschleuste Anweisungen führen dazu, dass das
+      System Berechtigungsgrenzen oder Verhaltensvorgaben übergeht.
+    audit_procedure: >-
+      Lasse dir das Testprotokoll zur Prompt-Manipulation zeigen und prüfe, ob auch indirekte
+      Einschleusung über indexierte Dokumente getestet wurde — nicht nur direkte Eingaben der
+      Nutzenden. Lass zwei Testfälle live nachstellen. Prüfe, ob ein gefundener Fall zu einer
+      Maßnahme geführt hat und ob nach der Maßnahme erneut getestet wurde.
+    evidence:
+      - Testprotokoll Prompt-Manipulation (T6), direkt und indirekt
+      - Maßnahmen- und Nachtestnachweis
+    mapping:
+      dora: ["Art. 9 (Protection and prevention)", "Art. 25 (Testing of ICT tools and systems)"]
+      bait: ["Kapitel 5 (Operative Informationssicherheit)"]
+      generic: ["Prüfung auf Umgehung von Sicherheits- und Verhaltensvorgaben durch Eingaben"]
+
+  # --- AUD ---------------------------------------------------------------------------------
+  - id: AUD-01
+    domain: AUD
+    title: Vollständigkeit und Auswertbarkeit der Protokollierung
+    objective: >-
+      Anfrage, abgerufene Fragmente, Antwort, Identität und Zeitpunkt sind so protokolliert, dass
+      ein Vorfall im Nachhinein rekonstruierbar ist.
+    audit_procedure: >-
+      Wähle einen zurückliegenden Zeitpunkt und lass dir eine konkrete Anfrage vollständig
+      rekonstruieren — Frage, gelieferte Treffer, Antwort, Nutzeridentität. Prüfe insbesondere,
+      ob die **abgerufenen Fragmente** protokolliert werden: Ohne sie lässt sich nicht
+      nachweisen, welche Inhalte einem Nutzenden tatsächlich zugänglich waren.
+    evidence:
+      - Protokollauszug einer vollständigen Rekonstruktion
+      - Protokollierungskonzept
+    mapping:
+      dora: ["Art. 10 (Detection)", "Art. 17 (ICT-related incident management process)"]
+      marisk: ["AT 4.3 (Internes Kontrollsystem)"]
+      bait: ["Kapitel 5 (Operative Informationssicherheit)"]
+      dsgvo: ["Art. 32 (Sicherheit der Verarbeitung)"]
+
+  - id: AUD-02
+    domain: AUD
+    title: Zugriffsschutz für Protokolldaten
+    objective: >-
+      Der Zugriff auf Prompt- und Antwortprotokolle ist auf einen definierten Kreis beschränkt,
+      an ein Verfahren gebunden und selbst protokolliert.
+    audit_procedure: >-
+      Lasse dir den Kreis der Zugriffsberechtigten und das Verfahren für den Zugriff zeigen.
+      Wähle einen erfolgten Zugriff und lass dir Anlass, Genehmigung und Protokollierung des
+      Zugriffs vorlegen. Prüfe, ob technische Administratoren die Protokolle ohne Verfahren lesen
+      können — wenn ja, welche kompensierende Kontrolle greift.
+    evidence:
+      - Berechtigungsübersicht Protokollzugriff
+      - Zugriffsprotokoll auf die Protokolldaten
+      - Vereinbarung mit der Mitbestimmung, falls einschlägig
+    mapping:
+      dsgvo: ["Art. 5 Abs. 1 lit. b (Zweckbindung)", "Art. 32 (Sicherheit der Verarbeitung)"]
+      marisk: ["AT 4.3 (Internes Kontrollsystem)"]
+      bait: ["Kapitel 6 (Identitäts- und Rechtemanagement)"]
+
+  - id: AUD-03
+    domain: AUD
+    title: Meldeweg für fehlerhafte Auskünfte
+    objective: >-
+      Nutzende können eine falsche Antwort melden; Meldungen werden ausgewertet und führen
+      nachweislich zu Korrekturen.
+    audit_procedure: >-
+      Lasse dir die Meldungen der letzten sechs Monate zeigen. Wähle drei Meldungen und verfolge
+      sie bis zur Korrektur oder bis zur begründeten Ablehnung. Prüfe die Bearbeitungsdauer und
+      ob unbearbeitete Meldungen existieren. Gibt es keine Meldungen, prüfe, ob der Kanal bekannt
+      und erreichbar ist — ein Meldeweg ohne Meldungen ist kein gutes Zeichen, sondern ein
+      ungenutzter.
+    evidence:
+      - Auswertung der Nutzermeldungen mit Bearbeitungsstand
+      - Nachweis über die daraus erfolgten Korrekturen
+    mapping:
+      dora: ["Art. 13 (Learning and evolving)"]
+      marisk: ["AT 4.3 (Internes Kontrollsystem)"]
+      dsgvo: ["Art. 5 Abs. 1 lit. d (Richtigkeit)", "Art. 16 (Recht auf Berichtigung)"]
+
+  # --- BET ---------------------------------------------------------------------------------
+  - id: BET-01
+    domain: BET
+    title: Modell-, Embedding- und Prompt-Änderungen im Änderungswesen
+    objective: >-
+      Änderungen an Sprachmodell, Embedding-Modell und Systemprompt unterliegen dem
+      Änderungsverfahren und lösen definierte Wiederholungstests aus.
+    audit_procedure: >-
+      Lasse dir die Änderungshistorie der letzten zwölf Monate zeigen, getrennt nach Anwendung,
+      Modell, Embedding-Modell und Prompt. Wähle die letzten drei Änderungen und lass dir
+      Genehmigung und die daraufhin durchgeführten Tests vorlegen. Prüfe gezielt, ob
+      Prompt-Änderungen überhaupt erfasst werden — sie werden regelmäßig als Konfiguration
+      behandelt und entziehen sich damit dem Verfahren.
+    evidence:
+      - Änderungshistorie einschließlich Modell- und Promptversionen
+      - Genehmigungen und Testnachweise je Änderung
+    mapping:
+      dora: ["Art. 9 (Protection and prevention)", "Art. 25 (Testing of ICT tools and systems)"]
+      marisk: ["AT 8.2 (Änderungen betrieblicher Prozesse oder Strukturen)"]
+      bait: ["Kapitel 8 (IT-Betrieb)"]
+    note: >-
+      Der häufigste Befund im Betrieb. Ein System, dessen Prompt ohne Verfahren geändert werden
+      kann, ist nach drei Monaten nicht mehr das freigegebene System.
+
+  - id: BET-02
+    domain: BET
+    title: Umgang mit anbieterseitigen Modelländerungen
+    objective: >-
+      Änderungen des Modellverhaltens durch den Anbieter werden erkannt und bewertet, bevor sie
+      wirksam werden — oder das Risiko ist bewusst als Restrisiko getragen.
+    audit_procedure: >-
+      Lasse dir die vertragliche Ankündigungsfrist und die Möglichkeit zur Versionsfestlegung
+      zeigen. Prüfe, wie das Haus von einer Änderung erfährt und was daraufhin geschieht. Lasse
+      dir den letzten Fall zeigen. Ist keine Regelung vorhanden, prüfe, ob das Risiko in der
+      Freigabevorlage als Restrisiko ausgewiesen und von einer benannten Stelle getragen wird.
+    evidence:
+      - Vertragsstelle zu Ankündigungsfrist/Versionsfestlegung
+      - Freigabevorlage mit ausgewiesenem Restrisiko, falls keine Regelung besteht
+      - Monitoring-/Regressionsnachweis nach der letzten Anbieteränderung
+    mapping:
+      dora: ["Art. 28 (General principles)", "Art. 30 (Key contractual provisions)"]
+      marisk: ["AT 8.2 (Änderungen betrieblicher Prozesse oder Strukturen)"]
+      bait: ["Kapitel 9 (Auslagerungen und sonstiger Fremdbezug von IT-Dienstleistungen)"]
+
+  - id: BET-03
+    domain: BET
+    title: Kill-Switch und Degradationsmodi
+    objective: >-
+      Das System kann kurzfristig abgeschaltet werden; die Abschaltung ist erprobt und der
+      Degradationsmodus schließt Antwortgenerierung ohne Retrieval aus.
+    audit_procedure: >-
+      Lasse dir das Protokoll der letzten Kill-Switch-Erprobung mit Datum, auslösender Person und
+      gemessener Wirkzeit zeigen — eine Beschreibung im Notfallkonzept genügt nicht. Frage, wer
+      an einem Samstagabend auslösen darf und über welchen Weg. Lasse dir zeigen, was das System
+      bei nicht erreichbarem Index tut.
+    evidence:
+      - Testprotokoll Kill-Switch (T8) mit Datum und Wirkzeit
+      - Notfallkonzept mit definierten Degradationsmodi
+      - Erreichbarkeits-/Vertretungsregelung
+    mapping:
+      dora: ["Art. 11 (Response and recovery)", "Art. 24 (General requirements for the performance of digital operational resilience testing)"]
+      marisk: ["AT 7.3 (Notfallmanagement)"]
+      bait: ["Kapitel 10 (IT-Notfallmanagement)"]
+
+  - id: BET-04
+    domain: BET
+    title: Erfassung des IKT-Drittdienstleisters und Exit-Fähigkeit
+    objective: >-
+      Alle IKT-Dienstleister der Lösung sind bewertet und registriert; für die Exit-Fähigkeit
+      liegt mehr als eine Absichtserklärung vor.
+    audit_procedure: >-
+      Lasse dir die Liste aller IKT-Dienstleister der Lösung zeigen — Sprachmodell,
+      Vektordatenbank, Hosting, Embedding-Dienst — und gleiche sie mit dem Informationsregister
+      ab. Prüfe die Einstufung als kritische oder wichtige Funktion auf eine dokumentierte
+      Begründung. Lasse dir zur Exit-Strategie den Nachweis zeigen, der über die Beschreibung
+      hinausgeht, etwa einen Testlauf des Referenzfragenkatalogs gegen ein Ausweichmodell.
+    evidence:
+      - Auszug aus dem Informationsregister
+      - Auslagerungsbewertung mit begründeter Einstufung
+      - Nachweis eines Exit-Tests oder ausgewiesenes Restrisiko
+    mapping:
+      dora: ["Art. 28 Abs. 3 (Register of information)", "Art. 29 (Preliminary assessment of ICT concentration risk at entity level)", "Art. 30 Abs. 3 Buchst. f (Ausstiegsstrategien)", "Art. 3 Nr. 22 (Definition kritische oder wichtige Funktion)"]
+      marisk: ["AT 9 (Auslagerung; für Auslagerungen ohne IT-Bezug)"]
+      bait: ["Kapitel 9 (Auslagerungen und sonstiger Fremdbezug von IT-Dienstleistungen)"]
+      dsgvo: ["Art. 28 (Auftragsverarbeiter)", "Art. 44-49 (Übermittlungen an Drittländer)"]
