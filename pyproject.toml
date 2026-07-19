@@ -14,7 +14,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8.0", "ruff>=0.5"]
+# setuptools is pinned here too, not only in build-system: the audited environment is what
+# pip-audit sees, and the runner ships 79.0.1 (PYSEC-2026-3447).
+dev = ["pytest>=8.0", "ruff>=0.5", "setuptools>=83"]
 
 [tool.setuptools]
 # The repository is a document set with one small tool; there is no installable package.
