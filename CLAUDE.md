@@ -61,10 +61,16 @@ framework. Never overclaim it.
    criticises in others.
 8. **Respect prior work.** Existing repos and vendor blueprints are linked and described
    accurately, never disparaged, never copied.
-9. **Code discipline.** Exactly one tool: `tools/render_controls.py` — under 250 lines, tested,
-   ruff-clean. `controls/controls.yaml` is the single source of truth; the rendered Markdown is
-   generated, never hand-edited, and a test fails if the two drift. Every pilot must assess
-   *every* control — a test enforces it, so a new control means updating both assessments.
+9. **Code discipline — two tools, no more.** `tools/render_controls.py` (under 250 lines,
+   tested, ruff-clean) and `tools/akte-assistent.html` (one file, no build, no dependency, no
+   network access, local storage only). No third tool, no framework, no server.
+   `controls/controls.yaml` is the single source of truth; the rendered Markdown is generated,
+   never hand-edited, and a test fails if the two drift. Every pilot must assess *every*
+   control — a test enforces it, so a new control means updating both assessments.
+10. **Never reinvent the interface.** Any UI consumes the house design tokens from
+   `dev/base/standards/extra/theme.css`; the rules live in `DESIGNSYSTEM.md` beside it.
+   Components never use raw hex, themes are named `paper` and `ink`. Look there *before*
+   choosing a colour.
 
 ## Session protocol
 

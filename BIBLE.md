@@ -34,8 +34,13 @@ internal audit, board submission. Not another RAG security pattern library.
 - **INV-7 — Pilot integrity.** Every file under `pilot/` and `pilot-abgelehnt/` is marked as a
   fictional institution. The documented conflict and the red controls stay in; neither pilot is
   ever polished clean, and the second one must keep ending in a refusal.
-- **INV-8 — One tool only.** `tools/render_controls.py`, under 250 lines, ruff-clean, tested.
-  No second tool, no framework, no plugin surface.
+- **INV-8 — Zwei Werkzeuge, mehr nicht.** `tools/render_controls.py` (unter 250 Zeilen,
+  ruff-clean, getestet) und `tools/akte-assistent.html` (eine Datei, kein Build, keine
+  Abhängigkeit, kein Netzzugriff). Kein drittes Werkzeug, kein Framework, keine
+  Plugin-Fläche, kein Server. Geändert am 2026-07-19, siehe Entscheidungsregister.
+- **INV-11 — Kein Neuerfinden der Oberfläche.** Jede UI konsumiert die Tokens aus
+  `dev/base/standards/extra/theme.css`; die Regeln stehen in `DESIGNSYSTEM.md` daneben.
+  Komponenten verwenden niemals rohes Hex. Themes heißen `paper` und `ink`.
 - **INV-10 — No demanded artifact without a specimen.** Every evidence format the repo defines
   and every evidence ID a pilot references must have a filled example under `pilot/evidenz/`.
   Otherwise the repo commits the defect it exists to name.
@@ -46,6 +51,29 @@ internal audit, board submission. Not another RAG security pattern library.
 ## Decision register
 
 Newest first. Each: date · decision · why · (superseded by …).
+
+- **2026-07-19 — INV-8 geändert: ein zweites Werkzeug, `tools/akte-assistent.html`.**
+  Das Briefing erlaubte genau ein Werkzeug unter 250 Zeilen. Diese Amendment ist bewusst und
+  datiert. *Why:* Der Assistent führt durch alle acht Teile der Akte, läuft als **eine Datei
+  ohne Build, ohne Abhängigkeit und ohne jeden Netzzugriff** aus dem Dateisystem und speichert
+  ausschließlich lokal — er verarbeitet genau die vertraulichen Inhalte, vor denen das
+  Repository warnt, und darf sie deshalb nirgendwohin senden. *Die Grenze, die bleibt:* kein
+  Server, keine Datenbank, kein Login, kein Deployment. Ab dort wäre es ein Produkt mit
+  Betriebs- und Sicherheitsverantwortung, und das Repository verlöre seine Eigenschaft, in
+  fünf Minuten verstanden und kopiert zu werden.
+- **2026-07-19 — Der Assistent ist bewusst kein Formularautomat.** Statt einer
+  Fortschrittsanzeige trägt er eine **Ehrlichkeitsprüfung**: Sie meldet Dokumente *ohne* offene
+  Punkte als erklärungsbedürftig, markiert Weichmacher im Restrisiko, verlangt zu jedem offenen
+  Punkt Verantwortlichen und Frist und beanstandet eine Berechtigungsprüfung, die nur zur
+  Indexierungszeit greift. *Why:* Ein Werkzeug, das nur Felder füllt, erzeugt den Anschein einer
+  Akte. Das Wertvolle — die Aggregationssitzung, das Restrisiko ohne Konjunktive, der
+  dokumentierte Konflikt — lässt sich nicht in ein Formular gießen; also misst das Werkzeug
+  nicht Vollständigkeit, sondern das, woran Vorlagen erfahrungsgemäß scheitern.
+- **2026-07-19 — Die Oberfläche übernimmt das Designsystem des Hauses, statt eines zu
+  erfinden.** Die Tokens lagen nur in `leonkoellerwirth.de/src/styles/` und wurden deshalb beim
+  ersten Entwurf neu erfunden. Sie sind jetzt über `base promote` in
+  `dev/base/standards/extra/` abrufbar; der Assistent spiegelt den Token-Block wortgleich, weil
+  er ohne Build läuft und nicht importieren kann.
 
 - **2026-07-19 — Evidenz-Ebene und Revisionssicht ergänzt (`pilot/evidenz/`, `pilot/revision/`).**
   *Why:* Der Katalog verlangt zu jeder Kontrolle ein Evidenz-Artefakt und die Prüfhandlungen

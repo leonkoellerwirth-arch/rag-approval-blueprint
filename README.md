@@ -128,7 +128,19 @@ cp pilot/controls-assessment.yaml my-assessment.yaml   # edit statuses, findings
 python tools/render_controls.py readiness --assessment my-assessment.yaml
 ```
 
-The renderer is the only code in here: 249 lines, tested, ruff-clean.
+There are exactly two tools ([`tools/`](tools/)): the renderer above — 249 lines, tested,
+ruff-clean — and [`akte-assistent.html`](tools/akte-assistent.html), which walks through all
+eight parts of the Freigabeakte and exports Markdown. Open it by double-clicking the file: no
+build, no install, no server, and **no network access whatsoever**, because it handles exactly
+the confidential content this repository warns about.
+
+The assistant deliberately shows no progress bar. A tool reporting "72 % complete" optimises
+for filled fields, and an approval file that looks generated is worse in an audit than none. It
+runs an **Ehrlichkeitsprüfung** instead, which flags what actually sinks submissions: a document
+with *no* open points, an open point without an owner and a deadline, qualifiers in the residual
+risk, a residual risk with no named bearer, conditions with no stated consequence, entitlement
+filtering that only happens at index time.
+
 `controls/controls.yaml` is the single source of truth — the Markdown is generated, and a test
 fails if the two ever drift.
 

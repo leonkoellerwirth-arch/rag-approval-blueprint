@@ -1,0 +1,1057 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Freigabeakte — Assistent</title>
+<style>
+/* =========================================================
+   Design-Tokens — gespiegelt aus dem Designsystem des Hauses
+   (leonkoellerwirth.de/src/styles/theme.css + ui.css).
+   Diese Datei läuft eigenständig aus dem Dateisystem und kann daher
+   nicht importieren; die Tokens sind wortgleich übernommen.
+
+   Regel des Systems: Komponenten verwenden NIEMALS rohes Hex.
+   Dieser Block ist die einzige Stelle, an der Hex erlaubt ist.
+   Themes heißen paper (hell) und ink (dunkel) — wie im Hauptsystem.
+========================================================= */
+:root,
+[data-theme="paper"]{
+  --bg:#eef3f8; --surface:#ffffff; --surface-2:#e8f1ec;
+  --text:#14222e; --text-soft:#3a4f5d; --muted:#586c7b;
+  --accent:#3a78b0; --accent-strong:#235d8f; --accent-soft:rgba(58,120,176,.1);
+  --accent2:#4a9b78; --accent2-strong:#2f6f53; --accent2-soft:rgba(74,155,120,.12);
+  --brass:#a87c3a; --brass-deep:#8a6326;
+  --signal:#d23a2a;
+  --line:#d4e0e9; --line-2:#bccdda;
+  --body-wash:radial-gradient(120% 80% at 50% -10%, #e3ecf3 0%, rgba(238,243,248,0) 56%);
+  --grain-opacity:.22;
+  --relief:linear-gradient(154deg,#eaf1f8 0%,#f3f7fb 48%,#ffffff 100%);
+  --relief-soft:linear-gradient(160deg,#f3f7fb 0%,#fafcfe 52%,#ffffff 100%);
+  --sheen:linear-gradient(180deg,rgba(58,120,176,.05) 0%,rgba(238,243,248,0) 38%);
+  --edge-light:rgba(168,124,58,.45);
+  --ok:#2f6f53; --warn:#b06f1f; --danger:#b3203f;
+  --r-sm:10px; --r-md:14px; --r-lg:18px;
+  --shadow-1:0 1px 2px rgba(20,34,46,.05),0 18px 50px -28px rgba(20,34,46,.28);
+  --shadow-2:0 1px 2px rgba(20,34,46,.06),0 28px 60px -30px rgba(20,34,46,.38);
+  --dur-1:180ms; --dur-2:420ms; --ease:cubic-bezier(.2,.7,.2,1);
+  --focus-ring:0 0 0 3px rgba(58,120,176,.34);
+  color-scheme:light;
+}
+[data-theme="ink"]{
+  --bg:#0f1820; --surface:#16212b; --surface-2:#1d2a36;
+  --text:#e9eef3; --text-soft:#bcc9d3; --muted:#8395a2;
+  --accent:#5aa0db; --accent-strong:#82b9e8; --accent-soft:rgba(90,160,219,.16);
+  --accent2:#5cc093; --accent2-strong:#82d3ac; --accent2-soft:rgba(92,192,147,.16);
+  --brass:#cb9d5a; --brass-deep:#b6863f;
+  --signal:#f0685a;
+  --line:rgba(233,238,243,.12); --line-2:rgba(233,238,243,.22);
+  --body-wash:radial-gradient(120% 80% at 50% -10%, rgba(34,64,92,.5) 0%, rgba(15,24,32,0) 58%);
+  --grain-opacity:.18;
+  --relief:linear-gradient(154deg,#18242f 0%,#131e28 48%,#0f1820 100%);
+  --relief-soft:linear-gradient(160deg,#1a2632 0%,#16212b 52%,#131d26 100%);
+  --sheen:linear-gradient(180deg,rgba(90,160,219,.07) 0%,rgba(15,24,32,0) 38%);
+  --edge-light:rgba(203,157,90,.32);
+  --ok:#5cc093; --warn:#d8a23e; --danger:#e0648a;
+  --shadow-1:0 1px 2px rgba(0,0,0,.5),0 18px 50px -28px rgba(0,0,0,.7);
+  --shadow-2:0 1px 2px rgba(0,0,0,.55),0 28px 60px -30px rgba(0,0,0,.75);
+  --focus-ring:0 0 0 3px rgba(90,160,219,.45);
+  color-scheme:dark;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="paper"]){
+    --bg:#0f1820; --surface:#16212b; --surface-2:#1d2a36;
+    --text:#e9eef3; --text-soft:#bcc9d3; --muted:#8395a2;
+    --accent:#5aa0db; --accent-strong:#82b9e8; --accent-soft:rgba(90,160,219,.16);
+    --accent2:#5cc093; --accent2-strong:#82d3ac; --accent2-soft:rgba(92,192,147,.16);
+    --brass:#cb9d5a; --brass-deep:#b6863f;
+    --signal:#f0685a;
+    --line:rgba(233,238,243,.12); --line-2:rgba(233,238,243,.22);
+    --body-wash:radial-gradient(120% 80% at 50% -10%, rgba(34,64,92,.5) 0%, rgba(15,24,32,0) 58%);
+    --grain-opacity:.18;
+    --relief:linear-gradient(154deg,#18242f 0%,#131e28 48%,#0f1820 100%);
+    --relief-soft:linear-gradient(160deg,#1a2632 0%,#16212b 52%,#131d26 100%);
+    --sheen:linear-gradient(180deg,rgba(90,160,219,.07) 0%,rgba(15,24,32,0) 38%);
+    --edge-light:rgba(203,157,90,.32);
+    --ok:#5cc093; --warn:#d8a23e; --danger:#e0648a;
+    --shadow-1:0 1px 2px rgba(0,0,0,.5),0 18px 50px -28px rgba(0,0,0,.7);
+    --shadow-2:0 1px 2px rgba(0,0,0,.55),0 28px 60px -30px rgba(0,0,0,.75);
+    --focus-ring:0 0 0 3px rgba(90,160,219,.45);
+    color-scheme:dark;
+  }
+}
+:root{
+  /* Schriftfamilien wortgleich aus ui.css. Die Variable Fonts liegen im Hauptsystem;
+     hier greift der System-Fallback, weil die Datei offline und ohne Netzzugriff läuft. */
+  --font-ui:"Plus Jakarta Sans Variable","Plus Jakarta Sans",system-ui,-apple-system,sans-serif;
+  --font-display:"Bricolage Grotesque Variable","Bricolage Grotesque",system-ui,sans-serif;
+  --font-serif:"Fraunces Variable",Fraunces,Georgia,"Times New Roman",serif;
+  --font-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background-color:var(--bg); background-image:var(--body-wash); background-attachment:fixed;
+  color:var(--text); font-family:var(--font-ui); font-size:16px; line-height:1.6;
+  letter-spacing:.002em; font-synthesis-weight:none; text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased; min-height:100dvh;
+}
+/* Papierfaser-Korn — das Signaturdetail des Hauses, fest, zeigerdurchlässig. */
+body::before{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:var(--grain-opacity);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+}
+.app{position:relative;z-index:1}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:500;letter-spacing:-.01em}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:none;box-shadow:var(--focus-ring);border-radius:6px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+
+/* Signaturfläche: kühler Materialverlauf + EINE leuchtende Messingkante. */
+.lk-card{
+  background-color:var(--surface); background-image:var(--relief-soft);
+  box-shadow:inset 0 1px 0 0 var(--edge-light),var(--shadow-1);
+  border:1px solid var(--line); border-radius:var(--r-lg);
+}
+.hairline{height:1px;background:var(--line);border:0}
+
+/* ---------- Kopfleiste ---------- */
+.top{
+  position:sticky;top:0;z-index:20;
+  background-color:var(--surface);background-image:var(--relief);
+  box-shadow:inset 0 1px 0 0 var(--edge-light);
+  border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:16px;padding:12px 22px;flex-wrap:wrap;
+}
+.brand{display:flex;align-items:baseline;gap:11px;margin-right:auto}
+.brand h1{font-size:20px;margin:0}
+.brand .sub{font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.btn{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);
+  padding:7px 13px;font-size:13.5px;cursor:pointer;white-space:nowrap;
+  transition:border-color var(--dur-1) var(--ease),color var(--dur-1) var(--ease);
+}
+.btn:hover{border-color:var(--line-2);color:var(--accent-strong)}
+/* Schrift auf dem Akzent: --surface trägt in beiden Themes korrekt —
+   Weiß auf dunklem Blau (paper), dunkles Navy auf hellem Blau (ink). */
+.btn-primary{background:var(--accent-strong);color:var(--surface);border-color:var(--accent-strong);font-weight:500}
+.btn-primary:hover{opacity:.92}
+
+/* ---------- Datenschutzhinweis ---------- */
+.privacy{
+  background:var(--accent-soft);border-bottom:1px solid var(--line);
+  padding:9px 22px;font-size:13px;color:var(--text-soft);
+  display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;
+}
+.privacy strong{color:var(--text);font-weight:600}
+
+/* ---------- Grundraster ---------- */
+.wrap{display:grid;grid-template-columns:270px minmax(0,1fr);align-items:start}
+@media (max-width:900px){.wrap{grid-template-columns:1fr}}
+
+/* ---------- Register ---------- */
+.register{
+  border-right:1px solid var(--line);background:var(--surface);background-image:var(--relief-soft);
+  min-height:calc(100vh - 104px);padding:18px 0;position:sticky;top:104px;
+}
+@media (max-width:900px){.register{position:static;min-height:0;border-right:0;border-bottom:1px solid var(--line)}}
+.reg-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:0 20px 11px}
+.reg-item{
+  display:grid;grid-template-columns:30px 1fr auto;gap:9px;align-items:baseline;
+  width:100%;text-align:left;background:none;border:0;border-left:3px solid transparent;
+  padding:9px 16px 9px 17px;cursor:pointer;
+  transition:background-color var(--dur-1) var(--ease);
+}
+.reg-item:hover{background:var(--accent-soft)}
+.reg-item[aria-current="true"]{background:var(--accent-soft);border-left-color:var(--accent)}
+.reg-num{font-family:var(--font-serif);font-size:15px;color:var(--muted);font-variant-numeric:tabular-nums}
+.reg-item[aria-current="true"] .reg-num{color:var(--accent-strong)}
+.reg-t{font-size:14px;line-height:1.35}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--line-2);align-self:center}
+.dot.teil{background:var(--warn)}
+.dot.voll{background:var(--ok)}
+
+/* ---------- Arbeitsfläche ---------- */
+.sheet{padding:28px 32px 130px;max-width:900px}
+@media (max-width:640px){.sheet{padding:20px 16px 130px}}
+.doc-head{border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:26px}
+.doc-num{font-family:var(--font-serif);font-size:13px;color:var(--accent-strong);letter-spacing:.08em}
+.doc-head h2{font-size:29px;margin:3px 0 11px;text-wrap:balance;line-height:1.2}
+.meta{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:13px;color:var(--muted)}
+.meta b{color:var(--text);font-weight:600}
+
+section.grp{margin:0 0 32px}
+section.grp > h3{
+  font-family:var(--font-ui);font-size:12px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--muted);margin:0 0 13px;padding-bottom:7px;border-bottom:1px solid var(--line);font-weight:600;
+}
+.hint{
+  font-size:13.5px;color:var(--text-soft);background:var(--surface-2);
+  border-left:2px solid var(--accent2);padding:10px 13px;margin:0 0 15px;
+  border-radius:0 var(--r-sm) var(--r-sm) 0;
+}
+.fields{display:flex;flex-direction:column;gap:15px}
+.f label{display:block;font-size:13.5px;font-weight:600;margin-bottom:4px}
+.f .lh{display:block;font-size:13px;color:var(--muted);font-weight:400;margin-bottom:6px}
+input[type=text],textarea,select{
+  width:100%;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);
+  padding:9px 11px;font-size:14.5px;
+  transition:border-color var(--dur-1) var(--ease);
+}
+textarea{min-height:78px;resize:vertical;line-height:1.55}
+input[type=text]:focus,textarea:focus,select:focus{border-color:var(--brass)}
+
+/* ---------- Tabellenfeld ---------- */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface)}
+table.grid{border-collapse:collapse;width:100%;min-width:540px;font-size:14px}
+table.grid th{
+  text-align:left;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--muted);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--line);
+  background:var(--surface-2);white-space:nowrap;
+}
+table.grid td{padding:3px 4px;border-bottom:1px solid var(--line);vertical-align:top}
+table.grid tr:last-child td{border-bottom:0}
+table.grid input[type=text]{border:1px solid transparent;background:transparent;border-radius:6px;padding:6px 7px}
+table.grid input[type=text]:focus{border-color:var(--brass);background:var(--surface)}
+.row-del{background:none;border:0;color:var(--muted);cursor:pointer;padding:4px 8px;font-size:16px;line-height:1;border-radius:6px}
+.row-del:hover{color:var(--danger)}
+.tbl-add{margin-top:8px}
+
+/* ---------- Offene Punkte ---------- */
+.op{
+  background-color:var(--surface);background-image:var(--relief-soft);
+  box-shadow:inset 0 1px 0 0 var(--edge-light),var(--shadow-1);
+  border:1px solid var(--warn);border-radius:var(--r-lg);padding:18px;margin-top:10px;
+}
+.op h3{font-family:var(--font-display);margin:0 0 5px;font-size:16px;color:var(--warn);letter-spacing:-.01em;text-transform:none;border:0;padding:0}
+.op p.why{font-size:13.5px;color:var(--text-soft);margin:0 0 14px}
+.op-row{display:grid;grid-template-columns:minmax(0,1fr) 158px 124px 34px;gap:8px;margin-bottom:8px}
+@media (max-width:640px){.op-row{grid-template-columns:1fr;gap:6px;padding-bottom:10px;border-bottom:1px solid var(--line)}}
+.op-none{display:flex;gap:9px;align-items:flex-start;margin-top:12px;font-size:13.5px;color:var(--text-soft)}
+.op-none input{margin-top:4px}
+
+/* ---------- Prüffragen ---------- */
+.fragen{
+  background-color:var(--surface);background-image:var(--relief-soft);
+  box-shadow:inset 0 1px 0 0 var(--edge-light),var(--shadow-1);
+  border:1px solid var(--line);border-radius:var(--r-lg);padding:18px;
+}
+.fragen h3{font-family:var(--font-ui);margin:0 0 11px;font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);border:0;padding:0}
+.fragen ol{margin:0;padding-left:21px;display:flex;flex-direction:column;gap:9px}
+.fragen li{font-size:14px}
+
+/* ---------- Ehrlichkeitsprüfung ---------- */
+.check{
+  position:fixed;right:0;bottom:0;left:0;z-index:30;
+  background-color:var(--surface);background-image:var(--relief);
+  box-shadow:inset 0 1px 0 0 var(--edge-light),var(--shadow-2);
+  border-top:1px solid var(--line);
+}
+.check-bar{display:flex;align-items:center;gap:15px;padding:10px 22px;cursor:pointer;flex-wrap:wrap}
+.check-bar h3{font-family:var(--font-display);margin:0;font-size:15px;font-weight:500;letter-spacing:-.01em;text-transform:none;border:0;padding:0}
+.pill{font-size:12px;font-weight:600;padding:3px 10px;border-radius:11px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.pill.crit{background:var(--accent-soft);color:var(--danger);box-shadow:inset 0 0 0 1px var(--danger)}
+.pill.warn{background:var(--accent-soft);color:var(--warn);box-shadow:inset 0 0 0 1px var(--warn)}
+.pill.ok{background:var(--accent2-soft);color:var(--accent2-strong);box-shadow:inset 0 0 0 1px var(--accent2)}
+.check-body{max-height:44vh;overflow-y:auto;border-top:1px solid var(--line);padding:15px 22px 20px;display:none}
+.check.open .check-body{display:block}
+.finding{display:grid;grid-template-columns:auto minmax(0,1fr);gap:11px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
+.finding:last-child{border-bottom:0}
+.finding .sev{width:3px;border-radius:2px}
+.finding .sev.crit{background:var(--danger)}
+.finding .sev.warn{background:var(--warn)}
+.finding b{display:block;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.finding a{color:var(--accent-strong);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.allclear{font-size:14px;color:var(--text-soft)}
+.small{font-size:13px;color:var(--muted)}
+.spacer{height:10px}
+
+/* ---------- Dialog ---------- */
+dialog{
+  border:1px solid var(--line);border-radius:var(--r-lg);
+  background-color:var(--surface);background-image:var(--relief-soft);
+  box-shadow:inset 0 1px 0 0 var(--edge-light),var(--shadow-2);
+  color:var(--text);padding:0;max-width:780px;width:calc(100% - 32px);
+}
+dialog::backdrop{background:rgba(15,24,32,.5)}
+.dlg-head{display:flex;align-items:center;gap:12px;padding:15px 20px;border-bottom:1px solid var(--line)}
+.dlg-head h3{margin:0;font-size:19px;border:0;padding:0;letter-spacing:-.01em;text-transform:none;color:var(--text)}
+.dlg-body{padding:17px 20px;max-height:64vh;overflow:auto}
+.dlg-foot{padding:13px 20px;border-top:1px solid var(--line);display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+pre.out{
+  background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:13px;
+  font-family:var(--font-mono);font-size:12px;line-height:1.55;overflow:auto;max-height:52vh;
+  white-space:pre-wrap;margin:0;
+}
+</style>
+
+</head>
+<body>
+
+<div class="app">
+<header class="top">
+  <div class="brand">
+    <h1>Freigabeakte</h1>
+    <span class="sub">Assistent · RAG im regulierten Umfeld</span>
+  </div>
+  <button class="btn" id="btn-theme" type="button">Ansicht</button>
+  <button class="btn" id="btn-json" type="button">Zwischenstand</button>
+  <button class="btn btn-primary" id="btn-export" type="button">Akte exportieren</button>
+</header>
+
+<div class="privacy">
+  <strong>Diese Seite arbeitet ausschließlich lokal.</strong>
+  <span>Ihre Eingaben werden im Browser dieses Geräts gespeichert und niemals übertragen — es gibt keinen Server und keine Netzwerkverbindung. <strong>Kein Rechtsrat.</strong></span>
+</div>
+
+<div class="wrap">
+  <nav class="register" aria-label="Akte-Register">
+    <div class="reg-label">Register</div>
+    <div id="register"></div>
+  </nav>
+  <main class="sheet" id="sheet"></main>
+</div>
+
+<div class="check" id="check">
+  <div class="check-bar" id="check-bar" role="button" tabindex="0" aria-expanded="false">
+    <h3>Ehrlichkeitsprüfung</h3>
+    <span class="pill" id="check-pill">—</span>
+    <span class="small" id="check-hint">Prüft nicht, ob alles ausgefüllt ist, sondern ob es der Prüfung standhält.</span>
+    <span class="small" style="margin-left:auto" id="check-toggle">einblenden</span>
+  </div>
+  <div class="check-body" id="check-body"></div>
+</div>
+
+<dialog id="dlg">
+  <div class="dlg-head"><h3 id="dlg-title">Export</h3></div>
+  <div class="dlg-body"><p class="small" id="dlg-note"></p><pre class="out" id="dlg-out"></pre></div>
+  <div class="dlg-foot">
+    <button class="btn" id="dlg-import" type="button" hidden>Einlesen</button>
+    <button class="btn" id="dlg-copy" type="button">In die Zwischenablage</button>
+    <button class="btn" id="dlg-dl" type="button">Herunterladen</button>
+    <button class="btn btn-primary" id="dlg-close" type="button">Schließen</button>
+  </div>
+</dialog>
+</div>
+
+<script>
+"use strict";
+/* Freigabeakte-Assistent — rag-approval-blueprint.
+   Eine Datei, kein Server, keine Abhängigkeiten. Läuft aus dem Dateisystem.
+   T = Text · A = mehrzeilig · W = Auswahl · TAB = Tabelle */
+
+var AKTE = [
+ {n:"01", t:"Schutzbedarfsfeststellung", akteur:"Informationssicherheit (ISB/CISO)",
+  prozess:"Schutzbedarfs- und Sicherheitsfreigabeprozess",
+  s:[
+   {t:"Gegenstand", f:[
+     ["sys","System","T","Name und Kurzbeschreibung"],
+     ["zweck","Fachlicher Zweck","A"],
+     ["nutzer","Nutzerkreis","T","Wer darf das System nutzen — und wer ausdrücklich nicht?"],
+     ["quellen","Einbezogene Quellsysteme","A"],
+     ["extern","Externe Verarbeitung","T","Embedding-Erzeugung? LLM-Aufruf? Verweis auf Teil 03"]
+   ]},
+   {t:"Datenklassen", hint:"Erfassen Sie jede Datenklasse einzeln — der Schutzbedarf ergibt sich aus der höchsten, nicht aus dem Durchschnitt. Die Klasse, die am häufigsten fehlt, ist das Prompt-Protokoll des Systems selbst: Es dokumentiert, wonach einzelne Beschäftigte gefragt haben.", f:[
+     ["dk","Datenklassen","TAB",["Klasse","Beispielinhalte","Quelle","Personenbezug","Besondere Kategorien"]]
+   ]},
+   {t:"Verarbeitungsstufen", hint:"Bewerten Sie nicht nur je Datenklasse, sondern je Stufe: Quelle → Fragmente → Embeddings → Index → Retrieval → Prompt → Antwort → Protokoll. Wer nur die Quelldokumente bewertet, hat die Verarbeitung nicht erfasst, die das System ausmacht.", f:[
+     ["stufen","Bewertung je Stufe","TAB",["Stufe","Artefakt","Schutzbedarf V/I/Vf","Begründung"]]
+   ]},
+   {t:"Aggregationsbewertung", hint:"Der Kern dieser Vorlage. Entsteht durch Zusammenführung ein höherer Schutzbedarf als bei den Einzelquellen? Dokumentieren Sie auch das negative Ergebnis — die Frage kommt in der Prüfung sicher, und „darüber haben wir nicht nachgedacht“ ist die einzige wirklich schlechte Antwort.", f:[
+     ["agg","Geprüfte Hypothesen","TAB",["Hypothese","Bewertet mit","Ergebnis","Maßnahme"]],
+     ["aggerg","Bewertungsergebnis Aggregation","A","normal / hoch / sehr hoch — mit Begründung"]
+   ]},
+   {t:"Gesamtergebnis", f:[
+     ["gv","Vertraulichkeit","W",["","normal","hoch","sehr hoch"]],
+     ["gvb","Begründung Vertraulichkeit","A"],
+     ["gi","Integrität","W",["","normal","hoch","sehr hoch"]],
+     ["gib","Begründung Integrität","A","Prüfen Sie ausdrücklich, ob eine Falschauskunft zu regulatorisch relevantem Fehlverhalten führen kann. Dann ist „normal“ nicht haltbar."],
+     ["gf","Verfügbarkeit","W",["","normal","hoch","sehr hoch"]],
+     ["gfb","Begründung Verfügbarkeit","A","Existiert ein fachlicher Rückfallweg — und wird er nach der Einführung noch gepflegt?"]
+   ]}
+  ],
+  fragen:[
+   "Haben Sie den Schutzbedarf für Embeddings und Index getrennt bewertet — oder nur für die Quelldokumente?",
+   "Welche Aggregationshypothesen haben Sie geprüft, und mit wem?",
+   "Warum haben Sie die Integrität mit „normal“ eingestuft, wenn Beschäftigte nach den Auskünften handeln?",
+   "Ist das Prompt-Protokoll als eigene Datenklasse bewertet?",
+   "Wann wurde die Feststellung zuletzt überprüft — und was hat die letzte neue Datenquelle daran geändert?"
+  ]},
+
+ {n:"02", t:"DSFA-Baustein RAG", akteur:"Datenschutzbeauftragter (DSB)",
+  prozess:"Datenschutz-Folgenabschätzung nach Art. 35 DSGVO",
+  s:[
+   {t:"Verarbeitungsübersicht", hint:"Dies ist kein Ersatz für Ihre DSFA-Methodik, sondern der RAG-spezifische Baustein darin.", f:[
+     ["bez","Bezeichnung der Verarbeitung","T"],
+     ["gruppen","Betroffene Personengruppen","A","Die regelmäßig übersehene Gruppe: Personen, die im Korpus vorkommen, aber das System nicht nutzen — Ansprechpartner in Prozessbeschreibungen, Beteiligte in Fallbeispielen."],
+     ["rechts","Rechtsgrundlage (Art. 6 DSGVO)","A","Je Personengruppe getrennt bewerten"],
+     ["art9","Besondere Kategorien (Art. 9 DSGVO)","T","nein / ja — welche, und wie ausgeschlossen bzw. begründet"],
+     ["pflicht","DSFA-Pflicht bejaht?","T","ja/nein — Begründung, Datum, durch wen"]
+   ]},
+   {t:"Sind Embeddings personenbezogene Daten?", hint:"Die Frage, die generische Vorlagen nicht haben und jede Prüfung stellt. Es gibt keine falsche Antwort außer der ausweichenden. Ein Embedding ist kein Klartext, aber auch keine Anonymisierung: Aus Embeddings lassen sich Inhalte in erheblichem Umfang rekonstruieren.", f:[
+     ["emb","Einordnung des Verantwortlichen","A","personenbezogen / nicht personenbezogen — mit Begründung"],
+     ["embrek","Betrachtete Rekonstruktionsmöglichkeiten","A"],
+     ["embzug","Wer hat Zugriff auf die Rohvektoren, auch administrativ?","A"]
+   ]},
+   {t:"Betroffenenrechte", hint:"Die Rechte gelten unverändert; nur ihre Umsetzung ist in einem Vektorindex ungewohnt. Bei der Auskunft ist Vollständigkeit über eine Ähnlichkeitssuche nicht zusicherbar — der tragfähige Weg führt über die Quellsysteme.", f:[
+     ["rechte","Umsetzung je Recht","TAB",["Recht","Umsetzung im System","Nachweis"]]
+   ]},
+   {t:"Protokollierung als eigene Verarbeitung", f:[
+     ["protumf","Was wird protokolliert?","A"],
+     ["protfrist","Aufbewahrungsfrist und Löschung","T"],
+     ["protzug","Wer darf Protokolle einsehen, in welchem Verfahren?","A"],
+     ["protmb","Mitbestimmung eingebunden?","T","Status, Datum — Verweis auf Teil 08"]
+   ]},
+   {t:"Risikobewertung", hint:"Die folgenden Risiken sind RAG-spezifisch und sollten ausdrücklich vorkommen — auch wenn Sie sie als gering einstufen.", f:[
+     ["risiken","Risiken für die Rechte und Freiheiten","TAB",["Risiko","Eintritt","Schwere","Maßnahme","Restrisiko"]]
+   ]},
+   {t:"Ergebnis", f:[
+     ["ergrest","Verbleibendes Gesamtrisiko","A"],
+     ["art36","Vorherige Konsultation nach Art. 36 DSGVO erforderlich?","W",["","nein","ja"]],
+     ["dsbemp","Stellungnahme und Empfehlung des DSB","A"]
+   ]}
+  ],
+  fragen:[
+   "Sind Embeddings für Sie personenbezogene Daten — und wie begründen Sie das?",
+   "Zeigen Sie mir, wie Sie ein Auskunftsersuchen zu einer Person in diesem System beantworten.",
+   "Woraus ergibt sich, dass der Anbieter Ihre Prompts nicht zum Training verwendet?",
+   "Welche Personen stehen im Korpus, die das System nicht nutzen?",
+   "Wie ist ausgeschlossen, dass die Prompt-Protokolle zur Leistungskontrolle verwendet werden?"
+  ]},
+
+ {n:"03", t:"Auslagerung und IKT-Drittparteien", akteur:"Auslagerungsmanagement / DORA-Verantwortliche",
+  prozess:"IKT-Drittpartei- und Auslagerungsprozess",
+  s:[
+   {t:"Gegenstand des Fremdbezugs", hint:"Häufigster Fehler: Bewertet wird „das LLM“, während Vektordatenbank, Hosting, Embedding-Dienst und Gateway unbewertet bleiben. Listen Sie alle IKT-Dienstleister der Lösung auf.", f:[
+     ["dl","IKT-Dienstleister der Lösung","TAB",["Dienstleister","Bezogene Leistung","Sitz / Region","Bewertet?"]],
+     ["vertrag","Vertragsverhältnis und Laufzeit","T"]
+   ]},
+   {t:"Einordnung", f:[
+     ["ikt","IKT-Dienstleistung im Sinne von DORA?","W",["","ja","nein"]],
+     ["kwf","Unterstützt eine kritische oder wichtige Funktion? (DORA Art. 3 Nr. 22)","W",["","nein","ja"]],
+     ["kwfb","Begründung der Einstufung","A","Beide Antworten sind vertretbar; nicht vertretbar ist eine Einstufung ohne dokumentierte Begründung. Die Einstufung ist eine Momentaufnahme — bei Einbettung in einen Prozess neu prüfen."],
+     ["reg","Eintrag im Informationsregister (DORA Art. 28 Abs. 3)","T","vorhanden? Referenz, Stand"]
+   ]},
+   {t:"Vertragsinhalte", hint:"Prüfen Sie gegen den vorliegenden Vertrag, nicht gegen die Website des Anbieters. Ausstiegsstrategien sind kein eigener Artikel, sondern Teil der wesentlichen Vertragsbestimmungen (DORA Art. 30 Abs. 3 Buchst. f).", f:[
+     ["vp","Vertragsprüfliste","TAB",["Vertragspunkt","Geregelt?","Fundstelle im Vertrag","Bewertung"]]
+   ]},
+   {t:"Subunternehmer und Konzentration", f:[
+     ["sub","Subunternehmerkette","TAB",["Ebene","Dienstleister","Leistung","Sitz / Region"]],
+     ["konz","Bewertung des Konzentrationsrisikos (DORA Art. 29)","A","Bei Sprachmodellen ist die Ausweichoption selten „ein anderer Anbieter mit gleichem Verhalten“."]
+   ]},
+   {t:"Exit-Strategie", hint:"Ein Exit, der nur als Absicht beschrieben ist, wird als nicht vorhanden bewertet. Ein kleiner, dokumentierter Nachweis schlägt eine große Behauptung.", f:[
+     ["exit","Zielzustand und Vorgehen","A"],
+     ["exitn","Was ist nicht migrierbar?","A"],
+     ["exitt","Erprobt?","T","ja/nein — Datum, Umfang, Evidenz"]
+   ]}
+  ],
+  fragen:[
+   "Ist der Anbieter im Informationsregister erfasst — und wer sind seine Subunternehmer?",
+   "Unterstützt der Dienst eine kritische oder wichtige Funktion — und wie haben Sie das begründet?",
+   "Zeigen Sie mir die Vertragsstelle, aus der sich ergibt, dass Ihre Inhalte nicht zum Training verwendet werden.",
+   "Ihre Exit-Strategie — was davon wurde erprobt?",
+   "Was passiert, wenn der Anbieter das Modell austauscht?"
+  ]},
+
+ {n:"04", t:"Betriebskonzept", akteur:"IT-Betrieb und Systemverantwortung",
+  prozess:"Betriebsübernahme und Änderungswesen",
+  s:[
+   {t:"Rollen und Verantwortlichkeiten", f:[
+     ["rollen","Rollen im Betrieb","TAB",["Rolle","Aufgabe","Besetzt durch","Vertretung"]],
+     ["ft","Funktionstrennung","A","Wer Inhalte in den Index geben darf und wer die Berechtigungen dazu vergibt, darf nicht dieselbe Person sein."]
+   ]},
+   {t:"Berechtigungsprozess", hint:"Der Abschnitt, an dem Freigaben real scheitern. Entscheidend ist nicht, dass die Quellsysteme berechtigt sind, sondern dass zur Query-Zeit gegen die aktuelle Berechtigung geprüft wird — einschließlich Trefferliste, Metadaten und Quellenangaben.", f:[
+     ["bzeit","Zeitpunkt der Berechtigungsprüfung","W",["","zur Query-Zeit gegen die aktuelle Berechtigung","nur zur Indexierungszeit","gemischt"]],
+     ["bquelle","Herkunft und Aktualität der Berechtigungsinformation","T"],
+     ["bentzug","Zugesagte Wirkzeit bei Entzug","T","„unmittelbar“ ist keine prüfbare Aussage — nennen Sie einen Wert."],
+     ["bmeta","Wie ist ausgeschlossen, dass Metadaten und Quellenangaben Inhalte preisgeben?","A"],
+     ["badmin","Umgang mit administrativen Zugriffen auf den Index","A"]
+   ]},
+   {t:"Änderungswesen", hint:"Bei RAG gibt es Änderungen, die kein klassisches Change-Verfahren erfasst, weil sie nicht wie Software aussehen — aber das Systemverhalten vollständig verändern.", f:[
+     ["chg","Änderungsarten","TAB",["Änderungsart","Verfahren","Genehmigung durch","Erneute Tests"]],
+     ["chganb","Anbieterseitige Modelländerung","A","Wie erfahren Sie davon, und was tun Sie, wenn Sie es nicht rechtzeitig erfahren? Wenn Sie es nicht steuern können, ist es ein Restrisiko für Teil 07 — kein Detail für den Betrieb."]
+   ]},
+   {t:"Betriebsüberwachung und Protokollierung", f:[
+     ["mon","Überwachung","TAB",["Gegenstand","Kennzahl / Signal","Schwellenwert","Reaktion"]],
+     ["prot","Protokollierung","TAB",["Was wird protokolliert","Zweck","Aufbewahrung","Zugriff"]],
+     ["meld","Meldeweg für fehlerhafte Auskünfte","A","Kein Komfort, sondern der wirksamste Halluzinationsdetektor im Betrieb."]
+   ]}
+  ],
+  fragen:[
+   "Zeigen Sie mir, wie die Berechtigung geprüft wird — zur Indexierungszeit oder zur Query-Zeit?",
+   "Ein Modellwechsel — ist das bei Ihnen ein Change?",
+   "Was passiert, wenn der Anbieter das Modell ohne Ankündigung aktualisiert?",
+   "Wer darf die Prompt-Protokolle lesen, und wer kontrolliert das?",
+   "Nennen Sie die letzten drei Änderungen am System und zeigen Sie mir die Genehmigungen."
+  ]},
+
+ {n:"05", t:"Notfallkonzept", akteur:"BCM- und Notfallverantwortliche",
+  prozess:"Notfall- und Wiederanlaufverfahren",
+  s:[
+   {t:"Einordnung", hint:"Der gefährlichere Zustand ist nicht der Ausfall, sondern das fehlerhafte Weiterlaufen: Das System antwortet, aber falsch, veraltet oder auf Basis von Inhalten, die es nicht mehr zeigen dürfte.", f:[
+     ["rueck","Fachlicher Rückfallweg","T","Was tun die Nutzenden, wenn das System steht?"],
+     ["rto","RTO / RPO","T"]
+   ]},
+   {t:"Szenarien", f:[
+     ["szen","Szenarien","TAB",["Szenario","Erkennung","Sofortmaßnahme","Entscheidung durch"]],
+     ["s3","Fehlerhafte Antworten im Regelbetrieb","A","Der eigentliche Notfall. Wie erkennen Sie ihn — und wie ermitteln Sie im Nachlauf, wer eine falsche Auskunft erhalten hat?"]
+   ]},
+   {t:"Degradationsmodi", hint:"Legen Sie vorab fest, was das System tut, wenn eine Komponente ausfällt. Ein System, das im Fehlerfall improvisiert, tut regelmäßig das Falsche.", f:[
+     ["deg","Stufen","TAB",["Stufe","Verhalten des Systems","Auslöser","Freigabe durch"]],
+     ["degaus","Antwortgenerierung ohne Retrieval ist ausgeschlossen durch","A","Der eine Modus, den es nicht geben darf. Beschreiben Sie, wie er technisch verhindert wird."]
+   ]},
+   {t:"Kill-Switch", hint:"Die einzige Zeile, die in einer Prüfung wirklich zählt, ist die Erprobung. Ein nie ausgelöster Kill-Switch ist eine Behauptung.", f:[
+     ["ks","Technische Umsetzung","T"],
+     ["kswirk","Wirkzeit (Ziel und gemessen)","T"],
+     ["ksrollen","Auslöseberechtigte","T","Mindestens zwei, damit Urlaub und Krankheit abgedeckt sind"],
+     ["ksausser","Auslösung außerhalb der Geschäftszeiten","A","Wer, über welchen Weg, mit welcher Erreichbarkeit?"],
+     ["kswieder","Wiederinbetriebnahme durch","T","Bewusst nicht dieselbe Rolle wie die auslösende"],
+     ["kstest","Letzte Erprobung in Produktion","T","Datum, auslösende Person, Evidenz"]
+   ]},
+   {t:"Wiederanlauf", f:[
+     ["wa","Prüfschritte vor der Wiederfreigabe","TAB",["Prüfschritt","Verantwortlich","Evidenz"]],
+     ["waloesch","Löschabgleich nach Wiederherstellung","A","Nach einem Restore kann der Index Inhalte enthalten, die zwischenzeitlich gelöscht wurden. Ein Restore ist bei RAG ein datenschutzrelevanter Vorgang."]
+   ]}
+  ],
+  fragen:[
+   "Wann wurde der Kill-Switch zuletzt tatsächlich ausgelöst, und wer war das?",
+   "Was macht das System, wenn der Index nicht erreichbar ist?",
+   "Wie merken Sie, dass das System falsch antwortet?",
+   "Nach einem Restore — woher wissen Sie, dass gelöschte Inhalte nicht wieder da sind?",
+   "Wer entscheidet um 22 Uhr an einem Samstag über die Abschaltung?"
+  ]},
+
+ {n:"06", t:"Testnachweise", akteur:"Projektleitung und Qualitätssicherung",
+  prozess:"Projekt-Stage-Gates und Freigabevorbereitung",
+  s:[
+   {t:"Teststatus", hint:"Nachweise müssen entstehen, während gebaut wird — nicht danach. Legen Sie das Evidenzformat fest, bevor Sie testen; nachträglich lässt es sich nicht mehr erzeugen, ohne dass es nachträglich aussieht.", f:[
+     ["tests","Tests","TAB",["Test","Status","Datum","Ergebnis","Offene Maßnahme"]]
+   ]},
+   {t:"Die Tests, an denen Freigaben scheitern", f:[
+     ["t1","T1 — Negativ-Retrieval (Berechtigungswirkung)","A","Bestanden nur, wenn weder Inhalt noch Existenzhinweis — Titel, Fundstelle, Zusammenfassung — sichtbar ist. Typischer Befund: Die Antwort ist leer, aber die Quellenliste nennt den Dateinamen."],
+     ["t3","T3 — Löschung über die gesamte Ableitungskette","A","Umfasst Quelle, Fragmente, Embeddings, Index einschließlich soft-gelöschter Einträge, Caches, Sicherungen und Protokolle. Beruht die Aussage zum Index auf einem API-Aufruf?"],
+     ["t4","T4 — Aggregation und Leakage über Dokumentgrenzen","A","Nicht automatisierbar; braucht Fachwissen, nicht Technik."]
+   ]},
+   {t:"Referenzfragenkatalog", f:[
+     ["rfk","Umfang und Zusammenstellung","T","Durch den Fachbereich, nicht durch die Entwicklung"],
+     ["rfkschwelle","Schwellenwert für die Freigabe","T"],
+     ["rfkohne","Kategorie „nicht beantwortbar“","A","Die wichtigste Kategorie. Ein System, das auf eine unbeantwortbare Frage eine plausible Antwort erfindet, ist gefährlicher als eines, das zu oft „weiß ich nicht“ sagt. Getrennt messen, strenger schwellen."]
+   ]},
+   {t:"Evidenzformat", hint:"Ein bestandener Test, von dem nur eine Folie mit einem grünen Haken übrig ist, ist keine Evidenz.", f:[
+     ["ev","Festgelegtes Evidenzformat","A","Mindestens: Test-ID, Kontrollbezug, Umgebung, Systemstand, Datum, durchführende Person, Stichprobe und ihre Begründung, Vorgehen, Rohdaten, Ergebnis, Abweichungen, Ablage, Aufbewahrung."],
+     ["evpb","Umgang mit personenbezogenen Inhalten in der Evidenz","A","Der Nachweis der Vertraulichkeit darf kein neues Vertraulichkeitsproblem erzeugen."]
+   ]}
+  ],
+  fragen:[
+   "Zeigen Sie mir das Rohprotokoll zu Test T1 — nicht die Zusammenfassung.",
+   "In welcher Umgebung wurde getestet, und mit welchen Berechtigungen?",
+   "Wie ist die Stichprobe zustande gekommen?",
+   "Was wurde nach dem letzten Modellwechsel erneut getestet?",
+   "Welcher Test ist nicht bestanden worden, und was ist daraus geworden?"
+  ]},
+
+ {n:"07", t:"Freigabevorlage", akteur:"Projektleitung und Enterprise-Architektur",
+  prozess:"Freigabe-Entscheidung im zuständigen Gremium",
+  s:[
+   {t:"Beschlussvorschlag", hint:"Zwei Seiten sind eine Vorgabe, keine Empfehlung. Ein Gremium entscheidet nicht besser, weil es mehr Text bekommt; es entscheidet später.", f:[
+     ["gremium","Gremium und Sitzungstermin","T"],
+     ["beschluss","Beschlussvorschlag","A","Ein bis drei Sätze in Gremiensprache"],
+     ["alt","Geprüfte und verworfene Alternativen","A"]
+   ]},
+   {t:"Worum es geht", f:[
+     ["worum","Sachverhalt","A","Fünf bis acht Zeilen. Eine Zahl, die den Nutzen belegt, ist mehr wert als drei Adjektive."],
+     ["nutzen","Erwarteter Nutzen — und woraus er belegt ist","A","Gemessen oder angenommen? Die Frage kommt."],
+     ["kosten","Kosten (Aufbau / laufend)","T"]
+   ]},
+   {t:"Risiko und Restrisiko", hint:"Der wichtigste Abschnitt der Vorlage. Schreiben Sie das Restrisiko in Ihre eigenen Worte, nicht in Konjunktive — ein Gremium, das ein weichgespültes Restrisiko genehmigt, hat nichts genehmigt.", f:[
+     ["risk","Die drei bis fünf Risiken, die für die Entscheidung zählen","TAB",["Risiko","Vor Maßnahmen","Maßnahme","Nach Maßnahmen"]],
+     ["rest","Restrisiko","A","Drei bis sechs Sätze, ohne Weichzeichner. Was bleibt, wie wahrscheinlich, welcher Schaden."],
+     ["traeger","Träger des Restrisikos","T","Namentlich. Ein Restrisiko ohne benannten Träger ist nicht getragen, sondern verteilt."]
+   ]},
+   {t:"Auflagen", f:[
+     ["aufl","Auflagen","TAB",["Auflage","Frist","Verantwortlich","Nachweis an"]],
+     ["auflfolge","Folge bei Nichterfüllung","A","Eine Auflage ohne benannte Folge ist eine Bitte."]
+   ]},
+   {t:"Stellungnahmen", hint:"Wenn eine Funktion einen Vorbehalt hat, gehört er hierhin — ausformuliert, nicht geglättet. Ein Gremium, das später erfährt, dass ein Vorbehalt bestand und nicht vorgelegt wurde, entzieht der nächsten Vorlage das Vertrauen.", f:[
+     ["stell","Stellungnahmen der beteiligten Funktionen","TAB",["Funktion","Stellungnahme","Datum","Vorbehalte"]],
+     ["abw","Abweichende Auffassungen im Wortlaut","A"]
+   ]},
+   {t:"Wiedervorlage", f:[
+     ["wv","Termin","T"],
+     ["wvausl","Auslöser für eine vorgezogene Wiedervorlage","A","Modellwechsel, sicherheitsrelevanter Vorfall, neue Datenquelle, Ausweitung des Nutzerkreises."]
+   ]}
+  ],
+  fragen:[
+   "Wer trägt das Restrisiko — namentlich?",
+   "Welche Auflage ist zum Fristende nicht erfüllt worden, und was ist passiert?",
+   "Gab es abweichende Auffassungen der beteiligten Funktionen?",
+   "Auf welcher Grundlage beruht die Nutzenaussage?",
+   "Ist seit der Freigabe etwas geändert worden, das eine vorgezogene Wiedervorlage ausgelöst hätte?"
+  ]},
+
+ {n:"08", t:"Mitbestimmung und Betriebsvereinbarung", akteur:"Projektleitung und Personalabteilung",
+  prozess:"Mitbestimmungsverfahren bis zum Abschluss der Vereinbarung",
+  s:[
+   {t:"Anwendbarkeit", hint:"Beginnen Sie damit am ersten Tag — dieser Strang hat die längste Laufzeit und die geringste Steuerbarkeit. In öffentlich-rechtlichen Häusern gilt Personalvertretungsrecht statt BetrVG.", f:[
+     ["br","Zuständiges Gremium","T","Örtlicher Betriebsrat, Gesamt- oder Konzernbetriebsrat? Schriftlich klären, bevor die erste Sitzung stattfindet."],
+     ["rahmen","Greift eine bestehende Rahmenvereinbarung?","A","Prüfen und dokumentieren — Vereinbarungen zu klassischen Fachanwendungen adressieren regelmäßig keine Freitexteingaben."]
+   ]},
+   {t:"Warum die Mitbestimmung greift", hint:"Ein Prompt-Protokoll, das Nutzeridentität, Zeitpunkt und Anfrage verbindet, ist objektiv geeignet, Verhalten abzubilden. Auf eine Überwachungsabsicht kommt es nicht an — auch dann nicht, wenn niemand auswerten will.", f:[
+     ["grund","Einordnung und Begründung","A"]
+   ]},
+   {t:"Verfahrensverlauf", f:[
+     ["verf","Schritte","TAB",["Schritt","Termin","Status"]],
+     ["sv","Sachverständiger hinzugezogen?","A","Muss der Betriebsrat den Einsatz künstlicher Intelligenz beurteilen, gilt die Hinzuziehung eines Sachverständigen als erforderlich. Planen Sie Zeit und Kosten ein — er verkürzt das Verfahren regelmäßig."]
+   ]},
+   {t:"Inhalte der Vereinbarung", hint:"Kein Mustertext — eine Vereinbarung muss zur Systemwirklichkeit passen, nicht zur Vorlage. Die beiden Punkte, an denen Verhandlungen kippen: das Verwertungsverbot und das Verfahren bei wesentlichen Änderungen.", f:[
+     ["bv","Regelungsgegenstände","TAB",["Gegenstand","Geregelt?","Fundstelle"]],
+     ["bvverw","Verwertungsverbot für arbeitsrechtliche Maßnahmen","A","Regelmäßig die Kernforderung. Halten Sie einen eng umrissenen Ausnahmefall offen, damit die Klausel nicht an der Wirklichkeit zerbricht."],
+     ["bvchg","Verfahren bei wesentlichen Änderungen","A","Ohne diesen Punkt ist die Vereinbarung nach dem ersten Modellwechsel inhaltlich überholt."]
+   ]},
+   {t:"Ergebnis", f:[
+     ["bvdat","Vereinbarung geschlossen am","T"],
+     ["bvbez","Bezeichnung / Nummer","T"],
+     ["bvbek","Bekanntmachung im Betrieb am","T"]
+   ]}
+  ],
+  fragen:[
+   "Liegt eine wirksame Vereinbarung vor — und deckt sie ab, was das System heute tut?",
+   "Wer hat seit Inkrafttreten auf die Protokolle zugegriffen, aus welchem Anlass?",
+   "War der Betriebsrat vor dem Pilotbetrieb beteiligt?",
+   "Ist die richtige Ebene beteiligt worden?",
+   "Was passiert mit der Vereinbarung, wenn Sie das Modell wechseln?"
+  ]}
+];
+
+var WEICHMACHER = ["grundsätzlich","im wesentlichen","weitgehend","tendenziell","dürfte","gegebenenfalls","unter umständen","in der regel","voraussichtlich","eventuell","weitestgehend","nach derzeitigem stand","im großen und ganzen"];
+
+var KEY = "rag-freigabeakte-v1";
+var state = load();
+var aktiv = 0;
+
+function load(){
+  try{ var r = localStorage.getItem(KEY); if(r) return JSON.parse(r); }catch(e){}
+  return {kopf:{}, d:{}};
+}
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+}
+function dget(n){ if(!state.d[n]) state.d[n] = {v:{}, op:[], opNone:false}; return state.d[n]; }
+function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+function el(tag,attrs,kids){
+  var e=document.createElement(tag);
+  if(attrs) for(var k in attrs){ if(k==="class") e.className=attrs[k]; else if(k==="text") e.textContent=attrs[k]; else if(attrs[k]!=null&&attrs[k]!==false) e.setAttribute(k,attrs[k]); }
+  (kids||[]).forEach(function(c){ if(c) e.appendChild(c); });
+  return e;
+}
+
+/* ---------------- Register ---------------- */
+function renderRegister(){
+  var box = document.getElementById("register");
+  box.textContent = "";
+  AKTE.forEach(function(doc,i){
+    var st = fillState(doc);
+    var b = el("button",{class:"reg-item",type:"button","aria-current":i===aktiv?"true":"false"},[
+      el("span",{class:"reg-num",text:doc.n}),
+      el("span",{class:"reg-t",text:doc.t}),
+      el("span",{class:"dot "+st})
+    ]);
+    b.addEventListener("click",function(){ aktiv=i; renderAll(); window.scrollTo({top:0,behavior:"instant"}); });
+    box.appendChild(b);
+  });
+}
+function fillState(doc){
+  var d=dget(doc.n), total=0, filled=0;
+  doc.s.forEach(function(g){ g.f.forEach(function(f){
+    total++;
+    var v=d.v[f[0]];
+    if(f[2]==="TAB"){ if(Array.isArray(v)&&v.some(function(r){return r.some(function(c){return c&&c.trim();});})) filled++; }
+    else if(v&&String(v).trim()) filled++;
+  });});
+  if(filled===0) return "";
+  return filled>=total ? "voll" : "teil";
+}
+
+/* ---------------- Arbeitsfläche ---------------- */
+function renderSheet(){
+  var doc = AKTE[aktiv], d = dget(doc.n);
+  var sheet = document.getElementById("sheet");
+  sheet.textContent = "";
+
+  sheet.appendChild(el("div",{class:"doc-head"},[
+    el("div",{class:"doc-num",text:"Teil "+doc.n+" von 08"}),
+    el("h2",{text:doc.t}),
+    el("div",{class:"meta"},[
+      el("span",{},[el("b",{text:"Wer füllt aus: "}),document.createTextNode(doc.akteur)]),
+      el("span",{},[el("b",{text:"Prozess: "}),document.createTextNode(doc.prozess)])
+    ])
+  ]));
+
+  doc.s.forEach(function(g){
+    var sec = el("section",{class:"grp"},[el("h3",{text:g.t})]);
+    if(g.hint) sec.appendChild(el("p",{class:"hint",text:g.hint}));
+    var fields = el("div",{class:"fields"});
+    g.f.forEach(function(f){ fields.appendChild(renderField(doc,d,f)); });
+    sec.appendChild(fields);
+    sheet.appendChild(sec);
+  });
+
+  /* Offene Punkte */
+  var op = el("div",{class:"op"});
+  op.appendChild(el("h3",{text:"Offene Punkte"}));
+  op.appendChild(el("p",{class:"why",text:"Was Sie nicht wissen, gehört hierhin — nicht in eine optimistische Formulierung. Ein ehrliches „offen, Termin X“ hat in einer Prüfung noch nie Schaden angerichtet; eine geschönte Aussage schon."}));
+  var opBox = el("div",{});
+  function drawOP(){
+    opBox.textContent="";
+    (d.op||[]).forEach(function(row,idx){
+      var r = el("div",{class:"op-row"});
+      [["Offener Punkt",0],["Verantwortlich",1],["Frist",2]].forEach(function(spec){
+        var inp = el("input",{type:"text",placeholder:spec[0],value:row[spec[1]]||""});
+        inp.addEventListener("input",function(){ row[spec[1]]=inp.value; save(); runCheck(); });
+        r.appendChild(inp);
+      });
+      var del = el("button",{class:"row-del",type:"button",title:"Zeile entfernen",text:"×"});
+      del.addEventListener("click",function(){ d.op.splice(idx,1); save(); drawOP(); runCheck(); renderRegister(); });
+      r.appendChild(del);
+      opBox.appendChild(r);
+    });
+  }
+  drawOP();
+  op.appendChild(opBox);
+  var add = el("button",{class:"btn tbl-add",type:"button",text:"+ Offenen Punkt ergänzen"});
+  add.addEventListener("click",function(){ d.op.push(["","",""]); save(); drawOP(); runCheck(); });
+  op.appendChild(add);
+
+  var noneWrap = el("label",{class:"op-none"});
+  var cb = el("input",{type:"checkbox"});
+  cb.checked = !!d.opNone;
+  cb.addEventListener("change",function(){ d.opNone=cb.checked; save(); runCheck(); });
+  noneWrap.appendChild(cb);
+  noneWrap.appendChild(el("span",{text:"Für dieses Dokument bestehen bewusst keine offenen Punkte. Ich bestätige, dass dies geprüft und nicht bloß nicht ausgefüllt wurde."}));
+  op.appendChild(noneWrap);
+  sheet.appendChild(op);
+
+  sheet.appendChild(el("div",{class:"spacer"}));
+
+  /* Prüffragen */
+  var fr = el("div",{class:"fragen"},[el("h3",{text:"Was die prüfende Funktion hier typischerweise fragt"})]);
+  var ol = el("ol");
+  doc.fragen.forEach(function(q){ ol.appendChild(el("li",{text:q})); });
+  fr.appendChild(ol);
+  sheet.appendChild(fr);
+}
+
+function renderField(doc,d,f){
+  var key=f[0], label=f[1], typ=f[2], extra=f[3];
+  var w = el("div",{class:"f"});
+  w.appendChild(el("label",{for:"fld-"+doc.n+"-"+key,text:label}));
+  if(typ!=="TAB" && typ!=="W" && extra) w.appendChild(el("span",{class:"lh",text:extra}));
+  if(typ==="W" && extra===undefined) extra=[];
+
+  if(typ==="T"||typ==="A"){
+    var inp = typ==="A" ? el("textarea",{id:"fld-"+doc.n+"-"+key}) : el("input",{type:"text",id:"fld-"+doc.n+"-"+key});
+    inp.value = d.v[key]||"";
+    inp.addEventListener("input",function(){ d.v[key]=inp.value; save(); renderRegister(); runCheck(); });
+    w.appendChild(inp);
+  } else if(typ==="W"){
+    var sel = el("select",{id:"fld-"+doc.n+"-"+key});
+    (extra||[]).forEach(function(o){
+      var op=el("option",{value:o,text:o||"— bitte wählen —"});
+      sel.appendChild(op);
+    });
+    sel.value = d.v[key]||"";
+    sel.addEventListener("change",function(){ d.v[key]=sel.value; save(); renderRegister(); runCheck(); });
+    w.appendChild(sel);
+  } else if(typ==="TAB"){
+    var cols = extra;
+    if(!Array.isArray(d.v[key])) d.v[key]=[cols.map(function(){return "";})];
+    var wrap = el("div",{class:"tbl-wrap"});
+    var tbl = el("table",{class:"grid"});
+    var thead = el("thead"), htr=el("tr");
+    cols.forEach(function(c){ htr.appendChild(el("th",{text:c})); });
+    htr.appendChild(el("th",{text:""}));
+    thead.appendChild(htr); tbl.appendChild(thead);
+    var tb = el("tbody"); tbl.appendChild(tb);
+    function drawRows(){
+      tb.textContent="";
+      d.v[key].forEach(function(row,ri){
+        var tr=el("tr");
+        cols.forEach(function(c,ci){
+          var td=el("td");
+          var inp=el("input",{type:"text",value:row[ci]||"","aria-label":c});
+          inp.addEventListener("input",function(){ row[ci]=inp.value; save(); renderRegister(); runCheck(); });
+          td.appendChild(inp); tr.appendChild(td);
+        });
+        var td=el("td");
+        var del=el("button",{class:"row-del",type:"button",title:"Zeile entfernen",text:"×"});
+        del.addEventListener("click",function(){ d.v[key].splice(ri,1); if(!d.v[key].length) d.v[key]=[cols.map(function(){return "";})]; save(); drawRows(); renderRegister(); runCheck(); });
+        td.appendChild(del); tr.appendChild(td);
+        tb.appendChild(tr);
+      });
+    }
+    drawRows();
+    wrap.appendChild(tbl);
+    w.appendChild(wrap);
+    var add=el("button",{class:"btn tbl-add",type:"button",text:"+ Zeile"});
+    add.addEventListener("click",function(){ d.v[key].push(cols.map(function(){return "";})); save(); drawRows(); });
+    w.appendChild(add);
+  }
+  return w;
+}
+
+/* ---------------- Ehrlichkeitsprüfung ---------------- */
+function findWeasels(txt){
+  var hits=[], low=(txt||"").toLowerCase();
+  WEICHMACHER.forEach(function(w){ if(low.indexOf(w)>=0) hits.push(w); });
+  return hits;
+}
+function runCheck(){
+  var findings=[];
+  AKTE.forEach(function(doc,i){
+    var d=dget(doc.n), st=fillState(doc);
+    if(st==="") return; /* noch nicht begonnen — kein Befund */
+
+    if((d.op||[]).filter(function(r){return r[0]&&r[0].trim();}).length===0 && !d.opNone){
+      findings.push({sev:"warn",doc:i,ti:"Teil "+doc.n+" — keine offenen Punkte",
+        tx:"Ein Dokument ohne offene Punkte ist in der Prüfung verdächtig, nicht vorbildlich. Tragen Sie ein, was noch offen ist — oder bestätigen Sie ausdrücklich, dass es geprüft wurde."});
+    }
+    (d.op||[]).forEach(function(r){
+      if(r[0]&&r[0].trim()&&(!r[1]||!r[1].trim()||!r[2]||!r[2].trim())){
+        findings.push({sev:"warn",doc:i,ti:"Teil "+doc.n+" — offener Punkt ohne Verantwortlichen oder Frist",
+          tx:"„"+r[0].slice(0,90)+"“ — ein offener Punkt ohne benannte Person und Termin wird als nicht nachverfolgt bewertet."});
+      }
+    });
+  });
+
+  /* Teil 07: die Stellen, an denen Gremienvorlagen scheitern */
+  var d7=dget("07");
+  if(fillState(AKTE[6])!==""){
+    var rest=d7.v.rest||"";
+    if(rest.trim()){
+      var hits=findWeasels(rest);
+      if(hits.length){
+        findings.push({sev:"crit",doc:6,ti:"Restrisiko enthält Weichmacher",
+          tx:"Gefunden: "+hits.join(", ")+". Diese Formulierungen schwächen die Aussage. Ein Gremium, das ein weichgespültes Restrisiko genehmigt, hat nichts genehmigt — prüfen Sie, ob sie hier tragen."});
+      }
+    }
+    if(!(d7.v.traeger||"").trim() && (d7.v.rest||"").trim()){
+      findings.push({sev:"crit",doc:6,ti:"Restrisiko ohne benannten Träger",
+        tx:"Ein Restrisiko ohne namentlich benannten Träger ist nicht getragen, sondern verteilt. Die Revision prüft, ob die Person davon weiß."});
+    }
+    var aufl=d7.v.aufl;
+    var hatAufl = Array.isArray(aufl) && aufl.some(function(r){return r[0]&&r[0].trim();});
+    if(hatAufl && !(d7.v.auflfolge||"").trim()){
+      findings.push({sev:"crit",doc:6,ti:"Auflagen ohne Folge bei Nichterfüllung",
+        tx:"Eine Auflage ohne benannte Folge ist eine Bitte. Halten Sie fest, was geschieht, wenn die Frist verstreicht."});
+    }
+    if(Array.isArray(aufl)) aufl.forEach(function(r){
+      if(r[0]&&r[0].trim()&&(!r[1]||!r[1].trim())){
+        findings.push({sev:"warn",doc:6,ti:"Auflage ohne Frist",tx:"„"+r[0].slice(0,90)+"“"});
+      }
+    });
+    if(!(d7.v.nutzen||"").trim() && (d7.v.worum||"").trim()){
+      findings.push({sev:"warn",doc:6,ti:"Nutzenaussage nicht belegt",
+        tx:"„Auf welcher Grundlage beruht die Nutzenaussage?“ ist eine Standardfrage. Gemessen schlägt angenommen."});
+    }
+    if(!(d7.v.abw||"").trim()){
+      findings.push({sev:"warn",doc:6,ti:"Keine abweichenden Auffassungen vermerkt",
+        tx:"Falls es keine gab: in Ordnung. Falls es welche gab und sie nicht in der Vorlage stehen, entzieht das der nächsten Vorlage das Vertrauen, sobald es über die Revision auftaucht."});
+    }
+  }
+
+  /* Teil 04: die Berechtigungsfrage */
+  var d4=dget("04");
+  if(d4.v.bzeit==="nur zur Indexierungszeit"){
+    findings.push({sev:"crit",doc:3,ti:"Berechtigungsprüfung nur zur Indexierungszeit",
+      tx:"Belastbar ist allein die Prüfung zur Query-Zeit gegen die aktuelle Berechtigung. Eine nur zur Indexierungszeit gesetzte Sichtbarkeit friert einen Stand ein, der sich täglich ändert — das ist der häufigste Befund überhaupt."});
+  }
+  if((d4.v.bentzug||"").toLowerCase().indexOf("unmittelbar")>=0){
+    findings.push({sev:"warn",doc:3,ti:"Wirkzeit nicht prüfbar formuliert",
+      tx:"„unmittelbar“ ist keine prüfbare Aussage. Nennen Sie einen Wert, den ein Test messen kann."});
+  }
+
+  /* Teil 03: Einstufung ohne Begründung */
+  var d3=dget("03");
+  if((d3.v.kwf||"") && !(d3.v.kwfb||"").trim()){
+    findings.push({sev:"crit",doc:2,ti:"Einstufung ohne dokumentierte Begründung",
+      tx:"Beide Antworten zur kritischen oder wichtigen Funktion sind vertretbar — eine Einstufung ohne Begründung ist es nicht."});
+  }
+  if((d3.v.exitt||"").toLowerCase().indexOf("nein")===0){
+    findings.push({sev:"warn",doc:2,ti:"Exit-Strategie nicht erprobt",
+      tx:"Ein Exit, der nur als Absicht beschrieben ist, wird als nicht vorhanden bewertet. Ein kleiner dokumentierter Nachweis schlägt eine große Behauptung."});
+  }
+
+  /* Teil 05: Kill-Switch */
+  var d5=dget("05");
+  if((d5.v.ks||"").trim() && !(d5.v.kstest||"").trim()){
+    findings.push({sev:"crit",doc:4,ti:"Kill-Switch ohne Erprobung in Produktion",
+      tx:"Ein nie ausgelöster Kill-Switch ist eine Behauptung. Verlangt wird ein Protokoll mit Datum, auslösender Person und gemessener Wirkzeit."});
+  }
+
+  /* Teil 01: Integrität zu bequem eingestuft */
+  var d1=dget("01");
+  if(d1.v.gi==="normal"){
+    findings.push({sev:"warn",doc:0,ti:"Integrität als „normal“ eingestuft",
+      tx:"Bei RAG ist Integrität der regelmäßig unterschätzte Grundwert: Eine falsche Antwort ist kein Anzeigefehler, sondern eine Handlungsgrundlage. Prüfen Sie, ob eine Falschauskunft regulatorisch relevantes Fehlverhalten auslösen kann."});
+  }
+
+  paintCheck(findings);
+}
+
+function paintCheck(findings){
+  var pill=document.getElementById("check-pill");
+  var body=document.getElementById("check-body");
+  var crit=findings.filter(function(f){return f.sev==="crit";}).length;
+  var warn=findings.length-crit;
+
+  pill.className="pill "+(crit?"crit":(warn?"warn":"ok"));
+  pill.textContent = findings.length===0 ? "keine Befunde" : (crit? crit+" kritisch":"") + (crit&&warn?" · ":"") + (warn? warn+" Hinweis"+(warn>1?"e":""):"");
+
+  body.textContent="";
+  if(!findings.length){
+    body.appendChild(el("p",{class:"allclear",text:"Keine Befunde. Das heißt nicht, dass die Akte vollständig ist — es heißt, dass die Stellen, an denen Vorlagen erfahrungsgemäß scheitern, hier nicht auffällig sind."}));
+    return;
+  }
+  findings.forEach(function(f){
+    var link = el("a",{href:"#",text:"→ zu Teil "+AKTE[f.doc].n});
+    link.addEventListener("click",function(ev){ ev.preventDefault(); aktiv=f.doc; renderAll(); window.scrollTo({top:0,behavior:"instant"}); });
+    body.appendChild(el("div",{class:"finding"},[
+      el("div",{class:"sev "+f.sev}),
+      el("div",{},[ el("b",{text:f.ti}), el("div",{text:f.tx}), link ])
+    ]));
+  });
+}
+
+/* ---------------- Export ---------------- */
+function mdDoc(doc){
+  var d=dget(doc.n), L=[];
+  L.push("# "+doc.n+" — "+doc.t,"");
+  L.push("> **Wer benutzt dieses Dokument?** "+doc.akteur+"  ");
+  L.push("> **In welchem Prozess?** "+doc.prozess,"");
+  L.push("> **Kein Rechtsrat.** Erstellt mit dem Freigabeakte-Assistenten des Projekts");
+  L.push("> `rag-approval-blueprint`. Arbeitsmittel aus generischer Aufsichts- und Governance-Logik,");
+  L.push("> keine Rechts- oder Aufsichtsberatung und kein Nachweis der Erfüllung regulatorischer");
+  L.push("> Anforderungen.","","---","");
+  doc.s.forEach(function(g){
+    L.push("## "+g.t,"");
+    g.f.forEach(function(f){
+      var v=d.v[f[0]];
+      if(f[2]==="TAB"){
+        var rows=(Array.isArray(v)?v:[]).filter(function(r){return r.some(function(c){return c&&c.trim();});});
+        L.push("**"+f[1]+"**","");
+        if(!rows.length){ L.push("_(noch nicht ausgefüllt)_",""); return; }
+        L.push("| "+f[3].join(" | ")+" |");
+        L.push("|"+f[3].map(function(){return "---";}).join("|")+"|");
+        rows.forEach(function(r){ L.push("| "+f[3].map(function(_,i){return (r[i]||"").replace(/\|/g,"\\|");}).join(" | ")+" |"); });
+        L.push("");
+      } else {
+        var val=(v==null?"":String(v)).trim();
+        L.push("**"+f[1]+"**","",(val||"_(noch nicht ausgefüllt)_"),"");
+      }
+    });
+  });
+  L.push("---","","## Was die prüfende Funktion hier typischerweise fragt","");
+  doc.fragen.forEach(function(q,i){ L.push((i+1)+". "+q); });
+  L.push("","## Offene Punkte","");
+  var ops=(d.op||[]).filter(function(r){return r[0]&&r[0].trim();});
+  if(ops.length){
+    L.push("| Offener Punkt | Verantwortlich | Frist |","|---|---|---|");
+    ops.forEach(function(r){ L.push("| "+(r[0]||"")+" | "+(r[1]||"—")+" | "+(r[2]||"—")+" |"); });
+  } else if(d.opNone){
+    L.push("Für dieses Dokument bestehen nach Prüfung keine offenen Punkte.");
+  } else {
+    L.push("_(nicht ausgefüllt — ein Dokument ohne offene Punkte ist in der Prüfung erklärungsbedürftig)_");
+  }
+  L.push("");
+  return L.join("\n");
+}
+function mdAkte(){
+  var out=["# Freigabeakte","",
+   "Erstellt mit dem Freigabeakte-Assistenten des Projekts `rag-approval-blueprint`.",
+   "**Kein Rechtsrat.** Prüfen Sie jede Fundstelle und jede Formulierung vor Verwendung.","",
+   "## Inhalt",""];
+  AKTE.forEach(function(d){ out.push("- "+d.n+" — "+d.t); });
+  out.push("");
+  AKTE.forEach(function(d){ out.push("","<!-- ============================= -->","",mdDoc(d)); });
+  return out.join("\n");
+}
+function download(name,text){
+  var b=new Blob([text],{type:"text/plain;charset=utf-8"});
+  var a=document.createElement("a");
+  a.href=URL.createObjectURL(b); a.download=name;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); },0);
+}
+
+/* ---------------- Dialoge ---------------- */
+var dlg=document.getElementById("dlg"), dlgOut=document.getElementById("dlg-out"),
+    dlgTitle=document.getElementById("dlg-title"), dlgNote=document.getElementById("dlg-note"),
+    dlgImport=document.getElementById("dlg-import");
+var dlgMode="md";
+
+document.getElementById("btn-export").addEventListener("click",function(){
+  dlgMode="md"; dlgTitle.textContent="Akte exportieren";
+  dlgNote.textContent="Markdown für alle acht Teile. Übernehmen Sie den Text in Ihr Dokumentensystem und arbeiten Sie ihn dort zu Ende — der Assistent führt durch die Struktur, das Denken bleibt bei Ihnen.";
+  dlgOut.textContent=mdAkte(); dlgImport.hidden=true; dlg.showModal();
+});
+document.getElementById("btn-json").addEventListener("click",function(){
+  dlgMode="json"; dlgTitle.textContent="Zwischenstand sichern oder einlesen";
+  dlgNote.textContent="Zum Weiterarbeiten an einem anderen Gerät oder zur Übergabe an eine Kollegin. Der Text unten ist Ihr vollständiger Stand; zum Einlesen ersetzen Sie ihn und klicken „Einlesen“.";
+  dlgOut.textContent=JSON.stringify(state,null,1); dlgImport.hidden=false; dlg.showModal();
+});
+document.getElementById("dlg-close").addEventListener("click",function(){ dlg.close(); });
+document.getElementById("dlg-copy").addEventListener("click",function(){
+  var t=dlgOut.textContent;
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(t).then(function(){ flash("dlg-copy","Kopiert"); },function(){ selectOut(); });
+  } else selectOut();
+});
+function selectOut(){
+  var r=document.createRange(); r.selectNodeContents(dlgOut);
+  var s=window.getSelection(); s.removeAllRanges(); s.addRange(r);
+  flash("dlg-copy","Markiert — mit Strg/Cmd+C kopieren");
+}
+function flash(id,txt){
+  var b=document.getElementById(id), old=b.textContent;
+  b.textContent=txt; setTimeout(function(){ b.textContent=old; },1800);
+}
+document.getElementById("dlg-dl").addEventListener("click",function(){
+  if(dlgMode==="md") download("freigabeakte.md",dlgOut.textContent);
+  else download("freigabeakte-stand.json",dlgOut.textContent);
+});
+dlgImport.addEventListener("click",function(){
+  try{
+    var parsed=JSON.parse(dlgOut.textContent);
+    if(!parsed||typeof parsed!=="object"||!("d" in parsed)) throw new Error("Format");
+    state=parsed; save(); dlg.close(); renderAll();
+  }catch(e){
+    dlgNote.textContent="Das ließ sich nicht einlesen: Der Text ist kein gültiger Zwischenstand. Fügen Sie den vollständigen, unveränderten Text aus einer früheren Sicherung ein.";
+  }
+});
+
+/* ---------------- Ansicht ---------------- */
+/* Themes heißen wie im Hauptsystem: paper (hell) und ink (dunkel). */
+document.getElementById("btn-theme").addEventListener("click",function(){
+  var cur=document.documentElement.getAttribute("data-theme");
+  var next = cur==="ink" ? "paper" : (cur==="paper" ? "" : "ink");
+  if(next) document.documentElement.setAttribute("data-theme",next);
+  else document.documentElement.removeAttribute("data-theme");
+  try{ localStorage.setItem(KEY+"-theme",next); }catch(e){}
+});
+try{ var th=localStorage.getItem(KEY+"-theme"); if(th) document.documentElement.setAttribute("data-theme",th); }catch(e){}
+
+var checkEl=document.getElementById("check"), bar=document.getElementById("check-bar");
+function toggleCheck(){
+  var open=checkEl.classList.toggle("open");
+  bar.setAttribute("aria-expanded",open?"true":"false");
+  document.getElementById("check-toggle").textContent=open?"ausblenden":"einblenden";
+}
+bar.addEventListener("click",toggleCheck);
+bar.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); toggleCheck(); } });
+
+function renderAll(){ renderRegister(); renderSheet(); runCheck(); }
+renderAll();
+</script>
+</body>
+</html>
