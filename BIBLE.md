@@ -31,15 +31,32 @@ internal audit, board submission. Not another RAG security pattern library.
   Evidenz-Artefakt · Mapping. A control missing one of them fails the schema test.
 - **INV-5 — Every document ends with "Offene Punkte" / "Open questions".**
 - **INV-6 — "Not legal advice"** appears in `README.md`, every `akte/` template, and the mapping.
-- **INV-7 — Pilot integrity.** Every file under `pilot/` is marked as a fictional institution.
-  The documented conflict and the two red controls stay in; the pilot is never polished clean.
+- **INV-7 — Pilot integrity.** Every file under `pilot/` and `pilot-abgelehnt/` is marked as a
+  fictional institution. The documented conflict and the red controls stay in; neither pilot is
+  ever polished clean, and the second one must keep ending in a refusal.
 - **INV-8 — One tool only.** `tools/render_controls.py`, under 250 lines, ruff-clean, tested.
   No second tool, no framework, no plugin surface.
+- **INV-9 — Every pilot assesses every control.** A pilot that silently skips a control would
+  overstate how complete its assessment is. Enforced by test; adding a control means updating both
+  assessments.
 
 ## Decision register
 
 Newest first. Each: date · decision · why · (superseded by …).
 
+- **2026-07-19 — The Freigabeakte has eight parts, not seven; the briefing's set is extended.**
+  Added `akte/08-mitbestimmung-betriebsvereinbarung.md` plus control `AUD-04`. *Why:* v0.1.0's own
+  known limitations named the missing co-determination block, and in practice that strand is the
+  longest one in a real approval. The load-bearing point is that a prompt log is *objectively*
+  suitable for monitoring behaviour, so co-determination applies regardless of intent. Verified
+  during the build that the BetrVG addresses AI explicitly in §§ 80 Abs. 3 S. 2, 90 Abs. 1 Nr. 3
+  and 95 Abs. 2a — a stronger hook than expected. Ships no model wording for the agreement itself:
+  a template text invites copying, and a works agreement must fit the system.
+- **2026-07-19 — A second pilot ends in refusal (`pilot-abgelehnt/`).** *Why:* a template set that
+  only ever shows approval teaches the easy half. The counter-case shows how to write a No that is
+  verifiable rather than personal, and pairs it with five conditions — a No without a path to Yes
+  is a block, not a decision. It deliberately does not re-fill all eight templates; only the case,
+  the assessment, and the submission, because the rest would be repetition.
 - **2026-07-19 — BAIT/VAIT are treated as historical vocabulary, DORA as the binding source.**
   Verified during the build: VAIT, KAIT and ZAIT were repealed effective 16./17.01.2025 and BAIT
   is being phased out (fully by 31.12.2026) because DORA (Regulation (EU) 2022/2554) supersedes

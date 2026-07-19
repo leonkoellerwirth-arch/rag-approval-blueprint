@@ -3,6 +3,40 @@
 Session handoffs, **newest entry first**. Written by `/session-stop` (via
 `scripts/session-snapshot.sh`). Read the top entry at `/session-start`.
 
+## 2026-07-19 — Session 2: v0.2.0, both v0.1.0 gaps closed
+
+_gate PASS · 20 tests green · 23 controls · 8 akte templates · 2 pilots_
+
+- **Done:** Closed both gaps v0.1.0 named in its own known limitations.
+  `akte/08-mitbestimmung-betriebsvereinbarung.md` + control `AUD-04` + a filled pilot version;
+  `pilot-abgelehnt/` (Südhafen Direktbank AG) as a second worked case that ends in refusal.
+  Propagated the counts and the diagram everywhere; released v0.2.0.
+- **Decided:**
+  - **The briefing's seven-part Freigabeakte is now eight parts.** A deliberate extension beyond
+    the briefing, recorded in `BIBLE.md`. Justified by v0.1.0's own limitation list.
+  - **The second pilot does not re-fill all eight templates** — only case, assessment and
+    submission. Re-filling would be repetition; the value is the refusal, not the paperwork.
+  - **No model wording for the Betriebsvereinbarung.** A template text invites copying; a works
+    agreement has to fit the system. A sixteen-point checklist takes its place.
+  - **INV-9 added:** every pilot assesses every control, enforced by test. Adding a control now
+    means updating both assessments — that is intentional friction.
+- **Open:**
+  - BetrVG § 87 Abs. 1 Nr. 6 **objective-suitability** interpretation rests on concurring
+    secondary sources, not a single decision read in full. Flagged in `docs/quellen.md` and in the
+    template's Offene Punkte.
+  - Personalvertretungsrecht (Sparkassen, Landesbanken, Anstalten) deliberately not worked up.
+  - Neither pilot shows a committee overruling its control functions — the hardest case of all.
+    Sketched in `pilot-abgelehnt/07-freigabevorlage-final.md`, not worked out.
+- **Next:** Announce v0.2.0. If a v0.3.0 follows, the strongest candidate is the
+  committee-overrules-the-experts case, because it is the situation with the least public
+  guidance and the highest personal stakes for the person documenting it.
+- **Continuity warnings:**
+  - `controls/controls.md`, `pilot/readiness-report.md` and `pilot-abgelehnt/readiness-report.md`
+    are **generated**. Never hand-edit; change the YAML and re-render or the drift tests fail.
+  - A new control requires an entry in **both** assessments (INV-9).
+  - The counts "23 controls" / "eight templates" / "ten actors" appear in README, executive
+    summary, CLAUDE.md and both pilots. Changing one means grepping for all.
+
 ## 2026-07-19 — Session 1: M0–M8 built, v0.1.0 released
 
 _gate PASS · 16 tests green · 22 controls · pilot complete_

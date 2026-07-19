@@ -6,6 +6,62 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.2.0] — 2026-07-19
+
+Closes both gaps that v0.1.0 named in its own known limitations.
+
+### Added
+
+- **`akte/08-mitbestimmung-betriebsvereinbarung.md`** — the co-determination building block. In
+  practice the works-council strand is the longest one in a real approval, and there was no
+  template for it. Covers applicability (including the fact that public-law institutions fall
+  under Personalvertretungsrecht instead), why co-determination applies at all, the procedure from
+  information duty to signature, and a sixteen-point checklist of what a works agreement must
+  regulate. Deliberately ships **no model wording** for the agreement itself.
+- **Control `AUD-04`** — Mitbestimmung und Zweckbindung der Protokollierung, with an audit
+  procedure that compares the agreement's subject matter against the logging actually configured,
+  not the logging described.
+- **`pilot-abgelehnt/`** — a second worked case that receives **no approval**. Südhafen Direktbank
+  AG (fictional) wants a customer-facing assistant answering questions about customers' own
+  contracts and transactions: 4 green, 11 yellow, 8 red. Three red controls cannot be healed by a
+  deadline because they are construction decisions — entitlement filtering happens after retrieval
+  rather than before, customer data goes to a US-only provider without a transfer impact
+  assessment, and erasure is unprovable because the managed index vendor will not say whether
+  anything is physically removed. Includes the submission that documents a defensible No, the
+  sponsor's dissent in full, and five conditions under which the project would become approvable.
+- **Betriebsrat / Personalvertretung** as the tenth actor in `docs/who-uses-this.md`.
+- Tests: each pilot's readiness report is checked against its assessment, and every pilot must
+  assess every control in the catalogue (INV-9).
+
+### Changed
+
+- The Freigabeakte now has **eight** parts; the control catalogue **23** controls.
+- The Nordwind pilot gained a filled `akte/08` and is assessed against `AUD-04`; its result moves
+  from 15/5/2 to **16 green, 5 yellow, 2 red**.
+- README context diagram shows both outcomes — approval under conditions and refusal — and the
+  co-determination strand running in parallel from day one.
+
+### Verified references added (July 2026)
+
+- **BetrVG** § 87 Abs. 1 Nr. 6 (verbatim), § 90 Abs. 1 Nr. 3, § 80 Abs. 3 Satz 2, § 95 Abs. 2a,
+  § 77 Abs. 2/3. Notable finding: the legislator addresses artificial intelligence **explicitly**
+  in three of these — the information duty covers "den Einsatz von Künstlicher Intelligenz", and
+  an expert counts as necessary when the works council must assess AI.
+- **GDPR** Art. 16, 18, 21 and 88, which earlier revisions had used without verification.
+
+### Known limitations
+
+Unchanged from v0.1.0 except where closed above, and with two additions:
+
+- **Personalvertretungsrecht is out of scope** — `akte/08` cites the BetrVG only; the federal and
+  state staff representation acts that apply to Sparkassen, Landesbanken and Anstalten differ per
+  state and are not worked up.
+- **Neither pilot shows a committee overruling its own control functions.** Both follow the
+  recommendation. The harder case is sketched but not worked out.
+- That for § 87 Abs. 1 Nr. 6 BetrVG the **objective suitability** standard applies is settled case
+  law, but is evidenced here through concurring secondary sources rather than a single decision
+  read in full.
+
 ## [0.1.0] — 2026-07-19
 
 First public release. The scope is deliberately narrow: the path from a finished RAG architecture
@@ -65,4 +121,5 @@ featuring technological innovation and artificial intelligence.
 - **The audience matrix assumes a mid-sized institution's separation of functions**; smaller
   houses merge roles, groups add layers.
 
+[0.2.0]: https://github.com/leonkoellerwirth-arch/rag-approval-blueprint/releases/tag/v0.2.0
 [0.1.0]: https://github.com/leonkoellerwirth-arch/rag-approval-blueprint/releases/tag/v0.1.0

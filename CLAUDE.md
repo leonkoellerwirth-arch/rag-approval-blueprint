@@ -22,15 +22,16 @@ Those exist and are good; we link them as implementation options and never compe
 **Zone:** Bridge / Tool — public, code MIT, documents CC BY 4.0. Reference pattern, not a
 framework. Never overclaim it.
 
-## The four core artifacts
+## The core artifacts
 
 | Path | What it is | Language |
 |---|---|---|
-| `akte/01`–`akte/07` | the Freigabeakte — the fillable template set an institution actually needs | German |
+| `akte/01`–`akte/08` | the Freigabeakte — the fillable template set an institution actually needs | German |
 | `controls/controls.yaml` + rendered docs | control catalogue: every control carries **Kontrollziel · Prüfhandlung · Evidenz-Artefakt · Mapping** | English fields |
 | `docs/loeschnachweis.md` | verifiable-erasure protocol (ghost vectors in HNSW) | German |
 | `docs/mapping-bait-vait-dora.md` | supervisory mapping: requirement → control → evidence | German |
 | `pilot/` | one fictional case run end to end — the proof that the set works | German |
+| `pilot-abgelehnt/` | the counter-case: a project that receives no approval | German |
 
 ## Content rules (this repo lives or dies by them)
 
@@ -45,16 +46,19 @@ framework. Never overclaim it.
    logic. The author's biography supplies perspective, never documents. No real institution,
    customer, or engagement is referenced anywhere (`scripts/gate.sh` enforces the name check).
 4. **"Not legal advice"** appears in `README.md`, every `akte/` template, and the mapping.
-5. **Pilot integrity.** "Nordwind Bank AG" is marked fictional in *every* pilot file. The
-   documented conflict and the two red controls stay in — a flawless pilot would be
-   unbelievable, and realism is the whole argument.
+5. **Pilot integrity.** Both fictional institutions ("Nordwind Bank AG", "Südhafen Direktbank
+   AG") are marked fictional in *every* pilot file. The documented conflict and the red controls
+   stay in — a flawless pilot would be unbelievable, and realism is the whole argument. The
+   second pilot must keep ending in a refusal; do not soften it into an approval under
+   conditions.
 6. **Every document ends with "Offene Punkte" / "Open questions."** Honest gaps are the
    handwriting of this repo, not a defect.
 7. **Respect prior work.** Existing repos and vendor blueprints are linked and described
    accurately, never disparaged, never copied.
 8. **Code discipline.** Exactly one tool: `tools/render_controls.py` — under 250 lines, tested,
    ruff-clean. `controls/controls.yaml` is the single source of truth; the rendered Markdown is
-   generated, never hand-edited, and a test fails if the two drift.
+   generated, never hand-edited, and a test fails if the two drift. Every pilot must assess
+   *every* control — a test enforces it, so a new control means updating both assessments.
 
 ## Session protocol
 

@@ -11,8 +11,8 @@ ISO/IEC 42001, und Referenzarchitektur-Beiträge in großer Zahl. Diese Arbeiten
 Frage: **Wie baue ich ein konformes RAG-System?**
 
 In einem BaFin-regulierten Haus ist das aber nicht die Frage, an der Vorhaben scheitern. Dort
-ist das System typischerweise fertig — und steht dann. Es steht, weil neun Funktionen es aus
-neun Blickwinkeln bewerten, weil jede von ihnen ein Dokument erwartet, das niemand vorbereitet
+ist das System typischerweise fertig — und steht dann. Es steht, weil zehn Funktionen es aus
+zehn Blickwinkeln bewerten, weil jede von ihnen ein Dokument erwartet, das niemand vorbereitet
 hat, und weil der nächste Gremientermin in sechs Wochen ist. Die eigentliche Frage lautet:
 **Wie bekomme ich es freigegeben?**
 

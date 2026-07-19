@@ -3,8 +3,9 @@
 > ## Everyone shows you how to build compliant RAG. This repo shows you how to get it approved.
 
 The approval file, the control catalogue with written-out audit procedures, the erasure-proof
-protocol, and one fictional bank taken end to end through the process — from information
-security, data protection and the 2nd line to the board submission.
+protocol, and two fictional banks taken end to end through the process — one approved under
+conditions, one refused — from information security, data protection and the 2nd line to the
+board submission.
 
 **The approval artifacts are in German**, because German supervisory practice is the gap this
 repository fills. An [English executive summary](docs/executive-summary.en.md) is provided.
@@ -48,10 +49,14 @@ flowchart LR
         S4 --> S5["<b>Testnachweise</b><br/>akte/06"]
         S5 --> S6["<b>Kontrollbewertung</b><br/>controls/ → Readiness-Report"]
         S6 --> S7["<b>Freigabevorlage</b><br/>akte/07 — 2 Seiten"]
+        S0["<b>Mitbestimmung</b><br/>akte/08"] -.->|parallel ab Tag 1| S5
     end
 
-    B --> C["Gremienentscheidung<br/>Freigabe unter Auflagen"]
-    C --> D["Wiedervorlage<br/>Auflagen nachverfolgt"]
+    B --> C["Gremienentscheidung"]
+    C --> D["<b>Freigabe unter Auflagen</b><br/>pilot/"]
+    C --> E["<b>Keine Freigabe</b><br/>pilot-abgelehnt/"]
+    D --> F["Wiedervorlage<br/>Auflagen nachverfolgt"]
+    E --> G["Neuvorlage<br/>Bedingungen umgesetzt"]
 
     L["<b>Löschnachweis</b><br/>docs/loeschnachweis.md"] -.->|Evidenz| S5
     M["<b>Aufsichts-Mapping</b><br/>docs/mapping-*.md"] -.->|Raster| S6
@@ -60,18 +65,20 @@ flowchart LR
     style B fill:#f6f8fa,stroke:#57606a
     style S7 fill:#dbeeff,stroke:#0969da
     style L fill:#fff4e5,stroke:#bc4c00
+    style E fill:#ffe0e0,stroke:#c00
 ```
 
 ## The artifacts
 
 | Artifact | One sentence | Sprache |
 |---|---|---|
-| **[Freigabeakte](akte/)** — `01`–`07` | The seven templates an institution actually needs, each naming the actor who uses it, what the reviewing function typically asks, and its open questions. | Deutsch |
-| **[Kontrollkatalog](controls/controls.md)** | 22 controls, each with control objective, a written-out **Prüfhandlung**, the **evidence artifact**, and the supervisory mapping — generated from [`controls.yaml`](controls/controls.yaml). | Deutsch |
+| **[Freigabeakte](akte/)** — `01`–`08` | The eight templates an institution actually needs, each naming the actor who uses it, what the reviewing function typically asks, and its open questions. | Deutsch |
+| **[Kontrollkatalog](controls/controls.md)** | 23 controls, each with control objective, a written-out **Prüfhandlung**, the **evidence artifact**, and the supervisory mapping — generated from [`controls.yaml`](controls/controls.yaml). | Deutsch |
 | **[Löschnachweis](docs/loeschnachweis.md)** | Erasure as a chain across eight stations, with three separate verification steps for the vector index — because the functional test is green even when nothing was physically removed. | Deutsch |
 | **[Aufsichts-Mapping](docs/mapping-bait-vait-dora.md)** | Requirement → control → evidence, against what actually applies today (DORA, MaRisk) with BAIT/VAIT kept only as the vocabulary audit functions still speak. | Deutsch |
-| **[Zielgruppen-Matrix](docs/who-uses-this.md)** | Nine actors, their process, their artifact, their opening question. | DE/EN |
+| **[Zielgruppen-Matrix](docs/who-uses-this.md)** | Ten actors, their process, their artifact, their opening question. | DE/EN |
 | **[Pilot](pilot/)** | One fictional bank taken end to end — two red controls, one documented conflict, approval under four conditions. | Deutsch |
+| **[Zweiter Pilot](pilot-abgelehnt/)** | The counter-case: a customer-facing assistant that gets **no approval** — eight red controls, and how to write a defensible No with a path to Yes. | Deutsch |
 | **[Quellen](docs/quellen.md)** | Every citation in this repository with its verification status and retrieval date — including the ones that could not be verified. | Deutsch |
 | **[Executive summary](docs/executive-summary.en.md)** | The whole thing, for international readers. | English |
 
@@ -85,6 +92,10 @@ Do not start with the templates. Start with the worked case — about **five min
    that actually went to the board.
 
 Then open the templates. They read completely differently once you have seen where they end up.
+
+And when you need the harder case — the project that should not be approved — read
+[`pilot-abgelehnt/`](pilot-abgelehnt/). It shows how to write a No that is verifiable rather than
+personal, and why a No without a path to Yes is just a block.
 
 ## Quickstart
 
@@ -145,10 +156,13 @@ plainly:
   guess would be more dangerous than an open gap.
 - **The ghost-vectors paper is new** (June 2026); peer-review status and follow-up work are
   unknown. Treated as a strong pointer to a question, not a settled result.
-- **No co-determination building block.** A works-council agreement on prompt logging is
-  regularly the longest strand in a real approval, and there is no template for it here yet.
-- **The pilot shows no rejected case.** A second run ending in "no approval" would be
-  instructive and is not written yet.
+- **Personalvertretungsrecht is out of scope.** The co-determination building block
+  ([`akte/08`](akte/08-mitbestimmung-betriebsvereinbarung.md)) cites the BetrVG only. For
+  public-law institutions — Sparkassen, Landesbanken, Anstalten — the federal and state staff
+  representation acts apply instead; their provisions differ per state and are not worked up here.
+- **No case where the committee overrules its own control functions.** Both pilots show a
+  committee that follows the recommendation. The harder case is sketched in
+  [`pilot-abgelehnt/`](pilot-abgelehnt/07-freigabevorlage-final.md) but not worked out.
 - **Every document ends with its own "Offene Punkte".** That is the method, not an omission.
 
 Feedback, corrections and — especially — reports of a wrong citation are welcome as issues.
