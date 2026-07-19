@@ -1,0 +1,292 @@
+# Kontrollbewertung der 2nd Line zum Freigabelauf KIRA — Südhafen Direktbank AG.
+#
+# FIKTIVES INSTITUT, REALER PROZESS. Südhafen Direktbank AG ist frei erfunden; Personen,
+# Anbieter, Zahlen und Befunde sind konstruiert. Siehe pilot-abgelehnt/00-fallbeschreibung.md.
+#
+# Bewertet gegen controls/controls.yaml. Der Readiness-Report wird hieraus erzeugt:
+#   python tools/render_controls.py readiness --assessment pilot-abgelehnt/controls-assessment.yaml
+# Niemals pilot-abgelehnt/readiness-report.md von Hand ändern.
+#
+# Dies ist der Gegenfall zum ersten Piloten: acht rote Kontrollen, Empfehlung "keine Freigabe".
+# Er bleibt so stehen, weil ein Vorlagensatz auch zeigen muss, wie ein Nein aussieht.
+
+meta:
+  institution: Südhafen Direktbank AG (fiktiv)
+  system: KIRA — Kundenassistent für Rückfragen und Auskünfte
+  date: "2026-05-05"
+  assessor: N. Pallas, 2nd Line / IT-Risikocontrolling
+  recommendation: >-
+    KEINE FREIGABE. Acht Kontrollen sind nicht erfüllt, davon vier mit unmittelbarem Bezug zu
+    Kundendaten. Anders als Auflagen, die einen laufenden Betrieb begleiten können, betreffen
+    ZUG-01, BET-04 und LOE-02 die Konstruktion des Systems: Sie lassen sich nicht durch eine
+    Frist heilen, sondern nur durch eine Änderung der Architektur und der Vertragslage. Die 2nd
+    Line kann den Produktivbetrieb daher nicht befürworten — auch nicht eingeschränkt auf einen
+    Teil der Kundschaft, weil die Befunde nicht mit der Zahl der Nutzenden skalieren, sondern mit
+    jeder einzelnen Anfrage eintreten können.
+  note: |
+    Bewertet wurden alle 23 Kontrollen des Katalogs gegen die vorgelegten Nachweise sowie durch
+    eigene Tests am 28.04. und 30.04.2026.
+
+    **Zur Lesart.** Rot bedeutet hier nicht „schlecht umgesetzt", sondern „in der Kernaussage
+    nicht belegbar". Bei ZUG-01 ist die Kontrolle nachweislich unwirksam, bei LOE-02 ist sie
+    nicht überprüfbar, weil der Anbieter die erforderliche Auskunft nicht erteilt. Beides führt
+    zum selben Ergebnis, aus unterschiedlichen Gründen.
+
+    **Zur Einordnung.** KIRA unterstützt nach Auffassung der 2nd Line eine kritische oder
+    wichtige Funktion im Sinne von DORA Art. 3 Nr. 22, weil das System in den einzigen
+    Kundenkontaktkanal eines Instituts ohne Filialnetz eingebettet werden soll und der
+    Personalabbau im Kundenservice bereits geplant ist. Der Projektbereich teilt diese Einordnung
+    nicht; die abweichende Auffassung ist in der Freigabevorlage dokumentiert.
+
+results:
+  # --- Zugriff und Berechtigungen -----------------------------------------------------------
+  - control: ZUG-01
+    status: red
+    finding: >-
+      Die Berechtigungsprüfung wirkt erst nach dem Retrieval. Im Test am 17.02.2026 erhielt ein
+      Testkunde auf die Frage nach seiner letzten Abbuchung einen Betrag eines anderen Kunden;
+      Ursache war ein leeres Metadatenfeld "kundennummer", das in der eingesetzten Konfiguration
+      nicht ausschließt, sondern durchlässt. Nach Nachbesserung trat im Wiederholungstest am
+      31.03.2026 kein Kreuztreffer mehr auf, die Filterung erfolgt jedoch weiterhin nach dem
+      Abruf: Das System ruft Fragmente aller Kundinnen und Kunden ab und verwirft anschließend
+      die nicht passenden. Fremde Kundendaten verlassen damit den Sicherheitsbereich, bevor die
+      Prüfung greift.
+    auflage: >-
+      Bedingung B1 — Umbau auf eine Berechtigungsprüfung, die vor dem Abruf wirkt (Filterung im
+      Index, nicht nach dem Treffer). Anschließend Negativ-Retrieval-Test mit mindestens 200
+      kundenübergreifenden Anfragen, extern begleitet.
+    due: "vor Neuvorlage"
+    owner: K. Öztürk
+  - control: ZUG-02
+    status: yellow
+    finding: >-
+      Eine Wirkzeit für den Entzug von Zugriffsrechten ist nicht zugesagt und nicht gemessen. Bei
+      einem Kundensystem ist der relevante Fall die Kontoauflösung bzw. der Widerruf einer
+      Vollmacht; ein Test dazu liegt nicht vor.
+    auflage: Wirkzeit zusagen, messen und dokumentieren.
+    due: "vor Neuvorlage"
+    owner: K. Öztürk
+  - control: ZUG-03
+    status: yellow
+    finding: >-
+      Rezertifizierung ist für die administrativen Zugänge geregelt, nicht jedoch für die
+      Berechtigungslogik gegenüber Kundinnen und Kunden; für diese existiert kein
+      Überprüfungsverfahren.
+    auflage: Verfahren definieren und in den bestehenden Rezertifizierungsprozess einbinden.
+    due: "vor Neuvorlage"
+    owner: Dr. H. Wiegand
+  - control: ZUG-04
+    status: red
+    finding: >-
+      Eine Aggregationsbewertung hat nicht stattgefunden. Bei einem System, das Vertrags- und
+      Umsatzdaten mit Produktinformationen zusammenführt, ist sie nicht verzichtbar: Aus
+      Umsatzmustern lassen sich Rückschlüsse auf Lebenssituationen ziehen, die das Institut in
+      dieser Verdichtung bislang nicht vorhält. Auf Nachfrage am 28.04.2026 wurde erklärt, die
+      Frage sei "durch die Kundennummernfilterung abgedeckt" — das ist eine Zugriffs-, keine
+      Aggregationsbetrachtung.
+    auflage: >-
+      Bedingung B4 — Aggregationsbewertung gemeinsam mit Datenschutz und Fachbereich nachholen,
+      mit dokumentierten Hypothesen und Maßnahmen.
+    due: "vor Neuvorlage"
+    owner: L. Feddersen
+
+  # --- Datenklassifizierung -----------------------------------------------------------------
+  - control: KLA-01
+    status: green
+    finding: >-
+      Die 1.430 Produkt- und Prozessdokumente sind einzeln freigegeben und im Quellenverzeichnis
+      geführt. Für die Kundendaten aus dem Kernbanksystem greift die bestehende
+      Datenfreigaberegelung des Hauses.
+    owner: B. Salzmann
+  - control: KLA-02
+    status: yellow
+    finding: >-
+      Eine Schutzbedarfsfeststellung liegt vor, bewertet jedoch nur die Quelldokumente. Embeddings,
+      Vektorindex und Prompt-Protokoll sind nicht als eigene Verarbeitungsstufen betrachtet — bei
+      einem Index, der beim Anbieter außerhalb der EU liegt, ist das die zentrale Lücke.
+    auflage: Feststellung je Verarbeitungsstufe S1 bis S8 nachziehen.
+    due: "vor Neuvorlage"
+    owner: Dr. H. Wiegand
+  - control: KLA-03
+    status: yellow
+    finding: >-
+      Gültigkeitszeiträume sind für Produktkonditionen gepflegt, für Prozessdokumente nicht. Im
+      Test wurden zwei abgelöste Gebührenregelungen als geltend zitiert — bei Auskünften gegenüber
+      Kundinnen und Kunden ist das kein Schönheitsfehler.
+    auflage: Gültigkeitsmetadaten für alle Quellen verpflichtend machen, anschließend erneut testen.
+    due: "vor Neuvorlage"
+    owner: K. Öztürk
+
+  # --- Löschung ------------------------------------------------------------------------------
+  - control: LOE-01
+    status: yellow
+    finding: >-
+      Ein Löschkonzept existiert und bildet Quelle, Fragmente und Caches ab. Die Stationen
+      Vektorindex und Sicherungen sind nicht beschrieben, weil sie beim Anbieter liegen.
+    auflage: Löschkonzept über alle acht Stationen führen, einschließlich der beim Anbieter liegenden.
+    due: "vor Neuvorlage"
+    owner: L. Feddersen
+  - control: LOE-02
+    status: red
+    finding: >-
+      Der Nachweis ist nicht führbar. Der Vektorindex ist ein verwalteter Dienst von Halcyon
+      Systems Inc.; eine Inspektion auf Ebene der Indexdateien ist für das Institut nicht möglich.
+      Auf schriftliche Anfrage vom 07.04.2026 hat der Anbieter am 20.04.2026 mitgeteilt, dass
+      gelöschte Vektoren "gemäß interner Aufbewahrungsrichtlinie" entfernt werden, ohne Angabe
+      eines Zeitraums, eines Verfahrens oder einer Zusicherung zur physischen Entfernung. Damit
+      ist die Löschung weder verifizierbar noch als unumkehrbar belegbar. Bei Kundendaten mit
+      Löschverlangen nach Art. 17 DSGVO ist das nicht tragfähig.
+    auflage: >-
+      Bedingung B2 — Verbindliche, schriftliche Anbieterzusage zu Verfahren und Frist der
+      physischen Entfernung, oder Verlagerung des Index in den eigenen Verantwortungsbereich, oder
+      Krypto-Shredding mit institutsseitiger Schlüsselhoheit.
+    due: "vor Neuvorlage"
+    owner: E. Bruckner
+  - control: LOE-03
+    status: red
+    finding: >-
+      Ohne Aussage zur Löschung im Index (LOE-02) ist auch der Umgang mit Sicherungen und
+      Wiederherstellungen nicht bewertbar. Ein Verfahren zur erneuten Anwendung von
+      Löschverlangen nach einem Restore existiert nicht.
+    auflage: Löschliste einführen und Prüfschritt im Wiederanlaufplan verankern.
+    due: "vor Neuvorlage"
+    owner: K. Öztürk
+  - control: LOE-04
+    status: yellow
+    finding: >-
+      Für Prompt- und Antwortprotokolle ist eine Aufbewahrungsfrist von 24 Monaten vorgesehen,
+      begründet mit "Nachweiszwecken". Eine Abwägung gegenüber dem Grundsatz der
+      Speicherbegrenzung ist nicht dokumentiert; bei Protokollen, die Kundenanfragen im Wortlaut
+      enthalten, ist die Frist erläuterungsbedürftig.
+    auflage: Frist begründen oder verkürzen; Abwägung dokumentieren.
+    due: "vor Neuvorlage"
+    owner: L. Feddersen
+
+  # --- Evaluierung ---------------------------------------------------------------------------
+  - control: EVA-01
+    status: red
+    finding: >-
+      Ein Referenzfragenkatalog existiert nicht. Die Antwortqualität wird über
+      Daumen-hoch-Rückmeldungen der Nutzenden gemessen; im Pilotbetrieb lag die Zustimmungsquote
+      bei 88 %. Diese Kennzahl misst Zufriedenheit, nicht Richtigkeit — und sie ist bei
+      Kundenauskünften zu Gebühren und Konditionen als Qualitätsnachweis ungeeignet. Ein
+      Schwellenwert für die Freigabe ist nicht definiert.
+    auflage: >-
+      Bedingung B5 — Referenzfragenkatalog durch den Fachbereich erstellen, mit hinterlegten
+      Sollantworten, getrennter Kategorie für nicht beantwortbare Fragen und definiertem
+      Schwellenwert.
+    due: "vor Neuvorlage"
+    owner: J. Reinhardt
+  - control: EVA-02
+    status: red
+    finding: >-
+      Das Verhalten bei nicht beantwortbaren Fragen ist ungeprüft. In der Stichprobe der 2nd Line
+      am 30.04.2026 beantwortete das System 7 von 20 Fragen zu nicht existierenden Produkten mit
+      einer plausibel formulierten, frei erfundenen Auskunft — darunter eine Angabe zu einem
+      Kontomodell, das nie angeboten wurde.
+    auflage: Nach Umsetzung von B5 getrennt messen, Schwellenwert 0 % selbstbewusst falscher Antworten.
+    due: "vor Neuvorlage"
+    owner: K. Öztürk
+  - control: EVA-03
+    status: red
+    finding: >-
+      Antworten zu Gebühren und Produktkonditionen werden ohne durchgängige Fundstellenangabe
+      ausgegeben. Damit ist im Nachhinein nicht feststellbar, auf welcher Grundlage eine Kundin
+      oder ein Kunde informiert wurde. Das Verhältnis solcher Auskünfte zu vorvertraglichen
+      Informationspflichten ist ungeklärt; eine rechtliche Bewertung liegt nicht vor.
+    auflage: >-
+      Bedingung B3 — Durchgängige Quellenbindung mit Fundstelle und Stand, sowie rechtliche
+      Bewertung der Auskunftserteilung gegenüber Kundinnen und Kunden.
+    due: "vor Neuvorlage"
+    owner: B. Salzmann
+  - control: EVA-04
+    status: yellow
+    finding: >-
+      Ein Test auf Prompt-Manipulation wurde am 24.03.2026 für direkte Eingaben durchgeführt und
+      bestanden. Indirekte Einschleusung wurde nicht getestet. Bei einem Kundensystem ist die
+      Angriffsfläche naturgemäß größer als bei einem internen — hier wiegt der offene Punkt
+      schwerer als im Vergleichsfall.
+    auflage: Test auf indirekte Einschleusung nachholen, extern begleitet.
+    due: "vor Neuvorlage"
+    owner: Dr. H. Wiegand
+
+  # --- Protokollierung -----------------------------------------------------------------------
+  - control: AUD-01
+    status: green
+    finding: >-
+      Anfrage, abgerufene Fragmente, Antwort, Kundenkennung und Zeitpunkt werden protokolliert;
+      die Rekonstruktion einer Anfrage vom 12.03.2026 wurde am 30.04.2026 vollständig vorgeführt.
+      Die Protokollierung der abgerufenen Fragmente hat den Befund zu ZUG-01 überhaupt erst
+      nachweisbar gemacht.
+    owner: K. Öztürk
+  - control: AUD-02
+    status: yellow
+    finding: >-
+      Der Zugriff auf die Protokolle ist auf eine Rolle im Kundenservice beschränkt, jedoch ohne
+      dokumentiertes Anlassverfahren und ohne Vier-Augen-Prinzip. Die Protokolle enthalten
+      Kundenanfragen im Wortlaut.
+    auflage: Anlassbezogenes Zugriffsverfahren mit Vier-Augen-Prinzip einführen.
+    due: "vor Neuvorlage"
+    owner: L. Feddersen
+  - control: AUD-03
+    status: green
+    finding: >-
+      Ein Meldeweg für fehlerhafte Auskünfte ist in der Anwendung eingerichtet und an den
+      bestehenden Beschwerdeprozess angebunden; 34 Meldungen aus dem Pilotbetrieb sind
+      bearbeitet. Der Meldeweg hat den Befund zu KLA-03 aufgedeckt.
+    owner: J. Reinhardt
+  - control: AUD-04
+    status: green
+    finding: >-
+      Mitbestimmung ist nicht einschlägig: KIRA richtet sich an Kundinnen und Kunden, nicht an
+      Beschäftigte, und protokolliert keine Beschäftigtendaten. Der Betriebsrat wurde am
+      16.02.2026 informiert, weil der geplante Personalabbau im Kundenservice mit dem Vorhaben
+      zusammenhängt; das ist ein eigener Vorgang außerhalb dieses Katalogs.
+    owner: J. Reinhardt
+
+  # --- Betrieb und Änderungswesen ------------------------------------------------------------
+  - control: BET-01
+    status: yellow
+    finding: >-
+      Anwendungsänderungen laufen im Standardverfahren. Modell-, Embedding- und Prompt-Änderungen
+      sind nicht als Änderungen erfasst; die Systemprompts liegen unversioniert in einer
+      Konfigurationsdatei.
+    auflage: Modell-, Embedding- und Prompt-Änderungen ins Änderungsverfahren aufnehmen.
+    due: "vor Neuvorlage"
+    owner: B. Salzmann
+  - control: BET-02
+    status: yellow
+    finding: >-
+      Der Vertrag enthält keine Ankündigungsfrist für Modellaktualisierungen. Anders als im
+      Vergleichsfall besteht auch keine kompensierende Erkennung, weil ohne Referenzfragenkatalog
+      (EVA-01) kein Regressionslauf möglich ist.
+    auflage: Nach Umsetzung von B5 wöchentlichen Regressionslauf einrichten; Ankündigungsfrist verhandeln.
+    due: "vor Neuvorlage"
+    owner: E. Bruckner
+  - control: BET-03
+    status: yellow
+    finding: >-
+      Ein Abschaltmechanismus ist vorhanden und in der Testumgebung erprobt. Degradationsmodi sind
+      nicht definiert; für den Ausfall des Anbieters existiert kein beschriebenes Verhalten. Bei
+      einem Kanal ohne Filialalternative ist das ein eigenständiges Thema.
+    auflage: Degradationsmodi definieren, Abschaltung in Produktion erproben.
+    due: "vor Neuvorlage"
+    owner: K. Öztürk
+  - control: BET-04
+    status: red
+    finding: >-
+      Halcyon Systems Inc. war bei Projektstart nicht als IKT-Drittdienstleister eingeordnet und
+      nicht im Informationsregister erfasst; beides wurde erst am 26.01.2026 nachgeholt, nach
+      Vertragsschluss. Die Verarbeitung von Kundendaten findet ausschließlich in der US-Region
+      Oregon statt; eine EU-Region wird vom Anbieter nicht angeboten. Eine belastbare Grundlage
+      für die Drittlandübermittlung nach Art. 44 bis 49 DSGVO liegt nicht vor — die vorgelegte
+      Anbieterdokumentation verweist auf Standardvertragsklauseln, ohne dass eine
+      Transferfolgenabschätzung durchgeführt wurde. Eine Exit-Strategie ist nicht beschrieben; ein
+      Ausweichanbieter ist nicht bewertet.
+    auflage: >-
+      Bedingung B2 (gemeinsam mit LOE-02) — Verarbeitung von Kundendaten in der EU, oder eine
+      tragfähige und dokumentierte Grundlage der Drittlandübermittlung einschließlich
+      Transferfolgenabschätzung. Zusätzlich Exit-Strategie und Bewertung des
+      Konzentrationsrisikos nachziehen.
+    due: "vor Neuvorlage"
+    owner: E. Bruckner
