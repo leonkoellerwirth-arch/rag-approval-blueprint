@@ -79,8 +79,13 @@ flowchart LR
 | **[Zielgruppen-Matrix](docs/who-uses-this.md)** | Ten actors, their process, their artifact, their opening question. | DE/EN |
 | **[Pilot](pilot/)** | One fictional bank taken end to end — two red controls, one documented conflict, approval under four conditions. | Deutsch |
 | **[Zweiter Pilot](pilot-abgelehnt/)** | The counter-case: a customer-facing assistant that gets **no approval** — eight red controls, and how to write a defensible No with a path to Yes. | Deutsch |
+| **[Evidenz](pilot/evidenz/)** | The specimens the audit procedures actually ask for: a deletion protocol that documents an *unprovable* erasure with the numbers, and two test protocols in the full evidence format. | Deutsch |
+| **[Revisionssicht](pilot/revision/)** | What internal audit makes of all this — a risk-based audit programme and the report, whose most serious finding is one nobody else had. | Deutsch |
 | **[Quellen](docs/quellen.md)** | Every citation in this repository with its verification status and retrieval date — including the ones that could not be verified. | Deutsch |
 | **[Executive summary](docs/executive-summary.en.md)** | The whole thing, for international readers. | English |
+
+Each folder has its own README as an entry point: [`akte/`](akte/) · [`controls/`](controls/) ·
+[`pilot/`](pilot/) · [`pilot-abgelehnt/`](pilot-abgelehnt/) · [`docs/`](docs/).
 
 ### ▶ Start with the pilot
 
@@ -96,6 +101,14 @@ Then open the templates. They read completely differently once you have seen whe
 And when you need the harder case — the project that should not be approved — read
 [`pilot-abgelehnt/`](pilot-abgelehnt/). It shows how to write a No that is verifiable rather than
 personal, and why a No without a path to Yes is just a block.
+
+Two layers are worth opening on their own:
+
+- [`pilot/evidenz/`](pilot/evidenz/) — the artifacts the Prüfhandlungen demand. The deletion
+  protocol documents an erasure that could **not** be proven, with the numbers that show it:
+  38.420 physical index entries before and after, tombstones from 6 to 47.
+- [`pilot/revision/`](pilot/revision/) — the audit programme and report. Its most serious finding
+  is not one of the known conditions but a new data source that slipped past the change process.
 
 ## Quickstart
 
@@ -163,6 +176,11 @@ plainly:
 - **No case where the committee overrules its own control functions.** Both pilots show a
   committee that follows the recommendation. The harder case is sketched in
   [`pilot-abgelehnt/`](pilot-abgelehnt/07-freigabevorlage-final.md) but not worked out.
+- **No specimens for the `KLA` and `AUD` control domains.** Their evidence consists of registers
+  and evaluations that do not lend themselves to a single example document.
+- **No documentation site and no UI.** One tool under 250 lines is the whole code budget. GitHub
+  Pages was evaluated and deliberately not enabled: the Mermaid diagrams render on github.com but
+  not under Jekyll, so a docs site would make this *less* readable.
 - **Every document ends with its own "Offene Punkte".** That is the method, not an omission.
 
 Feedback, corrections and — especially — reports of a wrong citation are welcome as issues.

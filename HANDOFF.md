@@ -3,6 +3,40 @@
 Session handoffs, **newest entry first**. Written by `/session-stop` (via
 `scripts/session-snapshot.sh`). Read the top entry at `/session-start`.
 
+## 2026-07-19 — Session 3: v0.3.0, Evidenz-Ebene und Revisionssicht
+
+_gate PASS · 20 Tests · 23 Kontrollen · 8 Vorlagen · 2 Piloten · 3 Evidenz-Muster_
+
+- **Done:** `pilot/evidenz/` (Löschprotokoll + zwei Testprotokolle im Evidenzformat),
+  `pilot/revision/` (Prüfprogramm + Prüfungsbericht), sechs Ordner-READMEs, Release v0.3.0.
+- **Der Auslöser:** Beim Prüfen der Frage „haben wir für alle Zielgruppen Beispiele?" kam heraus,
+  dass der Pilot **sieben Evidenz-IDs referenzierte, von denen keine existierte** — bei einem
+  Repository, dessen Prüfhandlungen wörtlich das Rohprotokoll verlangen. Das war der Widerspruch
+  zur eigenen These, nicht eine Vollständigkeitslücke.
+- **Decided:**
+  - **INV-10:** kein gefordertes Artefakt ohne Muster. Wer ein Format definiert, muss es zeigen.
+  - **Das Löschprotokoll-Muster dokumentiert bewusst einen nicht bestandenen Schritt.** Ein
+    Muster, in dem alles glattgeht, zeigt nicht, wofür das Format da ist.
+  - **Die wesentliche Feststellung des Prüfungsberichts ist keine der bekannten Auflagen**,
+    sondern eine neue Datenquelle am Änderungsverfahren vorbei — weil die Abgrenzung „neue
+    Quelle" gegen „einzelne Dokumente" kein prüfbares Merkmal hatte. Das ist die realistischste
+    Art, wie eine Kontrolle im Betrieb erodiert.
+  - **GitHub Pages bewusst NICHT aktiviert** — Mermaid rendert auf github.com, nicht unter
+    Jekyll. Ein Doku-Site hätte die Lesbarkeit verschlechtert; ein JS-Include wäre neuer Code
+    gegen INV-8. Navigation stattdessen über Ordner-READMEs.
+- **Open:**
+  - Keine Muster für die Domänen `KLA` und `AUD` — deren Evidenz sind Verzeichnisse und
+    Auswertungen, die sich schlecht als Einzeldokument abbilden lassen.
+  - Weiterhin kein Fall, in dem ein Gremium **gegen** seine Kontrollfunktionen entscheidet.
+- **Next:** Der Gremium-entscheidet-dagegen-Fall bleibt der stärkste Kandidat für v0.4.0.
+- **Continuity warnings:**
+  - **INV-10 gilt ab jetzt:** Wer eine neue Evidenz-ID in einem Pilot erwähnt, muss die Datei
+    unter `pilot/evidenz/` anlegen. Ein Verweis ins Leere ist genau der Fehler, den das Repo
+    anderen vorwirft.
+  - Ordner-READMEs enthalten Zählwerte (8 Vorlagen, 23 Kontrollen, 10 Akteure) — bei Änderungen
+    mit grep alle Stellen suchen.
+  - Pages bleibt deaktiviert; die Begründung steht im BIBLE-Entscheidungsregister.
+
 ## 2026-07-19 — Session 2: v0.2.0, both v0.1.0 gaps closed
 
 _gate PASS · 20 tests green · 23 controls · 8 akte templates · 2 pilots_

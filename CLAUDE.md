@@ -32,6 +32,8 @@ framework. Never overclaim it.
 | `docs/mapping-bait-vait-dora.md` | supervisory mapping: requirement → control → evidence | German |
 | `pilot/` | one fictional case run end to end — the proof that the set works | German |
 | `pilot-abgelehnt/` | the counter-case: a project that receives no approval | German |
+| `pilot/evidenz/` | filled specimens of the evidence artifacts the Prüfhandlungen demand | German |
+| `pilot/revision/` | internal audit's own output: audit programme and report | German |
 
 ## Content rules (this repo lives or dies by them)
 
@@ -53,9 +55,13 @@ framework. Never overclaim it.
    conditions.
 6. **Every document ends with "Offene Punkte" / "Open questions."** Honest gaps are the
    handwriting of this repo, not a defect.
-7. **Respect prior work.** Existing repos and vendor blueprints are linked and described
+7. **Demand nothing the repo does not show.** If a template defines a format or an audit
+   procedure asks for an artifact, a filled specimen must exist under `pilot/evidenz/`.
+   Referencing an evidence ID that has no corresponding file is the exact failure this repo
+   criticises in others.
+8. **Respect prior work.** Existing repos and vendor blueprints are linked and described
    accurately, never disparaged, never copied.
-8. **Code discipline.** Exactly one tool: `tools/render_controls.py` — under 250 lines, tested,
+9. **Code discipline.** Exactly one tool: `tools/render_controls.py` — under 250 lines, tested,
    ruff-clean. `controls/controls.yaml` is the single source of truth; the rendered Markdown is
    generated, never hand-edited, and a test fails if the two drift. Every pilot must assess
    *every* control — a test enforces it, so a new control means updating both assessments.

@@ -92,7 +92,7 @@ und Quellenangaben gemeinsam wirksam. Code-Review durch A. Kellner (Enterprise-A
 Dieselben fünf Anfragen, dieselbe Testnutzeridentität. Alle Anfragen lieferten:
 Antworttext „Ich konnte keine Informationen zu Ihrer Anfrage in den für Sie zugänglichen
 Unterlagen finden." — Quellenangabe: leer. Kein Titel, kein Pfad, kein Abschnittsverweis aus
-nicht berechtigten Dokumenten sichtbar. Evidenz: NORA-TP-T1-20260306.
+nicht berechtigten Dokumenten sichtbar. Evidenz: [`NORA-TP-T1-20260306`](../evidenz/NORA-TP-T1-20260306.md) — vollständiges Protokoll im Evidenzformat.
 
 *Zwischen Befund (11.02.2026) und bestandenem Nachtest lagen drei Wochen. Wer diesen Test erst
 kurz vor dem Gremientermin ansetzt, verliert einen Sitzungszyklus.*
@@ -160,7 +160,7 @@ V2 rot: Die Löschung ist auf Indexdatei-Ebene nicht vollzogen.
 **Bewertung.** Kontrolle `LOE-02` (Verifikation der Löschung im Vektorindex) als **nicht erfüllt**
 bewertet. Auflage A1: wöchentlicher Kompaktierungslauf mit Protokoll; Nachweis der physischen
 Entfernung und Unumkehrbarkeit durch T. Brand an Dr. P. Ohlsen und R. Mattis bis 30.09.2026.
-Evidenz des Testlaufs: NORA-TP-T3-20260428.
+Evidenz des Testlaufs: Löschprotokoll [`NORA-LP-2026-014`](../evidenz/NORA-LP-2026-014.md) — es führt die Stationen S1 bis S8 sowie die Verifikationsschritte V1 bis V3 und hält den negativen Befund zu V2 mit Zahlen fest.
 
 ### T4 — Aggregation und Leakage über Dokumentgrenzen
 

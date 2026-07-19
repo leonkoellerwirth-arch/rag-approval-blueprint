@@ -110,7 +110,9 @@ results:
       jedoch. Die Inspektion am 28.04.2026 zeigte, dass gelöschte Vektoren als markierte Einträge
       physisch im HNSW-Index verbleiben; eine Kompaktierung war nicht eingerichtet und ein
       Neuaufbau erfolgt nur bei Modellwechsel. Damit ist die Löschung derzeit weder als
-      unumkehrbar belegt noch widerlegt.
+      unumkehrbar belegt noch widerlegt. Belegt im Löschprotokoll NORA-LP-2026-014
+      (siehe pilot/evidenz/): 38.420 physische Einträge vor wie nach der Löschung,
+      Tombstones von 6 auf 47, Dateigröße unverändert.
     auflage: >-
       Einrichtung eines wöchentlichen Kompaktierungslaufs mit Protokoll sowie Nachweis der
       Unumkehrbarkeit durch Index-Inspektion vor und nach dem Lauf (Elementanzahl, markierte

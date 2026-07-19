@@ -107,12 +107,20 @@ Prüfungsvorbereitung.
 **Unser Artefakt.** Der [Kontrollkatalog](../controls/controls.md) ist in der Sprache der
 Prüfhandlung geschrieben („Lasse dir X zeigen, wähle Stichprobe Y, prüfe Z"). [`06
 Testnachweise`](../akte/06-testnachweise.md) definiert, welche Tests die Freigabe verlangt und in
-welchem Evidenzformat. [`07 Freigabevorlage`](../akte/07-freigabevorlage.md) zeigt, was dem
-Gremium tatsächlich vorgelegt wurde — und damit, woran Sie die Umsetzung messen.
+welchem Evidenzformat; [`pilot/evidenz/`](../pilot/evidenz/) zeigt ausgefüllte Muster davon.
+[`07 Freigabevorlage`](../akte/07-freigabevorlage.md) zeigt, was dem Gremium tatsächlich
+vorgelegt wurde — und damit, woran Sie die Umsetzung messen.
+
+Und als einziger Akteur finden Sie hier **Ihr eigenes Arbeitsergebnis** als Muster:
+[`pilot/revision/`](../pilot/revision/) enthält ein risikoorientiertes Prüfprogramm, aus dem
+Kontrollkatalog abgeleitet, und den Prüfungsbericht dazu — vier Feststellungen, eine davon
+wesentlich, und keine von ihnen betraf eine der bekannten Auflagen.
 
 **Ihre typischen Fragen.** Gibt es ein Prüfprogramm für dieses System? Sind die Auflagen aus der
 Freigabe nachverfolgt und mit Fristen versehen? Wurde nach dem Go-live etwas geändert, ohne dass
-das Änderungswesen gegriffen hat? Existiert die Evidenz noch, oder nur die Behauptung?
+das Änderungswesen gegriffen hat? Existiert die Evidenz noch, oder nur die Behauptung? Und die
+Frage, die im Pilot-Prüfungsbericht am meisten hergibt: Tragen die Zahlen, die dem Vorstand
+vorgelegt wurden?
 
 ### Auslagerungsmanagement / DORA-Verantwortliche
 

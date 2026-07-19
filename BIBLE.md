@@ -36,6 +36,9 @@ internal audit, board submission. Not another RAG security pattern library.
   ever polished clean, and the second one must keep ending in a refusal.
 - **INV-8 — One tool only.** `tools/render_controls.py`, under 250 lines, ruff-clean, tested.
   No second tool, no framework, no plugin surface.
+- **INV-10 — No demanded artifact without a specimen.** Every evidence format the repo defines
+  and every evidence ID a pilot references must have a filled example under `pilot/evidenz/`.
+  Otherwise the repo commits the defect it exists to name.
 - **INV-9 — Every pilot assesses every control.** A pilot that silently skips a control would
   overstate how complete its assessment is. Enforced by test; adding a control means updating both
   assessments.
@@ -43,6 +46,18 @@ internal audit, board submission. Not another RAG security pattern library.
 ## Decision register
 
 Newest first. Each: date · decision · why · (superseded by …).
+
+- **2026-07-19 — Evidenz-Ebene und Revisionssicht ergänzt (`pilot/evidenz/`, `pilot/revision/`).**
+  *Why:* Der Katalog verlangt zu jeder Kontrolle ein Evidenz-Artefakt und die Prüfhandlungen
+  fordern ausdrücklich das Rohprotokoll — der Pilot referenzierte sieben Evidenz-IDs, von denen
+  keine existierte. Damit tat das Repository genau das, was es anderen vorwirft. Das
+  Löschprotokoll dokumentiert bewusst einen **nicht bestandenen** Verifikationsschritt, weil
+  sich nur daran zeigt, wofür das Format da ist. Die interne Revision war der einzige Akteur
+  ohne Beispiel für ihr eigenes Arbeitsergebnis.
+- **2026-07-19 — GitHub Pages wird bewusst NICHT aktiviert.** Das README-Kontextdiagramm und
+  die Löschkette sind Mermaid; github.com rendert sie nativ, Jekyll auf Pages nicht. Pages
+  würde die Lesbarkeit verschlechtern, und ein JS-Include wäre neuer Code gegen INV-8. Das
+  Navigationsproblem wird stattdessen durch Ordner-READMEs gelöst.
 
 - **2026-07-19 — The Freigabeakte has eight parts, not seven; the briefing's set is extended.**
   Added `akte/08-mitbestimmung-betriebsvereinbarung.md` plus control `AUD-04`. *Why:* v0.1.0's own

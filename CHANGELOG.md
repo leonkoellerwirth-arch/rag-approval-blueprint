@@ -6,6 +6,60 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.3.0] — 2026-07-19
+
+Closes the gap the repository had against its own thesis: it demanded evidence and never showed
+any.
+
+### Added
+
+- **`pilot/evidenz/`** — the filled specimens of the artifacts the Prüfhandlungen ask for. Until
+  now the pilot referenced seven evidence IDs and **none of them existed**, while
+  `akte/06-testnachweise.md` insisted on "the raw protocol, not the summary". That was the exact
+  defect this repository criticises in others.
+  - `NORA-LP-2026-014` — a deletion protocol that documents an erasure which could **not** be
+    proven: V1 functionally green, V2 physically red, with the numbers that show it (38.420
+    physical index entries before and after, tombstones from 6 to 47, file size unchanged). It is
+    the most instructive document in the repository precisely because it records a failure.
+  - `NORA-TP-T1-20260306` — the negative-retrieval test in the full thirteen-field evidence
+    format: query wording, verbatim system responses, a positive control, the retrieval log
+    proving non-permitted fragments were never fetched, and the reference to the failed first run.
+  - `NORA-TP-T8-20260616` — the kill-switch test, deliberately short, to show how little a
+    load-bearing protocol needs and which four details it still cannot omit.
+- **`pilot/revision/`** — internal audit's own output, the one actor whose work product was
+  missing.
+  - A risk-based audit programme selecting 9 of 23 controls, with the criteria for that selection
+    and one audit procedure that checks whether the **board submission's own figures** hold.
+  - The report: four findings, one material — and it is not one of the known conditions but a new
+    data source that entered the knowledge base past the change process, because the boundary
+    between "new source" and "additional documents" was never defined by a testable criterion.
+- **Folder READMEs** for `akte/`, `controls/`, `pilot/`, `pilot-abgelehnt/`, `docs/` and
+  `pilot/evidenz/` as entry points into 47 files and 67,000 words.
+
+### Changed
+
+- Referenced evidence IDs now resolve to real files; `docs/loeschnachweis.md` and
+  `akte/06-testnachweise.md` link the worked specimens.
+- Internal audit's section in `docs/who-uses-this.md` now points at its own artifacts.
+- New invariant **INV-10**: no demanded artifact without a specimen.
+
+### Deliberately not done
+
+- **GitHub Pages was not enabled.** The README context diagram and the deletion chain are
+  Mermaid; github.com renders them natively, Jekyll on Pages does not. A docs site would have
+  made the repository *less* readable, and the JS include needed to fix that would be new code
+  against INV-8. The navigation problem is solved with folder READMEs instead.
+- **No UI.** One tool, under 250 lines, is the whole code budget (INV-8).
+
+### Known limitations
+
+Unchanged from v0.2.0, plus:
+
+- **No specimens for the `KLA` and `AUD` domains.** Their evidence consists of registers and
+  evaluations that do not lend themselves to a single example document.
+- **The audit report is dated after the current date** (16.10.2026), as are parts of both pilot
+  timelines. The fictional cases run into late 2026 and early 2027 by construction.
+
 ## [0.2.0] — 2026-07-19
 
 Closes both gaps that v0.1.0 named in its own known limitations.
@@ -121,5 +175,6 @@ featuring technological innovation and artificial intelligence.
 - **The audience matrix assumes a mid-sized institution's separation of functions**; smaller
   houses merge roles, groups add layers.
 
+[0.3.0]: https://github.com/leonkoellerwirth-arch/rag-approval-blueprint/releases/tag/v0.3.0
 [0.2.0]: https://github.com/leonkoellerwirth-arch/rag-approval-blueprint/releases/tag/v0.2.0
 [0.1.0]: https://github.com/leonkoellerwirth-arch/rag-approval-blueprint/releases/tag/v0.1.0

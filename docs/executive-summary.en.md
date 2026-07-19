@@ -32,6 +32,8 @@ worked case.
 | **`docs/mapping-bait-vait-dora.md`** | Requirement → control → evidence, against what actually applies in Germany today. **German.** |
 | **`pilot/`** | One fictional institution taken end to end through the approval process, with two red controls and a documented conflict between two functions. **German.** |
 | **`pilot-abgelehnt/`** | The counter-case: a customer-facing assistant that receives **no approval**, and how to write a No that is verifiable rather than personal — with the five conditions that would make it approvable. **German.** |
+| **`pilot/evidenz/`** | The specimens the audit procedures actually ask for — including a deletion protocol that documents an erasure which could **not** be proven, with the numbers that show it. **German.** |
+| **`pilot/revision/`** | Internal audit's own output: a risk-based audit programme derived from the catalogue, and the report it produced. **German.** |
 | **`docs/who-uses-this.md`** | Ten actors, their process, their artifact, their opening question. Bilingual. |
 
 ## Three things that make it different

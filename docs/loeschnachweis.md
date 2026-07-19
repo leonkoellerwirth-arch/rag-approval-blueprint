@@ -193,6 +193,10 @@ Konflikt nicht zu erwähnen.*
 Dieses Protokoll ist das Evidenz-Artefakt für die Kontrollen `LOE-01` und `LOE-02`. Führen Sie es
 je Löschvorgang.
 
+> **Ausgefülltes Muster:** [`pilot/evidenz/NORA-LP-2026-014.md`](../pilot/evidenz/NORA-LP-2026-014.md)
+> — bewusst ein Fall, in dem V2 **nicht** bestanden wurde, weil sich daran zeigt, wofür das
+> Format da ist.
+
 ---
 
 ### Löschprotokoll Nr. `<lfd. Nr.>`

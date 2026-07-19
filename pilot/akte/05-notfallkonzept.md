@@ -135,14 +135,14 @@ LLM-Aufruf ausgeführt.
 | Feld | Inhalt |
 |---|---|
 | Technische Umsetzung | Feature-Flag `nora.enabled` in der zentralen Konfigurationsverwaltung (RZ Bremen). Setzen auf `false` bewirkt, dass alle NORA-Endpunkte HTTP 503 mit Statusmeldung zurückgeben; laufende Verbindungen werden beim nächsten Response-Zyklus abgebrochen. |
-| Wirkzeit | Zielwert < 2 Minuten; gemessen **90 Sekunden** im Produktionstest am 16.06.2026 (Protokoll NORA-TP-T8-20260616) |
+| Wirkzeit | Zielwert < 2 Minuten; gemessen **90 Sekunden** im Produktionstest am 16.06.2026 (Protokoll [`NORA-TP-T8-20260616`](../evidenz/NORA-TP-T8-20260616.md)) |
 | Auslöseberechtigte | M. Sørensen (Leitung Organisation, primär) und Dr. P. Ohlsen (ISB, sekundär) |
 | Auslösung außerhalb der Geschäftszeiten | IT-Bereitschaftsdienst (24/7 erreichbar über ITSM-Hotline) führt die Änderung auf telefonische Anweisung eines der Auslöseberechtigten aus. Entscheidungsbefugnis verbleibt bei M. Sørensen oder Dr. P. Ohlsen; der Bereitschaftsdienst handelt ausschließlich auf Anweisung, nicht selbstständig. |
 | Auslösung ohne IT-Beteiligung möglich? | Nein — der Konfigurationsverwaltungs-Zugriff setzt VPN und Rollenzertifikat voraus. Verbesserung in Prüfung; vgl. Offene Punkte. |
 | Wirkung auf laufende Anfragen | Laufende HTTP-Anfragen werden beim nächsten Response-Zyklus mit HTTP 503 abgebrochen; offene Aufrufe an Meridian AI werden nicht mehr abgeholt. |
 | Sichtbarkeit für Nutzende | „NORA ist derzeit außer Betrieb. Bitte nutzen Sie das Intranet-Handbuch oder wenden Sie sich an die Organisationsabteilung. Rückfragen: nora-support@nordwindbank.example" |
 | Wiederinbetriebnahme durch | T. Brand (Betriebsverantwortlicher) — bewusst nicht dieselbe Rolle wie die auslösenden; Wiederfreigabe erst nach vollständig dokumentiertem Wiederanlauf (Abschnitt 5). |
-| Erprobung | **Turnus:** jährlich sowie nach jeder wesentlichen Änderung · **Letzter Test (TEST-Umgebung):** Januar 2026 (vor Pilotbetrieb) · **Letzter Test (Produktion):** 16.06.2026, ausgelöst von T. Brand auf Anweisung von Dr. P. Ohlsen · **Evidenz:** NORA-TP-T8-20260616 |
+| Erprobung | **Turnus:** jährlich sowie nach jeder wesentlichen Änderung · **Letzter Test (TEST-Umgebung):** Januar 2026 (vor Pilotbetrieb) · **Letzter Test (Produktion):** 16.06.2026, ausgelöst von T. Brand auf Anweisung von Dr. P. Ohlsen · **Evidenz:** [`NORA-TP-T8-20260616`](../evidenz/NORA-TP-T8-20260616.md) |
 
 ## 5. Wiederanlauf
 
@@ -202,7 +202,7 @@ Wiederfreigabe erteilt wird.
 
 | Übung | Turnus | Letzte Durchführung | Ergebnis / Evidenz |
 |---|---|---|---|
-| Kill-Switch-Auslösung | Jährlich + nach wesentlicher Änderung | 16.06.2026 (Produktion) | NORA-TP-T8-20260616: bestanden, Wirkzeit 90 Sekunden |
+| Kill-Switch-Auslösung | Jährlich + nach wesentlicher Änderung | 16.06.2026 (Produktion) | [`NORA-TP-T8-20260616`](../evidenz/NORA-TP-T8-20260616.md): bestanden, Wirkzeit 90 Sekunden |
 | Wiederanlauf inkl. Negativtest | Jährlich | 02.06.2026 (Testumgebung) | NORA-TP-T9-20260602: bestanden, vgl. [`06-testnachweise.md`](06-testnachweise.md) T9 |
 | Szenario S3 (Falschauskunft) als Tischübung | Jährlich | Noch nicht durchgeführt | — |
 | Ausfall des LLM-Anbieters (S2) | Jährlich | Noch nicht durchgeführt | — |
@@ -215,7 +215,7 @@ Wiederfreigabe erteilt wird.
    (2nd Line) fragte im Freigabevorbereitungsgespräch am 03.06.2026 nach dem Testprotokoll. Zum
    damaligen Zeitpunkt lag nur ein Test in der TEST-Umgebung vor (in der Kontrollbewertung gelb).
    Der Produktionstest folgte am 16.06.2026, ausgelöst von T. Brand auf Anweisung von
-   Dr. P. Ohlsen; gemessene Wirkzeit 90 Sekunden. Protokoll: NORA-TP-T8-20260616.
+   Dr. P. Ohlsen; gemessene Wirkzeit 90 Sekunden. Protokoll: [`NORA-TP-T8-20260616`](../evidenz/NORA-TP-T8-20260616.md).
 
 2. **„Was macht das System, wenn der Index nicht erreichbar ist?"** Dr. P. Ohlsen (ISB) stellte
    diese Frage im Architekturreview vom 28.01.2026. A. Kellner (Enterprise-Architekt) verwies auf
