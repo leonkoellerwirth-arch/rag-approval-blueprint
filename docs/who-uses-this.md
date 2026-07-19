@@ -2,13 +2,13 @@
 
 > **Kein Rechtsrat / Not legal advice.** Siehe [`DISCLAIMER.md`](../DISCLAIMER.md).
 
-Ein Freigabelauf scheitert selten an einer einzelnen Funktion. Er scheitert daran, dass neun
-Funktionen dasselbe System aus neun Blickwinkeln bewerten und niemand die Artefakte vorbereitet
+Ein Freigabelauf scheitert selten an einer einzelnen Funktion. Er scheitert daran, dass zehn
+Funktionen dasselbe System aus zehn Blickwinkeln bewerten und niemand die Artefakte vorbereitet
 hat, die jede einzelne von ihnen braucht. Diese Seite ordnet jedem Akteur seinen Prozess, sein
 primäres Artefakt und seine typische Eingangsfrage zu.
 
-*An approval run rarely fails on one function. It fails because nine functions assess the same
-system from nine angles and nobody prepared the artifact each of them needs. This page maps each
+*An approval run rarely fails on one function. It fails because ten functions assess the same
+system from ten angles and nobody prepared the artifact each of them needs. This page maps each
 actor to their process, their primary artifact, and the question they open with.*
 
 ## Die Matrix / The matrix
@@ -23,6 +23,7 @@ actor to their process, their primary artifact, and the question they open with.
 | Auslagerungsmanagement / DORA-Verantwortliche | IKT-Drittpartei- & Auslagerungsprozess | [03 Auslagerung/Drittparteien](../akte/03-auslagerung-drittparteien.md), [Mapping (DORA)](mapping-bait-vait-dora.md) | „Ist der LLM-Anbieter sauber als IKT-Dienstleister bewertet, inkl. Exit?" |
 | KI-/Digital-Projektleiter, Product Owner | Projekt-Stage-Gates & Gremienvorlagen | [07 Freigabevorlage](../akte/07-freigabevorlage.md), [06 Testnachweise](../akte/06-testnachweise.md) | „Wie setze ich das Projekt von Tag 1 genehmigungsfähig auf?" |
 | BCM-/Notfallverantwortliche | Notfall- & Wiederanlaufverfahren | [05 Notfallkonzept](../akte/05-notfallkonzept.md) | „Was passiert bei Ausfall/Fehlverhalten — gibt es einen Kill-Switch?" |
+| Betriebsrat / Personalvertretung | Mitbestimmungsverfahren, Betriebs-/Dienstvereinbarung | [08 Mitbestimmung](../akte/08-mitbestimmung-betriebsvereinbarung.md) | „Was wird über die Beschäftigten protokolliert — und wer darf das lesen?" |
 | Vorstand / Entscheidungsgremium | Freigabe-Entscheidung | [07 Freigabevorlage](../akte/07-freigabevorlage.md) (2 Seiten) | „Risiko, Restrisiko, Auflagen — auf zwei Seiten." |
 
 Jede Vorlage in [`akte/`](../akte/) nennt in ihrem Kopf, **welcher Akteur sie in welchem Prozess
@@ -157,6 +158,30 @@ außerhalb der Geschäftszeiten tatsächlich betätigen darf.
 Degradationsmodus — Abschalten oder Antworten ohne Retrieval? Wie merken wir überhaupt, dass das
 System fehlerhaft antwortet? Wer entscheidet über die Wiederinbetriebnahme?
 
+### Betriebsrat / Personalvertretung
+
+**Ihr Prozess.** Sie prüfen, ob eine technische Einrichtung geeignet ist, Verhalten oder Leistung
+der Beschäftigten zu überwachen, und verhandeln darüber eine Vereinbarung. Bei einem
+Assistenzsystem ist die Antwort auf die erste Frage regelmäßig ja: Ein Protokoll, das Frage,
+Zeitpunkt und Identität verbindet, ist objektiv dazu geeignet — unabhängig davon, ob jemand es
+auswerten will.
+
+**Unser Artefakt.** [`08-mitbestimmung-betriebsvereinbarung.md`](../akte/08-mitbestimmung-betriebsvereinbarung.md)
+führt das Verfahren von der Unterrichtung bis zur Unterschrift und enthält eine Prüfliste mit
+sechzehn Regelungsgegenständen — bewusst **ohne** Mustertext, weil eine Vereinbarung zur
+Systemwirklichkeit passen muss und nicht zur Vorlage. Der Pilot zeigt einen realen Verlauf
+einschließlich der Punkte, um die am längsten gerungen wurde.
+
+**Ihre typischen Fragen.** Was genau wird protokolliert, wie lange, und wer darf es lesen? Ist
+die Verwendung für arbeitsrechtliche Maßnahmen ausgeschlossen — und mit welchen Ausnahmen? Was
+passiert mit der Vereinbarung, wenn das Modell gewechselt wird? Wurden wir vor dem Pilotbetrieb
+beteiligt oder erst davor der Produktivsetzung? Und: Wird die Nutzung freiwillig sein?
+
+*Hinweis für die Arbeitgeberseite: § 80 Abs. 3 Satz 2 BetrVG stellt fest, dass die Hinzuziehung
+eines Sachverständigen als erforderlich gilt, wenn der Betriebsrat die Einführung oder Anwendung
+künstlicher Intelligenz beurteilen muss. Planen Sie Zeit und Kosten dafür ein — im Pilotfall hat
+der Sachverständige die Verhandlung verkürzt, nicht verlängert.*
+
 ### Vorstand / Entscheidungsgremium
 
 **Ihr Prozess.** Sie entscheiden. Sie brauchen keine Architektur, sondern eine belastbare
@@ -180,9 +205,10 @@ wieder auf die Tagesordnung?
   fallen Rollen zusammen (ISB und Datenschutz, 2nd Line und Auslagerungsmanagement); in
   Konzernstrukturen kommen Gruppenfunktionen und lokale Auslagerungsbeauftragte hinzu. Die
   Zuordnung ist als Ausgangspunkt gedacht, nicht als Organigramm.
-- Fachbereich und Betriebsrat sind bewusst nicht als eigene Zeilen aufgeführt, obwohl bei einem
-  Assistenzsystem für Beschäftigte regelmäßig eine Mitbestimmungsfrage entsteht. Ein eigener
-  Baustein „Mitbestimmung / Betriebsvereinbarung" fehlt und ist für eine spätere Version
-  vorgemerkt.
+- Der **Fachbereich** ist bewusst nicht als eigene Zeile aufgeführt, obwohl er in jedem
+  Freigabelauf beteiligt ist: Er ist Auftraggeber und Fachverantwortung zugleich und taucht damit
+  in fast jedem Artefakt auf, statt eines zu besitzen. Der Betriebsrat hat seit v0.2.0 eine eigene
+  Zeile und mit [`akte/08`](../akte/08-mitbestimmung-betriebsvereinbarung.md) ein eigenes
+  Artefakt.
 - Für Versicherer, Kapitalverwaltungsgesellschaften und Zahlungsinstitute sind die Prozessnamen
   teilweise andere; die Artefakte bleiben anwendbar, die Prozessspalte nicht durchgängig.

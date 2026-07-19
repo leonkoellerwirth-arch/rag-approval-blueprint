@@ -470,6 +470,33 @@ controls:
       marisk: ["AT 4.3 (Internes Kontrollsystem)"]
       dsgvo: ["Art. 5 Abs. 1 lit. d (Richtigkeit)", "Art. 16 (Recht auf Berichtigung)"]
 
+  - id: AUD-04
+    domain: AUD
+    title: Mitbestimmung und Zweckbindung der Protokollierung
+    objective: >-
+      Für die Protokollierung liegt eine wirksame Betriebsvereinbarung (bzw. Dienstvereinbarung)
+      vor, die den tatsächlichen Protokollierungsumfang abdeckt und die Verwendung zur Verhaltens-
+      und Leistungskontrolle ausschließt.
+    audit_procedure: >-
+      Lasse dir die Betriebsvereinbarung mit Datum und Unterschriften zeigen und vergleiche ihren
+      Regelungsgegenstand mit dem tatsächlichen Protokollierungsumfang aus dem Betriebskonzept —
+      nicht mit dem beschriebenen, sondern mit dem im System eingestellten. Prüfe, ob die
+      Vereinbarung ein Verfahren für wesentliche Änderungen enthält, und frage nach der letzten
+      Modell- oder Datenquellenänderung: Wurde der Betriebsrat beteiligt? Prüfe schließlich, ob
+      die Beteiligung bereits vor dem Pilotbetrieb mit echten Beschäftigten erfolgte.
+    evidence:
+      - Betriebs- bzw. Dienstvereinbarung mit Datum, Unterschriften und Bekanntmachungsnachweis
+      - Gegenüberstellung Regelungsgegenstand ↔ tatsächlicher Protokollierungsumfang
+      - Nachweis der Beteiligung bei der letzten wesentlichen Änderung
+    mapping:
+      dsgvo: ["Art. 5 Abs. 1 lit. b (Zweckbindung)", "Art. 88 (Datenverarbeitung im Beschäftigungskontext)"]
+      marisk: ["AT 4.3 (Internes Kontrollsystem)"]
+      generic: ["§ 87 Abs. 1 Nr. 6 BetrVG (Mitbestimmung bei technischen Überwachungseinrichtungen); § 90 Abs. 1 Nr. 3 BetrVG (Unterrichtung, ausdrücklich einschließlich des Einsatzes künstlicher Intelligenz); in öffentlich-rechtlichen Häusern das jeweilige Personalvertretungsrecht"]
+    note: >-
+      Ein Prompt-Protokoll ist objektiv geeignet, Verhalten abzubilden — auf eine
+      Überwachungsabsicht kommt es nicht an. Der häufigste Befund ist nicht die fehlende
+      Vereinbarung, sondern eine, die den Stand vor dem letzten Modellwechsel regelt.
+
   # --- BET ---------------------------------------------------------------------------------
   - id: BET-01
     domain: BET

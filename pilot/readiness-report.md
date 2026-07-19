@@ -4,7 +4,7 @@
 
 **Institut:** Nordwind Bank AG (fiktiv) · **Stand:** 2026-05-19 · **Bewertet durch:** S. Vogt, 2nd Line / IT-Risikocontrolling
 
-Bewertet wurden alle 22 Kontrollen des Katalogs gegen die vorgelegten Nachweise sowie durch
+Bewertet wurden alle 23 Kontrollen des Katalogs gegen die vorgelegten Nachweise sowie durch
 eigene Stichproben am 12.05. und 15.05.2026. Grundlage waren die Testnachweise T1 bis T12
 (siehe [`akte/06-testnachweise.md`](akte/06-testnachweise.md)), die Freigabeakte und zwei
 Systemvorführungen.
@@ -19,7 +19,7 @@ die Kontrolle in ihrer Kernaussage nicht belegt werden konnte.
 
 | Status | Anzahl |
 |---|---|
-| 🟢 erfüllt | 15 |
+| 🟢 erfüllt | 16 |
 | 🟡 teilweise erfüllt — Auflage | 5 |
 | 🔴 nicht erfüllt — Auflage | 2 |
 | ⚪ nicht bewertet | 0 |
@@ -48,6 +48,7 @@ die Kontrolle in ihrer Kernaussage nicht belegt werden konnte.
 | `AUD-01` Vollständigkeit und Auswertbarkeit der Protokollierung | 🟢 | Anfrage, abgerufene Fragmente, Antwort, Identität und Zeitpunkt werden protokolliert. Die vollständige Rekonstruktion einer Anfrage vom 06.04.2026 wurde am 15.05.2026 vorgeführt; insbesondere sind die abgerufenen Fragmente enthalten. Test T7 am 19.05.2026 bestanden. | — | — |
 | `AUD-02` Zugriffsschutz für Protokolldaten | 🟢 | Zugriff auf die Protokolle nur im Vier-Augen-Verfahren mit dokumentiertem Anlass; das Verfahren ist in der Betriebsvereinbarung vom 27.03.2026 geregelt und der Zugriff selbst wird protokolliert. Zwei erfolgte Zugriffe geprüft, beide mit Anlass und Genehmigung. Administrativer Direktzugriff ist technisch unterbunden. | — | — |
 | `AUD-03` Meldeweg für fehlerhafte Auskünfte | 🟡 | Ein Meldeweg für fehlerhafte Auskünfte ist eingerichtet und in der Anwendung sichtbar. Aus dem Pilotbetrieb liegen 14 Meldungen vor, davon 11 bearbeitet und 3 offen; die durchschnittliche Bearbeitungsdauer betrug 9 Arbeitstage ohne definierte Zielfrist. Eine Auswertung über einen vollen Regelbetriebszeitraum fehlt naturgemäß noch. | Festlegung einer Bearbeitungsfrist für gemeldete Falschauskünfte und erste Auswertung des Regelbetriebs zur Wiedervorlage. | 2026-11-30 |
+| `AUD-04` Mitbestimmung und Zweckbindung der Protokollierung | 🟢 | Betriebsvereinbarung NORA-BV-2026-01 vom 27.03.2026 liegt unterzeichnet vor und ist im Betrieb bekanntgemacht. Der Regelungsgegenstand wurde am 15.05.2026 gegen den im System eingestellten Protokollierungsumfang abgeglichen — keine Abweichung. Die Vereinbarung enthält ein Verwertungsverbot für arbeitsrechtliche Maßnahmen und ein Verfahren für wesentliche Änderungen; der Betriebsrat war vor dem Pilotbetrieb beteiligt (Verhandlung ab 12.03.2026, Pilotstart 20.01.2026 nur mit freiwilligen Teilnehmenden aus der Organisationsabteilung nach gesonderter Zustimmung vom 16.01.2026). | — | — |
 | `BET-01` Modell-, Embedding- und Prompt-Änderungen im Änderungswesen | 🟢 | Modell-, Embedding- und Prompt-Änderungen sind als wesentliche Änderungen im Änderungsverfahren erfasst und lösen definierte Wiederholungstests aus. Die Systemprompts liegen versioniert in der Konfigurationsverwaltung. Drei Änderungen der letzten zwölf Monate geprüft, jeweils mit Genehmigung und Testnachweis. | — | — |
 | `BET-02` Umgang mit anbieterseitigen Modelländerungen | 🔴 | Der Vertrag mit Meridian AI B.V. enthält weder eine Ankündigungsfrist für Modellaktualisierungen noch die Möglichkeit einer Versionsfestlegung. Eine Änderung des Antwortverhaltens könnte damit ohne Vorlauf und zunächst unbemerkt eintreten. Als Übergangsmaßnahme läuft seit dem 11.05.2026 wöchentlich ein automatisierter Regressionslauf gegen den Referenzfragenkatalog; das ist eine Erkennung, keine Steuerung. | Nachverhandlung einer Ankündigungsfrist von mindestens 30 Tagen oder einer Versionsfestlegung. Kommt die Regelung nicht zustande, ist das Risiko dem Vorstand erneut zur Entscheidung vorzulegen. Der wöchentliche Regressionslauf bleibt bis dahin verbindlich. | 2026-11-30 |
 | `BET-03` Kill-Switch und Degradationsmodi | 🟡 | Kill-Switch als Funktionsschalter umgesetzt, Degradationsmodi D0 bis D3 definiert; Antwortgenerierung ohne Retrieval ist technisch ausgeschlossen. Zum Bewertungsstichtag war die Auslösung ausschließlich in der Testumgebung erprobt. Die Erprobung in Produktion ist terminiert, aber noch nicht erfolgt. | Erprobung des Kill-Switch in der Produktionsumgebung mit gemessener Wirkzeit vor Produktivstart; Protokoll der 2nd Line vorlegen. | 2026-06-30 |

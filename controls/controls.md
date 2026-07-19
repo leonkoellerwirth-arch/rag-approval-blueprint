@@ -22,7 +22,7 @@ geprüft werden; behandeln Sie sie als Orientierung, nicht als Zitat.
 Funktion. Siehe [`DISCLAIMER.md`](../DISCLAIMER.md).
 
 
-**Stand:** 2026-07-19 · **Version:** 0.1.0 · **22 Kontrollen** in 6 Domänen
+**Stand:** 2026-07-19 · **Version:** 0.1.0 · **23 Kontrollen** in 6 Domänen
 
 > **Kein Rechtsrat.** Dieser Katalog ist ein Arbeitsmittel, kein Nachweis der Erfüllung regulatorischer Anforderungen. Siehe `DISCLAIMER.md`.
 
@@ -48,6 +48,7 @@ Funktion. Siehe [`DISCLAIMER.md`](../DISCLAIMER.md).
 | `AUD-01` | Vollständigkeit und Auswertbarkeit der Protokollierung | Protokollierung und Nachvollziehbarkeit | Protokollauszug einer vollständigen Rekonstruktion, Protokollierungskonzept |
 | `AUD-02` | Zugriffsschutz für Protokolldaten | Protokollierung und Nachvollziehbarkeit | Berechtigungsübersicht Protokollzugriff, Zugriffsprotokoll auf die Protokolldaten, Vereinbarung mit der Mitbestimmung, falls einschlägig |
 | `AUD-03` | Meldeweg für fehlerhafte Auskünfte | Protokollierung und Nachvollziehbarkeit | Auswertung der Nutzermeldungen mit Bearbeitungsstand, Nachweis über die daraus erfolgten Korrekturen |
+| `AUD-04` | Mitbestimmung und Zweckbindung der Protokollierung | Protokollierung und Nachvollziehbarkeit | Betriebs- bzw. Dienstvereinbarung mit Datum, Unterschriften und Bekanntmachungsnachweis, Gegenüberstellung Regelungsgegenstand ↔ tatsächlicher Protokollierungsumfang, Nachweis der Beteiligung bei der letzten wesentlichen Änderung |
 | `BET-01` | Modell-, Embedding- und Prompt-Änderungen im Änderungswesen | Betrieb, Änderungswesen und Notfall | Änderungshistorie einschließlich Modell- und Promptversionen, Genehmigungen und Testnachweise je Änderung |
 | `BET-02` | Umgang mit anbieterseitigen Modelländerungen | Betrieb, Änderungswesen und Notfall | Vertragsstelle zu Ankündigungsfrist/Versionsfestlegung, Freigabevorlage mit ausgewiesenem Restrisiko, falls keine Regelung besteht, Monitoring-/Regressionsnachweis nach der letzten Anbieteränderung |
 | `BET-03` | Kill-Switch und Degradationsmodi | Betrieb, Änderungswesen und Notfall | Testprotokoll Kill-Switch (T8) mit Datum und Wirkzeit, Notfallkonzept mit definierten Degradationsmodi, Erreichbarkeits-/Vertretungsregelung |
@@ -378,6 +379,24 @@ dokumentiert, wonach einzelne Beschäftigte gefragt haben.
   - *DORA:* Art. 13 (Learning and evolving)
   - *MaRisk:* AT 4.3 (Internes Kontrollsystem)
   - *DSGVO:* Art. 5 Abs. 1 lit. d (Richtigkeit); Art. 16 (Recht auf Berichtigung)
+
+### `AUD-04` Mitbestimmung und Zweckbindung der Protokollierung
+
+**Kontrollziel.** Für die Protokollierung liegt eine wirksame Betriebsvereinbarung (bzw. Dienstvereinbarung) vor, die den tatsächlichen Protokollierungsumfang abdeckt und die Verwendung zur Verhaltens- und Leistungskontrolle ausschließt.
+
+**Prüfhandlung.** Lasse dir die Betriebsvereinbarung mit Datum und Unterschriften zeigen und vergleiche ihren Regelungsgegenstand mit dem tatsächlichen Protokollierungsumfang aus dem Betriebskonzept — nicht mit dem beschriebenen, sondern mit dem im System eingestellten. Prüfe, ob die Vereinbarung ein Verfahren für wesentliche Änderungen enthält, und frage nach der letzten Modell- oder Datenquellenänderung: Wurde der Betriebsrat beteiligt? Prüfe schließlich, ob die Beteiligung bereits vor dem Pilotbetrieb mit echten Beschäftigten erfolgte.
+
+**Evidenz-Artefakt.**
+- Betriebs- bzw. Dienstvereinbarung mit Datum, Unterschriften und Bekanntmachungsnachweis
+- Gegenüberstellung Regelungsgegenstand ↔ tatsächlicher Protokollierungsumfang
+- Nachweis der Beteiligung bei der letzten wesentlichen Änderung
+
+**Mapping.**
+  - *MaRisk:* AT 4.3 (Internes Kontrollsystem)
+  - *DSGVO:* Art. 5 Abs. 1 lit. b (Zweckbindung); Art. 88 (Datenverarbeitung im Beschäftigungskontext)
+  - *Generisch:* § 87 Abs. 1 Nr. 6 BetrVG (Mitbestimmung bei technischen Überwachungseinrichtungen); § 90 Abs. 1 Nr. 3 BetrVG (Unterrichtung, ausdrücklich einschließlich des Einsatzes künstlicher Intelligenz); in öffentlich-rechtlichen Häusern das jeweilige Personalvertretungsrecht
+
+**Hinweis.** Ein Prompt-Protokoll ist objektiv geeignet, Verhalten abzubilden — auf eine Überwachungsabsicht kommt es nicht an. Der häufigste Befund ist nicht die fehlende Vereinbarung, sondern eine, die den Stand vor dem letzten Modellwechsel regelt.
 
 ## BET — Betrieb, Änderungswesen und Notfall
 

@@ -104,6 +104,8 @@ Artikelnummern und -titel ✅ geprüft gegen <https://gdpr-info.eu> (abgerufen 0
 | Art. 15 | Auskunftsrecht der betroffenen Person | [`akte/02`](../akte/02-dsfa-baustein-rag.md) |
 | Art. 16 | Recht auf Berichtigung | [`akte/02`](../akte/02-dsfa-baustein-rag.md), `AUD-03` |
 | Art. 17 | Recht auf Löschung („Recht auf Vergessenwerden") | [`docs/loeschnachweis.md`](loeschnachweis.md), `LOE-01`–`LOE-04` |
+| Art. 18 | Recht auf Einschränkung der Verarbeitung | [`akte/02`](../akte/02-dsfa-baustein-rag.md) |
+| Art. 21 | Widerspruchsrecht | [`akte/02`](../akte/02-dsfa-baustein-rag.md) |
 | Art. 22 | Automatisierte Entscheidungen im Einzelfall einschließlich Profiling | [`akte/02`](../akte/02-dsfa-baustein-rag.md) |
 | Art. 25 | Datenschutz durch Technikgestaltung und durch datenschutzfreundliche Voreinstellungen | [`akte/02`](../akte/02-dsfa-baustein-rag.md) |
 | Art. 28 | Auftragsverarbeiter | [`akte/03`](../akte/03-auslagerung-drittparteien.md), `BET-04` |
@@ -111,6 +113,7 @@ Artikelnummern und -titel ✅ geprüft gegen <https://gdpr-info.eu> (abgerufen 0
 | Art. 32 | Sicherheit der Verarbeitung | `ZUG-01`, `ZUG-02`, `AUD-01`, `AUD-02` |
 | Art. 35 | Datenschutz-Folgenabschätzung | [`akte/02`](../akte/02-dsfa-baustein-rag.md), `ZUG-04` |
 | Art. 44–49 | Übermittlungen an Drittländer | [`akte/03`](../akte/03-auslagerung-drittparteien.md), `BET-04` |
+| Art. 88 | Datenverarbeitung im Beschäftigungskontext | [`akte/08`](../akte/08-mitbestimmung-betriebsvereinbarung.md), `AUD-04` |
 
 ## 5. Orientierungshilfen zu KI und Datenschutz
 
@@ -122,6 +125,34 @@ eine DSFA, die sie nicht kennt, wirkt in der Prüfung entsprechend.
 | EDPB, **Opinion 28/2024** on certain data protection aspects related to the processing of personal data in the context of AI models | 18.12.2024 | [edpb.europa.eu](https://www.edpb.europa.eu/our-work-tools/our-documents/opinion-board-art-64/opinion-282024-certain-data-protection-aspects_en) |
 | EDPB, **AI Privacy Risks & Mitigations – Large Language Models (LLMs)** | 10.04.2025 | [edpb.europa.eu](https://www.edpb.europa.eu/our-work-tools/our-documents/support-pool-experts-projects/ai-privacy-risks-mitigations-large_en) |
 | DSK, Orientierungshilfe **„Künstliche Intelligenz und Datenschutz"** | 06.05.2024 | [datenschutzkonferenz-online.de](https://www.datenschutzkonferenz-online.de/media/oh/20240506_DSK_Orientierungshilfe_KI_und_Datenschutz.pdf) |
+
+## 5a. Betriebsverfassungsgesetz (BetrVG)
+
+✅ geprüft (07/2026) gegen den Gesetzestext unter <https://www.gesetze-im-internet.de/betrvg/>.
+Verwendet in [`akte/08`](../akte/08-mitbestimmung-betriebsvereinbarung.md) und `AUD-04`.
+
+| Fundstelle | Amtliche Überschrift | Kerninhalt für dieses Repository |
+|---|---|---|
+| **§ 87 Abs. 1 Nr. 6** | Mitbestimmungsrechte | Mitbestimmung bei „Einführung und Anwendung von technischen Einrichtungen, die dazu bestimmt sind, das Verhalten oder die Leistung der Arbeitnehmer zu überwachen" (Wortlaut geprüft) |
+| **§ 90 Abs. 1 Nr. 3** | Unterrichtungs- und Beratungsrechte | Unterrichtung über die Planung „von Arbeitsverfahren und Arbeitsabläufen **einschließlich des Einsatzes von Künstlicher Intelligenz**" |
+| **§ 80 Abs. 3 Satz 2** | Allgemeine Aufgaben | Muss der Betriebsrat „die Einführung oder Anwendung von Künstlicher Intelligenz beurteilen, gilt insoweit die Hinzuziehung eines Sachverständigen als erforderlich" |
+| **§ 95 Abs. 2a** | Auswahlrichtlinien | Mitbestimmung gilt auch, „wenn bei der Aufstellung der Richtlinien … Künstliche Intelligenz zum Einsatz kommt" |
+| **§ 77 Abs. 2, Abs. 3** | Durchführung gemeinsamer Beschlüsse, Betriebsvereinbarungen | Schriftform und Unterzeichnung durch beide Seiten (bei elektronischem Abschluss dasselbe Dokument); Tarifvorbehalt |
+
+**Bemerkenswert:** Der Gesetzgeber adressiert künstliche Intelligenz im BetrVG an drei Stellen
+ausdrücklich (§§ 80, 90, 95). Wer in einer Diskussion hört, für KI gebe es
+mitbestimmungsrechtlich noch keine Grundlage, hat hier die Antwort.
+
+**Zur Auslegung** ⚠️ **eingeschränkt.** Dass für § 87 Abs. 1 Nr. 6 BetrVG die **objektive
+Eignung** zur Überwachung genügt und es auf eine Überwachungsabsicht nicht ankommt, entspricht
+der gefestigten Rechtsprechung des Bundesarbeitsgerichts; belegt ist das hier über
+übereinstimmende Sekundärquellen, nicht über eine einzelne, im Volltext geprüfte Entscheidung.
+Vor Verwendung in einer echten Vorlage durch die Rechtsabteilung bestätigen lassen.
+
+**Nicht aufgearbeitet:** das **Personalvertretungsrecht** des Bundes und der Länder, das für
+Sparkassen, Landesbanken und Anstalten öffentlichen Rechts an die Stelle des BetrVG tritt. Die
+Systematik ist ähnlich, die Fundstellen weichen je Land ab; sie werden in diesem Repository
+bewusst nicht genannt.
 
 ## 6. BSI
 

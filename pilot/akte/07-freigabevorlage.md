@@ -180,8 +180,9 @@ vorenthalten wird und später über die Revision auftaucht, kostet mehr als sie 
 | Betriebskonzept | abgeschlossen 29.05.2026 | Anlage 4 — [`04`](04-betriebskonzept.md) |
 | Notfallkonzept | abgeschlossen 16.06.2026 (nach Kill-Switch-Test in Produktion) | Anlage 5 — [`05`](05-notfallkonzept.md) |
 | Testnachweise T1–T12 | 9 bestanden, 2 mit Einschränkung, 1 offen (T3, Indexebene) | Anlage 6 — [`06`](06-testnachweise.md) |
-| Kontrollbewertung / Readiness-Report | 15 grün, 5 gelb, 2 rot | Anlage 7 — [`../readiness-report.md`](../readiness-report.md) |
+| Kontrollbewertung / Readiness-Report | 16 grün, 5 gelb, 2 rot | Anlage 7 — [`../readiness-report.md`](../readiness-report.md) |
 | Betriebsvereinbarung Protokollierung | geschlossen 27.03.2026 | Anlage 8 |
+| Mitbestimmungsverfahren | abgeschlossen 30.03.2026 | Anlage 9 — [`08`](08-mitbestimmung-betriebsvereinbarung.md) |
 
 *Zwischen der Kontrollbewertung vom 19.05.2026 und dieser Vorlage wurde eine gelbe Kontrolle
 geschlossen: Der Kill-Switch wurde am 16.06.2026 in der Produktionsumgebung erprobt, gemessene
@@ -200,7 +201,7 @@ Bewertungstags — er ist die Momentaufnahme der 2nd Line und wird nicht nachtr�
 
 1. Schutzbedarfsfeststellung · 2. DSFA-Baustein · 3. Auslagerungsbewertung ·
 4. Betriebskonzept · 5. Notfallkonzept · 6. Testnachweise · 7. Readiness-Report ·
-8. Betriebsvereinbarung Protokollierung
+8. Betriebsvereinbarung Protokollierung · 9. Mitbestimmungsverfahren
 
 ---
 

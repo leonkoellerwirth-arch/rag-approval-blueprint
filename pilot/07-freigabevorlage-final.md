@@ -57,7 +57,7 @@ Quellsystem.
 
 ## Bewertung der 2nd Line
 
-Von 22 Kontrollen sind **15 grün, 5 gelb und 2 rot**. Die beiden roten Kontrollen betreffen
+Von 23 Kontrollen sind **16 grün, 5 gelb und 2 rot**. Die beiden roten Kontrollen betreffen
 keinen laufenden Schaden, sondern einen fehlenden Nachweis (Löschung auf Indexebene) und eine
 fehlende vertragliche Absicherung (Ankündigung von Modelländerungen). Beide sind mit Frist und
 benannter Verantwortung in Auflagen überführt. Die 2nd Line befürwortet die Freigabe unter
@@ -119,7 +119,8 @@ Vorfall · Aufnahme einer neuen Datenquelle mit personenbezogenen Inhalten · Ei
 in einen Prozess, der ohne das System nicht mehr läuft.
 
 **Anlagen:** 1 Schutzbedarfsfeststellung · 2 DSFA · 3 Auslagerungsbewertung · 4 Betriebskonzept ·
-5 Notfallkonzept · 6 Testnachweise · 7 Readiness-Report · 8 Betriebsvereinbarung
+5 Notfallkonzept · 6 Testnachweise · 7 Readiness-Report · 8 Betriebsvereinbarung ·
+9 Mitbestimmungsverfahren
 
 ---
 

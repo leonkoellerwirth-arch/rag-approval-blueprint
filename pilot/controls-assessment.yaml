@@ -22,7 +22,7 @@ meta:
     Line steht der Produktivbetrieb nicht entgegen, sofern die Auflagen A1 bis A4 mit den
     genannten Fristen beschlossen werden.
   note: |
-    Bewertet wurden alle 22 Kontrollen des Katalogs gegen die vorgelegten Nachweise sowie durch
+    Bewertet wurden alle 23 Kontrollen des Katalogs gegen die vorgelegten Nachweise sowie durch
     eigene Stichproben am 12.05. und 15.05.2026. Grundlage waren die Testnachweise T1 bis T12
     (siehe [`akte/06-testnachweise.md`](akte/06-testnachweise.md)), die Freigabeakte und zwei
     Systemvorführungen.
@@ -195,6 +195,18 @@ results:
       Regelbetriebs zur Wiedervorlage.
     due: "2026-11-30"
     owner: M. Sørensen
+
+  - control: AUD-04
+    status: green
+    finding: >-
+      Betriebsvereinbarung NORA-BV-2026-01 vom 27.03.2026 liegt unterzeichnet vor und ist im
+      Betrieb bekanntgemacht. Der Regelungsgegenstand wurde am 15.05.2026 gegen den im System
+      eingestellten Protokollierungsumfang abgeglichen — keine Abweichung. Die Vereinbarung
+      enthält ein Verwertungsverbot für arbeitsrechtliche Maßnahmen und ein Verfahren für
+      wesentliche Änderungen; der Betriebsrat war vor dem Pilotbetrieb beteiligt (Verhandlung ab
+      12.03.2026, Pilotstart 20.01.2026 nur mit freiwilligen Teilnehmenden aus der
+      Organisationsabteilung nach gesonderter Zustimmung vom 16.01.2026).
+    owner: R. Mattis
 
   # --- Betrieb und Änderungswesen ------------------------------------------------------------
   - control: BET-01
