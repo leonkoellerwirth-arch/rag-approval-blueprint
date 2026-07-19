@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rag-approval-blueprint"
+version = "0.1.0"
+description = "Render the RAG control catalogue (controls.yaml) into an audit-ready Markdown catalogue and a readiness report."
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = [
+    "PyYAML>=6.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.5"]
+
+[tool.setuptools]
+# The repository is a document set with one small tool; there is no installable package.
+py-modules = []
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["tools", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["tools"]
+markers = [
+    "slow: exercises a real model/LLM; excluded from the gate and CI (run locally with -m slow).",
+]
