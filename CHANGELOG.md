@@ -6,6 +6,38 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+- **`app/` — der Freigabeakte-Assistent.** Eine Weboberfläche (Vite + React 19 + TypeScript,
+  aus dem `dev/base`-Template `vite-react-pwa`), die durch alle acht Teile der Akte führt und
+  Markdown in der Struktur der Vorlagen exportiert. Kein Server, keine Datenbank, kein Login,
+  kein Netzaufruf — nachprüfbar per grep über den Build. Auf dem Designsystem des Hauses
+  (`paper`/`ink`, Blau primär, Mint sekundär, Messing für Fokus).
+- **Zwei Auslieferungsformen aus einer Codebasis:** `npm run build` erzeugt die gehostete PWA,
+  `npm run build:datei` eine self-contained HTML-Datei zum Öffnen per Doppelklick. Die
+  Einzeldatei ist erzeugt, nicht handgepflegt — wie `controls.md` aus `controls.yaml`. Beide
+  Ziele laufen in `verify:ci`.
+- **Die Ehrlichkeitsprüfung** statt einer Fortschrittsanzeige: Sie beanstandet, was Vorlagen in
+  der Prüfung scheitern lässt (Weichmacher im Restrisiko, Restrisiko ohne Träger, Auflage ohne
+  Folge, Berechtigungsprüfung nur zur Indexierungszeit, Kill-Switch ohne Erprobung u. a.) —
+  reine Funktionen, 33 Tests.
+
+### Changed
+
+- INV-8 auf zwei Werkzeuge erweitert (`tools/render_controls.py` und `app/`); neue INV-11 (kein
+  Neuerfinden des Fundaments — UI aus dem Template, Oberfläche aus den Haus-Tokens).
+- CI installiert Node und spiegelt das Gate über beide Flächen (Python und Web).
+
+### Fixed
+
+- Vites `modulePreload`-Polyfill abgeschaltet, damit der Offline-Nachweis (kein `fetch`) trägt.
+
+---
+
+_In `dev/base` (nicht dieses Repo): Designsystem via `base promote` nach `standards/extra/`
+gehoben; Defekt der ESLint-Config des `vite-react-pwa`-Templates behoben
+(`reactHooks.configs.flat` existiert in eslint-plugin-react-hooks 5.x nicht)._
+
 ## [0.3.0] — 2026-07-19
 
 Closes the gap the repository had against its own thesis: it demanded evidence and never showed
