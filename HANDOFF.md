@@ -3,6 +3,42 @@
 Session handoffs, **newest entry first**. Written by `/session-stop` (via
 `scripts/session-snapshot.sh`). Read the top entry at `/session-start`.
 
+## 2026-07-22 — Session 4: der Assistent als Web-App (`app/`), noch nicht getaggt
+
+_gate PASS · 33 Web-Tests + 20 Python-Tests · zwei Bauziele · commits-ahead 0 (gepusht)_
+
+- **Done:** `app/` — Vite + React 19 + TS aus dem `dev/base`-Template, führt durch alle acht
+  Teile der Akte, exportiert Markdown, trägt die Ehrlichkeitsprüfung (33 Tests). Zwei
+  Auslieferungsformen aus einer Codebasis: gehostete PWA (`npm run build`) und self-contained
+  Einzeldatei (`npm run build:datei`). CI spiegelt beide Flächen. CHANGELOG `[Unreleased]`
+  gefüllt.
+- **In `dev/base` (separates Repo, gepusht):** Designsystem via `base promote` nach
+  `standards/extra/` gehoben + `DESIGNSYSTEM.md`; ESLint-Config-Defekt des `vite-react-pwa`-
+  Templates behoben.
+- **Decided (im BIBLE-Register festgehalten):**
+  - Die Trennlinie ist **Verteilung, nicht Nutzerkompetenz** — nicht „React für Power User,
+    HTML für normale User", sondern ein Quelltext mit zwei Bauzielen. Der ISB ist der
+    Hauptnutzer und der, der kein `npm` ausführt; die Einzeldatei ist für ihn.
+  - Die Einzeldatei ist **erzeugt, nicht handgepflegt** (wie `controls.md` aus YAML) — Drift
+    konstruktiv ausgeschlossen.
+  - Die handgeschriebene HTML-Erstfassung ist **gelöscht**, nicht parallel gepflegt.
+  - `modulePreload`-Polyfill aus, damit der Offline-Nachweis (kein `fetch` im Build) trägt.
+- **Open / Next:**
+  - **Noch kein Tag.** v0.4.0 steht bereit: Assistent + Mitbestimmung + zweiter Pilot +
+    Evidenz-Ebene + Revisionssicht. Warten auf die Sichtprüfung der Oberfläche durch den Autor,
+    dann taggen und Release-Notes schreiben (Muster: `scratchpad/relnotes-0xx.md` der Vorsessions).
+  - Weiterhin offen (aus Session 2/3): der Fall „Gremium entscheidet gegen die Kontrollfunktionen".
+- **Continuity warnings:**
+  - **`app/dist/` und `app/dist-einzeldatei/` sind git-ignored** — nicht committen. Der
+    Release-Artefakt (die Einzeldatei) wird bei Bedarf gebaut, nicht versioniert.
+  - **Offline-Nachweis ist eine Zusage:** `grep -E "fetch\(|XMLHttpRequest|WebSocket" app/dist*/…`
+    muss leer bleiben (INV-8). Wer eine Abhängigkeit hinzufügt, prüft das erneut.
+  - **INV-10 gilt weiter:** neue Evidenz-ID im Pilot ⇒ Datei unter `pilot/evidenz/`.
+  - Zählwerte (8 Teile, 23 Kontrollen, 10 Akteure, 33 Web-Tests) stehen an mehreren Stellen —
+    bei Änderung mit grep alle finden.
+  - `app/eslint.config.js` weicht bewusst vom Template ab (`recommended-latest`); die
+    Template-Korrektur liegt in `dev/base` und greift erst bei künftigen Scaffolds.
+
 ## 2026-07-19 — Session 3: v0.3.0, Evidenz-Ebene und Revisionssicht
 
 _gate PASS · 20 Tests · 23 Kontrollen · 8 Vorlagen · 2 Piloten · 3 Evidenz-Muster_
