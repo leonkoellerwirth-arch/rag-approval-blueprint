@@ -226,6 +226,6 @@ you to publish anything.
 
 **Leon Köllerwirth Hlihel**
 [leon-koellerwirth.com](https://leon-koellerwirth.com) ·
-[LinkedIn](https://www.linkedin.com/in/leon-k%C3%B6llerwirth-hlihel-642506197/) ·
+[LinkedIn](https://www.linkedin.com/in/leon-k%C3%B6llerwirth-642506197/) ·
 Sister repository: [agentic-ai-governance-toolkit](https://github.com/leonkoellerwirth-arch/agentic-ai-governance-toolkit)
 — lifecycle models, risk scoring, EU AI Act & DORA checklists, and a working evaluator.
