@@ -1,0 +1,20 @@
+{
+  "_source": "agentic-ai-governance-toolkit · evaluator/src/agent_evaluator/regulatory_sources.yaml",
+  "_toolkit_release": "v0.3.0",
+  "_extracted": "2026-08-25",
+  "_why": "A pinned, hand-updated export of the sister repository's DORA register. Updating it is deliberately manual: that update is the moment drift becomes visible, and automation would hide it. Nothing reads the other repository at test time.",
+  "_caveat": "The sister register carries verification.owner_verified: false — its labels are recorded and pinned but not read back against the primary text by a person. Every comparison here inherits that reservation.",
+  "dora": [
+    { "id": "5-6",   "topic": "ICT risk management framework" },
+    { "id": "9",     "topic": "protection and prevention" },
+    { "id": "10",    "topic": "detection" },
+    { "id": "11",    "topic": "response and recovery" },
+    { "id": "12",    "topic": "backup and restoration" },
+    { "id": "17",    "topic": "ICT-related incident management process" },
+    { "id": "18",    "topic": "classification of ICT-related incidents" },
+    { "id": "19",    "topic": "reporting of major ICT-related incidents" },
+    { "id": "24-27", "topic": "digital operational resilience testing" },
+    { "id": "28",    "topic": "ICT third-party risk" },
+    { "id": "30",    "topic": "key contractual provisions" }
+  ]
+}
