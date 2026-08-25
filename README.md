@@ -196,7 +196,12 @@ plainly:
   into force could not be confirmed. All MaRisk references are to Circular 06/2024.
 - **The EU AI Act is deliberately not mapped.** General application starts 2 August 2026, and
   whether an internal policy assistant is high-risk is a case-by-case Annex III test. A plausible
-  guess would be more dangerous than an open gap.
+  guess would be more dangerous than an open gap. This is the same position the sister repository
+  states in full — what an article requires can be mapped, whether it applies to a given system
+  cannot: [what this maps, and what it does
+  not](https://github.com/leonkoellerwirth-arch/agentic-ai-governance-toolkit/blob/main/docs/00-scope/regulatory-scope.md).
+  That the toolkit maps the AI Act and this repository does not is one position applied twice, not
+  a disagreement.
 - **The ghost-vectors paper is new** (June 2026); peer-review status and follow-up work are
   unknown. Treated as a strong pointer to a question, not a settled result.
 - **Personalvertretungsrecht is out of scope.** The co-determination building block
