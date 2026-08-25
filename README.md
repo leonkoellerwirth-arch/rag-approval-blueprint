@@ -83,6 +83,7 @@ flowchart LR
 | **[Revisionssicht](pilot/revision/)** | What internal audit makes of all this — a risk-based audit programme and the report, whose most serious finding is one nobody else had. | Deutsch |
 | **[Quellen](docs/quellen.md)** | Every citation in this repository with its verification status and retrieval date — including the ones that could not be verified. | Deutsch |
 | **[Executive summary](docs/executive-summary.en.md)** | The whole thing, for international readers. | English |
+| **[Filtering after retrieval is not an authorisation check](docs/filterung-nach-dem-abruf.en.md)** | The rejected pilot as one argument, for readers who do not know this repository. ([deutsch](docs/filterung-nach-dem-abruf.md)) | English / German |
 
 Each folder has its own README as an entry point: [`akte/`](akte/) · [`controls/`](controls/) ·
 [`pilot/`](pilot/) · [`pilot-abgelehnt/`](pilot-abgelehnt/) · [`docs/`](docs/).

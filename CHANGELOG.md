@@ -8,6 +8,28 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- **The rejected pilot as one argument**, in both languages
+  ([de](docs/filterung-nach-dem-abruf.md) · [en](docs/filterung-nach-dem-abruf.en.md)). The case
+  was already complete in `pilot-abgelehnt/`, but only legible to someone who knows this
+  repository. This is the same material shaped for someone who does not.
+
+  It leads with the engineering lesson rather than the governance one, because that is the half
+  that holds outside banking supervision: a filter applied after retrieval is a compensation, not
+  an authorisation check, and the class of failure it leaves open does not close by working
+  correctly today. Personnel files, client matters, project shares and ticket systems have the
+  same shape and the same temptation — a metadata filter is two lines, identity-scoped retrieval
+  is a rebuild.
+
+  The governance half follows: why three of the eight red controls could not be healed by a
+  deadline, why the decisive mistake happened ten weeks before the test that surfaced it, and
+  what makes a no a decision on the merits rather than a conflict between people — reasoning
+  control by control, naming the schedule pressure in the submission, and shipping the conditions
+  with it.
+
+## [Unreleased]
+
+### Added
+
 - **`app/` — der Freigabeakte-Assistent.** Eine Weboberfläche (Vite + React 19 + TypeScript,
   aus dem `dev/base`-Template `vite-react-pwa`), die durch alle acht Teile der Akte führt und
   Markdown in der Struktur der Vorlagen exportiert. Kein Server, keine Datenbank, kein Login,
