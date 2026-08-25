@@ -8,6 +8,29 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- **Decision records** ([`decisions/`](decisions/), rendered to
+  [`decisions/README.md`](decisions/README.md)): both pilots as machine-readable records that
+  answer eighteen questions about a use case — business problem through to the final GO /
+  CONDITIONAL GO / KILL — and, for each, point at the place in the approval file where the answer
+  stands.
+
+  **The pointing is what is new.** `tools/render_decision.py check` resolves every reference,
+  file *and* section, against the repository: rename a heading three files away and the gate turns
+  red. Completeness is no longer a claim in a README, it is `32/36 steps evidenced, 4 recorded
+  gaps, every reference resolves`. A step is either answered with a source, or carries a `gap:`
+  with a reason — never neither, and never both. A step answered only within a limit carries a
+  `caveat:` instead, because letting "answered with a stated limit" pass as "answered" is exactly
+  the sloppiness this exists to prevent.
+
+  The rejected case keeps four gaps: no operating concept, no DPIA building block, no monitoring,
+  no action boundaries — because it ended before those were written. A test asserts they stay,
+  which is INV-7 applied to the records: a rejection is not tidied up after the fact.
+
+  The records also carry the decision-quality figures a board actually looks at — business value,
+  operational risk, reversibility, blast radius, residual risk — each with a level *and* a source,
+  because a level without a basis is an opinion with a colour. Overstating what the case is
+  (`nature`) fails validation, so nothing can drift into reading as production use.
+
 - **The rejected pilot as one argument**, in both languages
   ([de](docs/filterung-nach-dem-abruf.md) · [en](docs/filterung-nach-dem-abruf.en.md)). The case
   was already complete in `pilot-abgelehnt/`, but only legible to someone who knows this

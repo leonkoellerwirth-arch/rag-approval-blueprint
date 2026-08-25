@@ -1,0 +1,141 @@
+# Entscheidungssatz — maschinenlesbar, geprüft, nicht behauptet.
+#
+# Jeder der achtzehn Schritte zeigt auf eine Fundstelle, die es wirklich gibt: Datei und
+# Abschnitt werden von tools/render_decision.py gegen den Bestand geprüft. Ein Verweis auf einen
+# Abschnitt, der nicht existiert, lässt das Gate fehlschlagen. Damit ist die Akte nicht
+# vollständig, weil jemand das behauptet, sondern weil es nachrechenbar ist.
+#
+# `answer` sagt in einem Satz, was an der Fundstelle steht. Es ersetzt sie nicht.
+# Ein Schritt ohne Fundstelle braucht `gap:` mit einer Begründung — eine Lücke wird benannt,
+# nicht überbrückt. Ein Schritt, der beantwortet ist, aber nur innerhalb einer Grenze, trägt
+# `caveat:` neben seiner Fundstelle. Beides zugleich ist verboten.
+
+meta:
+  id: NORA-2026
+  system: NORA — Nordwind Richtlinien-Assistent
+  institution: Nordwind Bank AG
+  nature: illustrative case          # illustrative case | reference implementation | production-tested
+  fictional: true
+  decision: CONDITIONAL_GO           # GO | CONDITIONAL_GO | KILL
+  decided_on: 2026-06-24
+  decided_by: Vorstand, Sitzung vom 24.06.2026, TOP 7
+  expires_on: 2026-11-30
+  business_owner: Leitung Organisationsabteilung
+  technical_owner: Leitung IT-Betrieb
+  risk_owner: Ressort COO
+  assessment: pilot/controls-assessment.yaml
+
+# Entscheidungsqualität — keine Compliance-Ampel, sondern die Größen, auf die ein Gremium schaut.
+# Sie werden aus der Akte übernommen, nicht berechnet; jede trägt ihre Fundstelle.
+quality:
+  business_value:
+    level: medium
+    basis: "Regelungsanfragen im Pilotbereich um 38 % zurückgegangen; 210 TEUR Aufbau, 95 TEUR p. a."
+    source: pilot/00-fallbeschreibung.md#das-vorhaben
+  operational_risk:
+    level: medium
+    basis: "Interner Nutzerkreis, keine Kundendaten; Antworterzeugung bei einem IKT-Drittdienstleister."
+    source: pilot/akte/01-schutzbedarfsfeststellung.md#6-gesamtergebnis
+  reversibility:
+    level: high
+    basis: "Kill-Switch dokumentiert, Degradationsmodi definiert, Index eigenbetrieben."
+    source: pilot/akte/05-notfallkonzept.md#4-kill-switch
+  blast_radius:
+    level: medium
+    basis: "1.200 Beschäftigte, kein Kundenkontakt, keine schreibenden Aktionen."
+    source: pilot/00-fallbeschreibung.md#das-vorhaben
+  residual_risk:
+    level: medium
+    basis: "Zwei rote Kontrollen als Auflagen mit Frist; Restrisiko dem Ressort COO zugewiesen."
+    source: pilot/07-freigabevorlage-final.md#restrisiko
+
+steps:
+  - n: 1
+    name: Business Problem
+    answer: "31 % der Anfragen an die Organisationsabteilung sind Fragen nach bestehenden Regelungen."
+    source: pilot/00-fallbeschreibung.md#das-vorhaben
+  - n: 2
+    name: Vorgeschlagener Use-Case
+    answer: "Interner Assistent, der Richtlinienfragen mit Fundstelle beantwortet; 812 Dokumente, rund 400 Anfragen pro Arbeitstag."
+    source: pilot/00-fallbeschreibung.md#das-vorhaben
+  - n: 3
+    name: Erwarteter wirtschaftlicher Nutzen
+    answer: "Im Pilotbetrieb gemessener Rückgang der Regelungsanfragen um 38 %, gegen 210 TEUR Aufbau und 95 TEUR laufend."
+    source: pilot/00-fallbeschreibung.md#das-vorhaben
+  - n: 4
+    name: Architektur
+    answer: "Ingest, Embedding und Index eigenbetrieben; nur die Antworterzeugung eingekauft (Meridian AI B.V., Inferenz EU-Region Frankfurt)."
+    source: pilot/akte/04-betriebskonzept.md#2-architektur-im-betrieb-kurzform
+  - n: 5
+    name: Datenflüsse
+    answer: "Die RAG-spezifischen Verarbeitungsstufen einzeln aufgeführt, von der Quelle bis zur Antwort."
+    source: pilot/akte/01-schutzbedarfsfeststellung.md#3-rag-spezifische-verarbeitungsstufen
+  - n: 6
+    name: Externe und interne Abhängigkeiten
+    answer: "Fremdbezug, Einordnung als IKT-Drittdienstleister, Subunternehmerkette, Konzentrationsrisiko und Exit-Strategie."
+    source: pilot/akte/03-auslagerung-drittparteien.md#4-subunternehmerkette
+  - n: 7
+    name: Risk Classification
+    answer: "Schutzbedarf je Grundwert festgestellt, Aggregationsrisiko bewertet, Gesamtergebnis begründet."
+    source: pilot/akte/01-schutzbedarfsfeststellung.md#6-gesamtergebnis
+  - n: 8
+    name: Threats und Failure Modes
+    answer: "Betriebs- und Sicherheitsszenarien mit Auswirkung und Reaktion; dazu die vier Tests, an denen Freigaben scheitern."
+    source: pilot/akte/05-notfallkonzept.md#2-szenarien
+  - n: 9
+    name: Security Controls
+    answer: "23 Kontrollen in sechs Domänen, je mit Kontrollziel, Prüfhandlung, Evidenz und Normbezug; hier bewertet."
+    source: pilot/readiness-report.md#kontrollen-im-einzelnen
+  - n: 10
+    name: Privacy und Data Controls
+    answer: "Technische und organisatorische Maßnahmen nach Art. 32 DSGVO, dazu Betroffenenrechte und die Embedding-Frage."
+    source: pilot/akte/02-dsfa-baustein-rag.md#7-technische-und-organisatorische-maßnahmen-art-32-dsgvo
+  - n: 11
+    name: Human Oversight
+    answer: "Rollen und Verantwortlichkeiten im Betrieb, dazu der Berechtigungsprozess mit benannten Entscheidern."
+    source: pilot/akte/04-betriebskonzept.md#3-rollen-und-verantwortlichkeiten
+  - n: 12
+    name: Action Boundaries
+    answer: "Gegenstand und Abgrenzung des Betriebs — was das System tut und was ausdrücklich nicht."
+    source: pilot/akte/04-betriebskonzept.md#1-gegenstand-und-abgrenzung
+    caveat: >-
+      Der Fall ist lesend. Es gibt keine schreibenden Aktionen, also auch keine Action Authority
+      Matrix im Sinne von Aktion mal Erlaubnisstufe. Für einen agentischen Fall wäre dieser
+      Schritt hier nicht erfüllt; das ist die bekannte Lücke, nicht eine Eigenheit dieses Falls.
+  - n: 13
+    name: Logging und Evidence
+    answer: "Protokollierung im Betriebskonzept, Evidenzformat in den Testnachweisen, echte Belege unter pilot/evidenz/."
+    source: pilot/akte/04-betriebskonzept.md#8-protokollierung
+  - n: 14
+    name: Monitoring
+    answer: "Betriebsüberwachung mit Kennzahlen und Schwellen."
+    source: pilot/akte/04-betriebskonzept.md#7-betriebsüberwachung
+  - n: 15
+    name: Incident und Kill-Switch
+    answer: "Kill-Switch mit Auslöser, Wirkzeit und Verantwortlichem; dazu Degradationsmodi und Wiederanlauf."
+    source: pilot/akte/05-notfallkonzept.md#4-kill-switch
+  - n: 16
+    name: Verantwortlichkeiten
+    answer: "Rollen im Betrieb benannt; das Restrisiko ist in der Vorlage einem Ressort zugewiesen."
+    source: pilot/akte/04-betriebskonzept.md#3-rollen-und-verantwortlichkeiten
+  - n: 17
+    name: Approval Conditions
+    answer: "Vier Auflagen A1 bis A4, jede mit Frist und benannter Verantwortung."
+    source: pilot/07-freigabevorlage-final.md#auflagen
+  - n: 18
+    name: Finale Entscheidung
+    answer: "Freigabe unter den Auflagen A1 bis A4, befristet bis zur Wiedervorlage am 30.11.2026."
+    source: pilot/07-freigabevorlage-final.md#beschluss-protokollauszug
+
+conditions:
+  - id: A1
+    source: pilot/07-freigabevorlage-final.md#auflagen
+  - id: A2
+    source: pilot/07-freigabevorlage-final.md#auflagen
+  - id: A3
+    source: pilot/07-freigabevorlage-final.md#auflagen
+  - id: A4
+    source: pilot/07-freigabevorlage-final.md#auflagen
+
+open_questions:
+  - "Schritt 12 ist für einen lesenden Fall erfüllt und für einen agentischen nicht. Ein zweiter Entscheidungssatz für einen handelnden Agenten würde die Lücke sichtbar machen, statt sie zu erklären."

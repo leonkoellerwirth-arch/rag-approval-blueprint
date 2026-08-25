@@ -1,0 +1,135 @@
+# Entscheidungssatz für den abgelehnten Fall.
+#
+# Er ist absichtlich lückenhaft, und die Lücken sind die Aussage: Betriebskonzept, DSFA-Baustein
+# und Notfallkonzept wurden nie erstellt, weil der Fall vorher scheiterte. Ein Entscheidungssatz,
+# der das glattzieht, würde eine Vollständigkeit behaupten, die es nie gab.
+
+meta:
+  id: KIRA-2026
+  system: KIRA — Kundenassistent für Rückfragen und Auskünfte
+  institution: Südhafen Direktbank AG
+  nature: illustrative case
+  fictional: true
+  decision: KILL
+  decided_on: 2026-06-09
+  decided_by: Vorstandsbeschluss vom 09.06.2026
+  expires_on: 2027-03-31          # angestrebte Neuvorlage
+  business_owner: Leitung Kundenservice
+  technical_owner: Leitung Digitale Kanäle
+  risk_owner: Informationssicherheit (2nd Line)
+  assessment: pilot-abgelehnt/controls-assessment.yaml
+
+quality:
+  business_value:
+    level: high
+    basis: "Entlastung des Kundenservice um 25 % erwartet, 1,4 Mio. EUR Aufbau, 620 TEUR p. a."
+    source: pilot-abgelehnt/00-fallbeschreibung.md#das-vorhaben
+  operational_risk:
+    level: high
+    basis: "Einziger Kundenkontaktkanal eines Instituts ohne Filialnetz; als kritische oder wichtige Funktion eingeordnet."
+    source: pilot-abgelehnt/00-fallbeschreibung.md#warum-es-am-ende-acht-rote-kontrollen-waren
+  reversibility:
+    level: low
+    basis: "Drei rote Kontrollen sind Konstruktions- und Vertragsentscheidungen; sie lassen sich nicht durch eine Frist heilen."
+    source: pilot-abgelehnt/07-freigabevorlage-final.md#die-drei-befunde-die-der-freigabe-entgegenstehen
+  blast_radius:
+    level: high
+    basis: "Rund 900.000 Privatkunden, Vertrags- und Umsatzdaten im Index, Übermittlung an einen Anbieter ohne EU-Verarbeitung."
+    source: pilot-abgelehnt/00-fallbeschreibung.md#das-vorhaben
+  residual_risk:
+    level: unacceptable
+    basis: "Fremde Kundendaten verlassen den Sicherheitsbereich, bevor die Berechtigungsprüfung greift."
+    source: pilot-abgelehnt/00-fallbeschreibung.md#der-befund-an-dem-alles-hängt
+
+steps:
+  - n: 1
+    name: Business Problem
+    answer: "Kundenservice als einziger Kontaktpunkt eines Instituts ohne Filialnetz; Entlastung um 25 % angestrebt."
+    source: pilot-abgelehnt/00-fallbeschreibung.md#das-vorhaben
+  - n: 2
+    name: Vorgeschlagener Use-Case
+    answer: "Assistent im Online-Banking, der auch Fragen zu eigenen Verträgen und Umsätzen beantwortet."
+    source: pilot-abgelehnt/00-fallbeschreibung.md#das-vorhaben
+  - n: 3
+    name: Erwarteter wirtschaftlicher Nutzen
+    answer: "1,4 Mio. EUR Aufbau, 620 TEUR laufend, gegen 25 % Entlastung und kürzere Wartezeiten."
+    source: pilot-abgelehnt/00-fallbeschreibung.md#das-vorhaben
+  - n: 4
+    name: Architektur
+    answer: "Vertrags- und Umsatzdaten aus dem Kernbanksystem im Index; Anbieter Halcyon Systems Inc., ohne EU-Verarbeitung."
+    source: pilot-abgelehnt/00-fallbeschreibung.md#architektur
+  - n: 5
+    name: Datenflüsse
+    answer: "Abruf über den gesamten Bestand, Filterung erst danach — der Befund, an dem der Fall scheitert."
+    source: pilot-abgelehnt/00-fallbeschreibung.md#der-befund-an-dem-alles-hängt
+  - n: 6
+    name: Externe und interne Abhängigkeiten
+    answer: "Einordnung als IKT-Drittdienstleister und Eintrag im Informationsregister fehlten bei Projektstart."
+    source: pilot-abgelehnt/07-freigabevorlage-final.md#die-drei-befunde-die-der-freigabe-entgegenstehen
+  - n: 7
+    name: Risk Classification
+    answer: "Als kritische oder wichtige Funktion eingeordnet — anders als im freigegebenen Fall."
+    source: pilot-abgelehnt/00-fallbeschreibung.md#warum-es-am-ende-acht-rote-kontrollen-waren
+  - n: 8
+    name: Threats und Failure Modes
+    answer: "Kreuztreffer im Negativ-Retrieval-Test; nach der Nachbesserung blieb der konstruktive Mangel."
+    source: pilot-abgelehnt/00-fallbeschreibung.md#der-befund-an-dem-alles-hängt
+  - n: 9
+    name: Security Controls
+    answer: "23 Kontrollen bewertet: 4 grün, 11 gelb, 8 rot."
+    source: pilot-abgelehnt/readiness-report.md#kontrollen-im-einzelnen
+  - n: 10
+    name: Privacy und Data Controls
+    gap: >-
+      Kein DSFA-Baustein erstellt. Die Drittlandübermittlung wurde als Kontrollbefund BET-04
+      festgestellt, nicht als eigene Datenschutzakte bearbeitet — der Fall endete vorher.
+  - n: 11
+    name: Human Oversight
+    gap: >-
+      Kein Betriebskonzept erstellt. Rollen im Regelbetrieb wurden nie festgelegt, weil es keinen
+      Regelbetrieb gab.
+  - n: 12
+    name: Action Boundaries
+    gap: >-
+      Nicht festgelegt. Der Fall ist lesend, aber die Abgrenzung, welche Auskünfte das System
+      geben darf, war selbst ein roter Befund (EVA-03, Quellenbindung).
+  - n: 13
+    name: Logging und Evidence
+    answer: "Protokollierung als Kontrolldomäne AUD bewertet; Testprotokolle vom 17.02. und 31.03. liegen vor."
+    source: pilot-abgelehnt/readiness-report.md#kontrollen-im-einzelnen
+  - n: 14
+    name: Monitoring
+    gap: >-
+      Nicht festgelegt. EVA-01 blieb rot, weil Qualität über Daumen-hoch-Rückmeldungen gemessen
+      wurde statt über einen Referenzfragenkatalog.
+  - n: 15
+    name: Incident und Kill-Switch
+    answer: "Als Kontrolle BET-03 bewertet; Degradationsmodi und Kill-Switch nicht abschließend belegt."
+    source: pilot-abgelehnt/readiness-report.md#kontrollen-im-einzelnen
+  - n: 16
+    name: Verantwortlichkeiten
+    answer: "Beteiligte Funktionen benannt; die Informationssicherheit kam zehn Wochen nach Projektstart hinzu."
+    source: pilot-abgelehnt/00-fallbeschreibung.md#beteiligte
+  - n: 17
+    name: Approval Conditions
+    answer: "Fünf Bedingungen für eine Neuvorlage — drei Architekturänderungen, zwei vertragliche."
+    source: pilot-abgelehnt/07-freigabevorlage-final.md#bedingungen-für-eine-neuvorlage
+  - n: 18
+    name: Finale Entscheidung
+    answer: "Keine Freigabe. Neuvorlage nach Umsetzung der Bedingungen, angestrebt zum 31.03.2027."
+    source: pilot-abgelehnt/07-freigabevorlage-final.md#beschluss-protokollauszug
+
+conditions:
+  - id: B1
+    source: pilot-abgelehnt/07-freigabevorlage-final.md#bedingungen-für-eine-neuvorlage
+  - id: B2
+    source: pilot-abgelehnt/07-freigabevorlage-final.md#bedingungen-für-eine-neuvorlage
+  - id: B3
+    source: pilot-abgelehnt/07-freigabevorlage-final.md#bedingungen-für-eine-neuvorlage
+  - id: B4
+    source: pilot-abgelehnt/07-freigabevorlage-final.md#bedingungen-für-eine-neuvorlage
+  - id: B5
+    source: pilot-abgelehnt/07-freigabevorlage-final.md#bedingungen-für-eine-neuvorlage
+
+open_questions:
+  - "Vier von achtzehn Schritten sind unbeantwortet, weil der Fall vor ihrer Bearbeitung endete. Das ist der ehrliche Zustand einer Ablehnung und sollte nicht nachträglich gefüllt werden."
