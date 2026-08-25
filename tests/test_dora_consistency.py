@@ -29,17 +29,15 @@ SNAPSHOT = REPO_ROOT / "refs" / "toolkit-dora-snapshot.json"
 
 # Divergences that are known, tracked, and not yet resolvable — never a way to silence a
 # finding. Each entry names what would settle it. Remove an entry the moment it is settled.
-KNOWN_LABEL_DIVERGENCES = {
-    "28": (
-        "This repository reads 'General principles', the sister register reads 'ICT "
-        "third-party risk' — the section heading rather than the article's. A review on "
-        "2026-08-25 found the official heading to be 'General principles', which would make "
-        "the label here the correct one; that review could not reach EUR-Lex directly, which "
-        "answers automated requests with an empty body, and so is not primary-source "
-        "evidence. Settled by a person reading the article in a browser and correcting the "
-        "sister register, after which this entry goes."
-    ),
-}
+# Divergences that are known, tracked, and not yet resolvable — never a way to silence a
+# finding. Each entry names what would settle it. Remove an entry the moment it is settled.
+#
+# Empty since 2026-08-25. The one entry it held, DORA Art. 28, was settled the way the entry said
+# it would be: someone read the official heading in the primary text and corrected the sister
+# register, which had been describing the chapter rather than the article. The second test below
+# is what forced the removal — a resolved divergence that stays on the list turns the list into
+# decoration.
+KNOWN_LABEL_DIVERGENCES: dict[str, str] = {}
 
 
 # Words that carry no distinguishing meaning in a heading.

@@ -6,6 +6,20 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Changed
+
+- **The cross-register divergence list is empty, and the test made it happen.** DORA Article 28
+  was recorded as diverging: this repository read *General principles*, the sister register read
+  *ICT third-party risk*. The entry said what would settle it — someone reading the official
+  heading in the primary text — and that is what settled it. The sister register was checked
+  against the Publications Office text, found to be describing the chapter rather than the
+  article, and corrected.
+
+  Refreshing `refs/toolkit-dora-snapshot.json` then made `test_known_divergences_still_diverge`
+  fail with the instruction it was written to give: *Art. 28: now compatible — remove it*. A
+  resolved divergence left on the list turns the list into decoration, which is the failure that
+  test exists to prevent, and it caught it on its first real occasion.
+
 ### Added
 
 - **Decision records** ([`decisions/`](decisions/), rendered to
